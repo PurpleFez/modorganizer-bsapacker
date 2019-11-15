@@ -15,7 +15,6 @@ namespace BsaPacker
 	public:
 		explicit ArchiveBuilderFactory(const IArchiveBuilderHelper* archiveBuilderHelper);
 		~ArchiveBuilderFactory() override = default;
-		// IArchiveBuilderFactory interface
 		[[nodiscard]] std::vector<bsa_archive_type_e> GetArchiveTypes(const IModDto* modDto) const override;
 		[[nodiscard]] std::unique_ptr<IArchiveBuilder> Create(bsa_archive_type_e archiveType, const IModDto* modDto) const override;
 

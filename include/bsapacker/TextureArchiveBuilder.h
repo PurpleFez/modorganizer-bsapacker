@@ -17,7 +17,6 @@ namespace BsaPacker
 		~TextureArchiveBuilder() override = default;
 		uint32_t setFiles() override;
 		void setShareData(bool) override;
-		//void setExtensionBlacklist(const QStringList&) override;
 
 		[[nodiscard]] std::unique_ptr<BSArchiveAuto> getArchive() override;
 		[[nodiscard]] uint32_t getFileCount() const override;

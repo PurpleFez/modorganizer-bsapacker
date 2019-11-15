@@ -8,7 +8,6 @@
 namespace BsaPacker
 {
 	const std::array <QString, 3> ArchiveBuilderHelper::INCOMPRESSIBLE_TYPES = { "wav", "ogg", "mp3" };
-	//const std::array <QString, 2> ArchiveBuilderHelper::BLACKLIST = { "ini", "txt" };
 
 	ArchiveBuilderHelper::ArchiveBuilderHelper(const ISettingsService* settingsService)
 		: m_SettingsService(settingsService)

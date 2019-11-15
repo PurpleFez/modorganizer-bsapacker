@@ -27,7 +27,6 @@ namespace BsaPacker
 		[[nodiscard]] QStringList getRootDirectoryFilenames(const QDir&) const override;
 
 		const static std::array <QString, 3> INCOMPRESSIBLE_TYPES;
-		//const static std::array <QString, 2> BLACKLIST;
 
 	private:
 		const ISettingsService* m_SettingsService = nullptr;
