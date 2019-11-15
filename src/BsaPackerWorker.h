@@ -7,7 +7,6 @@
 #include <bsapacker/IHideLooseAssetService.h>
 #include <bsapacker/IModContext.h>
 #include <bsapacker/IModDtoFactory.h>
-#include <bsapacker/IPackerProgressDialogFactory.h>
 #include <bsapacker/ISettingsService.h>
 
 #include <boost/di/extension/injections/factory.hpp>

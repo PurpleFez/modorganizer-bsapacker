@@ -1,11 +1,9 @@
 #ifndef ARCHIVEBUILDDIRECTOR_H
 #define ARCHIVEBUILDDIRECTOR_H
 
-#include "ISettingsService.h"
-
 #include <bsapacker/IArchiveBuilder.h>
-#include <bsapacker/IPackerProgressDialogFactory.h>
 
+#include "ISettingsService.h"
 
 namespace BsaPacker
 {

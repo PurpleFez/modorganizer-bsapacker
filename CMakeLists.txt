@@ -48,8 +48,6 @@ add_library(${PROJ_NAME} SHARED
 	include/bsapacker/IModDtoFactory.h
 	include/bsapacker/IPackerDialog.h
 	include/bsapacker/IPackerDialogFactory.h
-	include/bsapacker/IPackerProgressDialog.h
-	include/bsapacker/IPackerProgressDialogFactory.h
 	include/bsapacker/ISettingsService.h
 
 	include/bsapacker/GeneralArchiveBuilder.h
@@ -88,8 +86,6 @@ add_library(${PROJ_NAME} SHARED
 	src/OblivionDummyPluginService.cpp
 	src/PackerDialog.cpp
 	src/PackerDialogFactory.cpp
-	src/PackerProgressDialog.cpp
-	src/PackerProgressDialogFactory.cpp
 	src/SettingsService.cpp
 	src/SkyrimDummyPluginService.cpp
 	src/SkyrimSEDummyPluginService.cpp
