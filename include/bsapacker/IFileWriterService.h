@@ -9,7 +9,7 @@ namespace BsaPacker
 	{
 	public:
 		virtual ~IFileWriterService() = default;
-		virtual bool Write(const std::string& path, const char* payload, const uint32_t size) const = 0;
+		virtual bool Write(const std::string&, const char*, uint32_t) const = 0;
 	};
 }
 

@@ -5,6 +5,7 @@
 #include <QObject>
 #include <QMessageBox>
 #include <QtConcurrent>
+#include <QProgressDialog>
 
 #include "SettingsService.h"
 

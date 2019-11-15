@@ -1,4 +1,4 @@
-#include "WorkClass.h"
+#include "BsaPackerWorker.h"
 
 #include <QMessageBox>
 

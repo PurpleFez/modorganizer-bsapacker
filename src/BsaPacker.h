@@ -8,8 +8,6 @@
 #include <boost/di.hpp>
 #include <boost/di/extension/injections/factory.hpp>
 
-namespace di = boost::di;
-
 namespace BsaPacker
 {
 	class Bsa_Packer : public MOBase::IPluginTool

@@ -5,6 +5,7 @@
 #include <bsapacker/ArchiveBuilderHelper.h>
 #include <bsapacker/ArchiveBuilderFactory.h>
 #include "ArchiveExtensionService.h"
+#include "BsaPackerWorker.h"
 #include "DummyPluginLogic.h"
 #include "DummyPluginServiceFactory.h"
 #include "FileWriterService.h"
@@ -12,9 +13,7 @@
 #include "ModContext.h"
 #include "ModDto.h"
 #include "SettingsService.h"
-#include "WorkClass.h"
 #include <bsapacker/ModDtoFactory.h>
-#include <bsapacker/PackerProgressDialogFactory.h>
 #include <QMessageBox>
 
 #include <iostream>
@@ -55,22 +54,11 @@ namespace BsaPacker
 	bool Bsa_Packer::isActive() const
 	{
 		return this->m_SettingsService->GetPluginSetting(SettingsService::SETTING_ENABLED).toBool();
-		//return true; //m_Organizer->pluginSetting(this->name(), SettingsService::SETTING_ENABLED).toBool();
 	}
 
 	QList<MOBase::PluginSetting> Bsa_Packer::settings() const
 	{
 		return SettingsService::PluginSettings;
-		//return this->m_SettingsService->GetPluginSettings(); // reads this before settings IOrganizer
-		/*
-		return QList<MOBase::PluginSetting> {
-			MOBase::PluginSetting(SettingsService::SETTING_HIDE_LOOSE_ASSETS, QObject::tr("After creating the archive, set loose assets to hidden."), false),
-			MOBase::PluginSetting(SettingsService::SETTING_CREATE_PLUGINS, QObject::tr("Create a dummy plugin to load the archive if one does not exist."), false),
-			MOBase::PluginSetting(SettingsService::SETTING_ENABLED, QObject::tr("Allow this plugin to run."), false),
-			MOBase::PluginSetting(SettingsService::SETTING_BLACKLISTED_FILES, QObject::tr("Specify a semi-colon seperated list of file extensions to ignore when packing."), ".txt;.hkx;.xml;.ini")
-			//MOBase::PluginSetting(SettingsService::SETTING_SPLIT_ARCHIVES, QObject::tr("Automatically create multiple archives if they exceed the size limit."), false);
-		};
-		*/
 	}
 
 	QString Bsa_Packer::tooltip() const
@@ -97,7 +85,6 @@ namespace BsaPacker
 			di::bind<IArchiveBuilderHelper>.to<ArchiveBuilderHelper>(),
 			di::bind<IArchiveBuilderFactory>.to<ArchiveBuilderFactory>(),
 			di::bind<IArchiveAutoService>.to<ArchiveAutoService>(),
-			di::bind<IPackerProgressDialogFactory>.to<PackerProgressDialogFactory>(),
 			di::bind<IDummyPluginServiceFactory>.to<DummyPluginServiceFactory>(),
 			di::bind<IFileWriterService>.to<FileWriterService>(),
 			di::bind<IArchiveExtensionService>.to<ArchiveExtensionService>(),

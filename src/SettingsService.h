@@ -12,7 +12,7 @@ namespace BsaPacker
 	public:
 		SettingsService(MOBase::IOrganizer* organizer);
 		~SettingsService() override = default;
-		QVariant GetPluginSetting(const QString& setting) const override;
+		[[nodiscard]] QVariant GetPluginSetting(const QString& setting) const override;
 
 		static const QString& SETTING_ENABLED;
 		static const QString& SETTING_HIDE_LOOSE_ASSETS;
