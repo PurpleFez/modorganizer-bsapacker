@@ -2,12 +2,16 @@
 
 namespace BsaPacker
 {
-	Fallout4DummyPluginService::Fallout4DummyPluginService(const IFileWriterService* fileWriterService, const IDummyPluginLogic* dummyPluginLogic)
-		: m_FileWriterService(fileWriterService), m_DummyPluginLogic(dummyPluginLogic)
+	Fallout4DummyPluginService::Fallout4DummyPluginService(
+			const IFileWriterService* fileWriterService,
+			const IDummyPluginLogic* dummyPluginLogic)
+		: m_FileWriterService(fileWriterService),
+		  m_DummyPluginLogic(dummyPluginLogic)
 	{
 	}
 
-	bool Fallout4DummyPluginService::CreatePlugin(const QString& modPath, const QString& archiveNameBase) const
+	bool Fallout4DummyPluginService::CreatePlugin(const QString& modPath,
+												  const QString& archiveNameBase) const
 	{
 		const QString& fileNameNoExtension = modPath + '/' + archiveNameBase;
 		if (!this->m_DummyPluginLogic->canCreateDummyESL(fileNameNoExtension))
@@ -16,7 +20,7 @@ namespace BsaPacker
 		}
 		const std::string& absoluteFileName = fileNameNoExtension.toStdString() + ".esp";
 		return this->m_FileWriterService->Write(absoluteFileName,
-												reinterpret_cast<const char*>(this->RAW_FALLOUT4),
-												this->RAW_FO4_SIZE);
+												reinterpret_cast<const char*>(Fallout4DummyPluginService::RAW_FALLOUT4),
+												sizeof(Fallout4DummyPluginService::RAW_FALLOUT4));
 	}
 }

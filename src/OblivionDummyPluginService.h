@@ -10,12 +10,13 @@ namespace BsaPacker
 	class OblivionDummyPluginService : public IDummyPluginService
 	{
 	public:
-		OblivionDummyPluginService(const IFileWriterService* fileWriterService, const IDummyPluginLogic* dummyPluginLogic);
+		OblivionDummyPluginService(const IFileWriterService* fileWriterService,
+								   const IDummyPluginLogic* dummyPluginLogic);
 		~OblivionDummyPluginService() override = default;
-		bool CreatePlugin(const QString& modPath, const QString& archiveNameBase) const override;
+		bool CreatePlugin(const QString& modPath,
+						  const QString& archiveNameBase) const override;
 
-		static constexpr int RAW_TES4_SIZE = 52;
-		static constexpr unsigned char RAW_OBLIVION[RAW_TES4_SIZE] = {
+		static constexpr unsigned char RAW_OBLIVION[] = {
 			0x54, 0x45, 0x53, 0x34, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 			0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x48, 0x45, 0x44, 0x52,
 			0x0C, 0x00, 0x00, 0x00, 0x80, 0x3F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08,

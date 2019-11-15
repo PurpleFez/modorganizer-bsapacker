@@ -10,12 +10,13 @@ namespace BsaPacker
 	class SkyrimDummyPluginService : public IDummyPluginService
 	{
 	public:
-		SkyrimDummyPluginService(const IFileWriterService* fileWriterService, const IDummyPluginLogic* dummyPluginLogic);
+		SkyrimDummyPluginService(const IFileWriterService* fileWriterService,
+								 const IDummyPluginLogic* dummyPluginLogic);
 		~SkyrimDummyPluginService() override = default;
-		bool CreatePlugin(const QString& modPath, const QString& archiveNameBase) const override;
+		[[nodiscard]] bool CreatePlugin(const QString& modPath,
+										const QString& archiveNameBase) const override;
 
-		static constexpr int RAW_TES5_SIZE = 49;
-		static constexpr unsigned char RAW_SKYRIM[RAW_TES5_SIZE] = {
+		static constexpr unsigned char RAW_SKYRIM[] = {
 			0x54, 0x45, 0x53, 0x34, 0x19, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 			0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x2B, 0x00, 0x00, 0x00,
 			0x48, 0x45, 0x44, 0x52, 0x0C, 0x00, 0x9A, 0x99, 0xD9, 0x3F, 0x00, 0x00,

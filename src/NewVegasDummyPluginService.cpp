@@ -4,12 +4,16 @@
 
 namespace BsaPacker
 {
-	NewVegasDummyPluginService::NewVegasDummyPluginService(const IFileWriterService* fileWriterService, const IDummyPluginLogic* dummyPluginLogic)
-		: m_FileWriterService(fileWriterService), m_DummyPluginLogic(dummyPluginLogic)
+	NewVegasDummyPluginService::NewVegasDummyPluginService(
+			const IFileWriterService* fileWriterService,
+			const IDummyPluginLogic* dummyPluginLogic)
+		: m_FileWriterService(fileWriterService),
+		  m_DummyPluginLogic(dummyPluginLogic)
 	{
 	}
 
-	bool NewVegasDummyPluginService::CreatePlugin(const QString& modPath, const QString& archiveNameBase) const
+	bool NewVegasDummyPluginService::CreatePlugin(const QString& modPath,
+												  const QString& archiveNameBase) const
 	{
 		const QString& fileNameNoExtension = modPath + '/' + archiveNameBase;
 		if (!this->m_DummyPluginLogic->canCreateDummyESP(fileNameNoExtension))
@@ -18,8 +22,8 @@ namespace BsaPacker
 		}
 		const std::string& absoluteFileName = fileNameNoExtension.toStdString() + ".esp";
 		return this->m_FileWriterService->Write(absoluteFileName,
-												reinterpret_cast<const char*>(this->RAW_NEWVEGAS),
-												this->RAW_FNV_SIZE);
+												reinterpret_cast<const char*>(NewVegasDummyPluginService::RAW_NEWVEGAS),
+												sizeof(NewVegasDummyPluginService::RAW_NEWVEGAS));
 	}
 }
 
