@@ -43,11 +43,11 @@ namespace BsaPacker
 			case baTES3:
 			case baTES4:
 			case baFO3:
-				return std::make_unique<GeneralArchiveBuilder>(this->m_ArchiveBuilderHelper, modDto->Path());
+				return std::make_unique<GeneralArchiveBuilder>(this->m_ArchiveBuilderHelper, modDto->Directory());
 			case baFO4:
-				return std::make_unique<TexturelessArchiveBuilder>(this->m_ArchiveBuilderHelper, modDto->Path());
+				return std::make_unique<TexturelessArchiveBuilder>(this->m_ArchiveBuilderHelper, modDto->Directory());
 			case baFO4dds:
-				return std::make_unique<TextureArchiveBuilder>(this->m_ArchiveBuilderHelper, modDto->Path());
+				return std::make_unique<TextureArchiveBuilder>(this->m_ArchiveBuilderHelper, modDto->Directory());
 			case baNone:
 			default:
 				return std::make_unique<NullArchiveBuilder>();

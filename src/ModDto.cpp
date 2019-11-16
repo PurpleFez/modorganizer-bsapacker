@@ -16,9 +16,24 @@ namespace BsaPacker
 	{
 	}
 
-	int ModDto::NexusId() const
+	QString ModDto::AbsolutePath() const
 	{
-		return this->m_NexusId;
+		return  this->m_Path.path() + '/' + this->m_ArchiveName + this->m_ArchiveExtension;
+	}
+
+	QString ModDto::ArchiveExtension() const
+	{
+		return this->m_ArchiveExtension;
+	}
+
+	QString ModDto::ArchiveName() const
+	{
+		return this->m_ArchiveName;
+	}
+
+	QString ModDto::Directory() const
+	{
+		return this->m_Path.path();
 	}
 
 	QString ModDto::ModName() const
@@ -26,18 +41,8 @@ namespace BsaPacker
 		return this->m_Path.dirName();
 	}
 
-	QString ModDto::Path() const
+	int ModDto::NexusId() const
 	{
-		return this->m_Path.path();
-	}
-
-	QString ModDto::ArchiveName() const
-	{
-		return this->m_Path.path() + '/' + this->m_ArchiveName;
-	}
-
-	QString ModDto::ArchiveExtension() const
-	{
-		return this->m_ArchiveExtension;
+		return this->m_NexusId;
 	}
 } // namespace BsaPacker

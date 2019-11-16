@@ -13,13 +13,12 @@ namespace BsaPacker
 	public:
 		ModDto(const int nexusId, const QString& modDir, const QString& archiveName, const QString& archiveExtension);
 		~ModDto() override = default;
-
-		// IModContext interface
-		[[nodiscard]] int NexusId() const override;
-		[[nodiscard]] QString ModName() const override;
-		[[nodiscard]] QString Path() const override;
-		[[nodiscard]] QString ArchiveName() const override;
+		[[nodiscard]] QString AbsolutePath() const override;
 		[[nodiscard]] QString ArchiveExtension() const override;
+		[[nodiscard]] QString ArchiveName() const override;
+		[[nodiscard]] QString Directory() const override;
+		[[nodiscard]] QString ModName() const override;
+		[[nodiscard]] int NexusId() const override;
 
 	private:
 		const int m_NexusId;

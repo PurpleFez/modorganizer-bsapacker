@@ -16,10 +16,11 @@ namespace BsaPacker
 	public:
 		ModDtoFactory(const IModContext* modContext);
 		~ModDtoFactory() override = default;
-		// IModDtoFactory interface
 		[[nodiscard]] std::unique_ptr<IModDto> Create() const override;
-		//static std::unique_ptr<IModDto> Create(const IModContext*);
-		static QString ArchiveNameValidator(const QString& modName, const QString& pluginName);
+		[[nodiscard]] static QString ArchiveNameValidator(const QString& modName,
+											const QString& pluginName);
+		[[nodiscard]] static bool CanOverwriteFile(const QString& filePath,
+											 const QString& fileName);
 
 	private:
 		const IModContext* m_ModContext = nullptr;

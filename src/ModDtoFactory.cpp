@@ -63,4 +63,17 @@ namespace BsaPacker
 		}
 		return archive_name_base;
 	}
+
+	bool ModDtoFactory::CanOverwriteFile(const QString& filePath,
+										 const QString& fileName)
+	{
+		const QString& absoluteFileName = filePath + '/' + fileName;
+		const QFileInfo& fileInfo(absoluteFileName);
+		if (!fileInfo.exists() || !fileInfo.isFile()) {
+			return true;
+		}
+
+		const QString& message = QObject::tr("File \"") + absoluteFileName + QObject::tr("\" already exists. Overwrite?");
+		return QMessageBox::question(nullptr, QStringLiteral("BSA Packer"), message, QMessageBox::Ok | QMessageBox::Cancel) != QMessageBox::Cancel;
+	}
 } // namespace BsaPacker
