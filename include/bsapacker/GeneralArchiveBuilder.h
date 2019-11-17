@@ -14,6 +14,11 @@ namespace BsaPacker
 	public:
 		explicit GeneralArchiveBuilder(const IArchiveBuilderHelper* archiveBuilderHelper, const QDir& rootDir);
 		~GeneralArchiveBuilder() override = default;
+		GeneralArchiveBuilder(const GeneralArchiveBuilder&) = delete;
+		GeneralArchiveBuilder& operator=(const GeneralArchiveBuilder&) = delete;
+		GeneralArchiveBuilder(GeneralArchiveBuilder&&) = delete;
+		GeneralArchiveBuilder& operator=(GeneralArchiveBuilder&&) = delete;
+
 		uint32_t setFiles() override;
 		void setShareData(bool value) override;
 		[[nodiscard]] std::unique_ptr<BSArchiveAuto> getArchive() override;
@@ -21,9 +26,6 @@ namespace BsaPacker
 
 	public Q_SLOTS:
 		void cancel() override;
-
-	Q_SIGNALS:
-		void valueChanged(int) override;
 
 	private:
 		const IArchiveBuilderHelper* m_ArchiveBuilderHelper = nullptr;

@@ -20,6 +20,11 @@ namespace BsaPacker
 	public:
 		ArchiveBuilderHelper(const ISettingsService* settingsService);
 		~ArchiveBuilderHelper() override = default;
+		ArchiveBuilderHelper(const ArchiveBuilderHelper&) = delete;
+		ArchiveBuilderHelper& operator=(const ArchiveBuilderHelper&) = delete;
+		ArchiveBuilderHelper(ArchiveBuilderHelper&&) = delete;
+		ArchiveBuilderHelper& operator=(ArchiveBuilderHelper&&) = delete;
+
 		[[nodiscard]] bool isFileIgnorable(const QString&, const QStringList&) const override;
 		[[nodiscard]] bool isIncompressible(const QString&) const override;
 		[[nodiscard]] bool isExtensionBlacklisted(const QString&) const override;

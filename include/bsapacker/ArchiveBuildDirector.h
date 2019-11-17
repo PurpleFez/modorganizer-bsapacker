@@ -10,10 +10,13 @@ namespace BsaPacker
 	class ArchiveBuildDirector
 	{
 	public:
-		explicit ArchiveBuildDirector(
-				const ISettingsService* settingsService,
-				IArchiveBuilder* archiveFileBuildService);
+		explicit ArchiveBuildDirector(const ISettingsService* settingsService,
+									  IArchiveBuilder* archiveFileBuildService);
 		~ArchiveBuildDirector() = default;
+		ArchiveBuildDirector(const ArchiveBuildDirector&) = default;
+		ArchiveBuildDirector& operator=(const ArchiveBuildDirector&) = default;
+		ArchiveBuildDirector(ArchiveBuildDirector&&) = default;
+		ArchiveBuildDirector& operator=(ArchiveBuildDirector&&) = default;
 		void Construct();
 
 	private:
