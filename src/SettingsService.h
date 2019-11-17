@@ -4,6 +4,7 @@
 #include <bsapacker/ISettingsService.h>
 
 #include <imoinfo.h>
+#include <pluginsetting.h>
 
 namespace BsaPacker
 {

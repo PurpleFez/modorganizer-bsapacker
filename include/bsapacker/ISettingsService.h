@@ -2,7 +2,6 @@
 #define ISETTINGSSERVICE_H
 
 #include <QList>
-#include <pluginsetting.h>
 
 namespace BsaPacker
 {

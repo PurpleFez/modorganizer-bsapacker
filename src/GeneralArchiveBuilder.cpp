@@ -46,7 +46,6 @@ namespace BsaPacker
 			this->m_Archive->addFileFromDiskRoot(filepath);
 		}
 		this->m_Archive->setCompressed(!static_cast<bool>(incompressibleFiles));
-		//QMessageBox::information(nullptr, "", QString::number(count));
 		return incompressibleFiles + compressibleFiles;
 	}
 
@@ -58,8 +57,6 @@ namespace BsaPacker
 	std::unique_ptr<BSArchiveAuto> GeneralArchiveBuilder::getArchive()
 	{
 		return std::move(this->m_Archive);
-		//return std::unique_ptr<BSArchiveAuto>(this->m_Archive.get());
-		//return this->m_Archive.get() == nullptr ? nullptr : std::unique_ptr<BSArchiveAuto>(this->m_Archive.get());
 	}
 
 	uint32_t GeneralArchiveBuilder::getFileCount() const

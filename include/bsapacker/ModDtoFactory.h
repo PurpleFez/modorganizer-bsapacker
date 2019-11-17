@@ -5,10 +5,6 @@
 #include <bsapacker/IModContext.h>
 #include <bsapacker/IModDto.h>
 
-#include <boost/di.hpp>
-#include <boost/di/extension/injections/factory.hpp>
-
-namespace di = boost::di;
 namespace BsaPacker
 {
 	class ModDtoFactory : public IModDtoFactory

@@ -53,7 +53,6 @@ namespace BsaPacker
 	std::unique_ptr<BSArchiveAuto> TextureArchiveBuilder::getArchive()
 	{
 		return std::move(this->m_Archive);
-		//return std::unique_ptr<BSArchiveAuto>(this->m_Archive.get());
 	}
 
 	uint32_t TextureArchiveBuilder::getFileCount() const
