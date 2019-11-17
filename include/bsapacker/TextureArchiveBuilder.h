@@ -24,9 +24,6 @@ namespace BsaPacker
 	public Q_SLOTS:
 		void cancel() override;
 
-	Q_SIGNALS:
-		void valueChanged(int) override;
-
 	private:
 		const IArchiveBuilderHelper* m_ArchiveBuilderHelper = nullptr;
 		std::unique_ptr<BSArchiveAuto> m_Archive;

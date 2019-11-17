@@ -19,13 +19,8 @@ namespace BsaPacker
 		[[nodiscard]] std::unique_ptr<BSArchiveAuto> getArchive() override;
 		[[nodiscard]] uint32_t getFileCount() const override;
 
-		// IEmitsValueChanged interface
 	public Q_SLOTS:
 		void cancel() override;
-
-	signals:
-		void valueChanged(int) override;
-
 	};
 } // namespace BsaPacker
 

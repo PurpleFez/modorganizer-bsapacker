@@ -16,7 +16,7 @@ namespace BsaPacker
 		virtual void cancel() = 0;
 
 	Q_SIGNALS:
-		virtual void valueChanged(int) = 0;
+		void valueChanged(int);
 	};
 }  // namespace BsaPacker
 

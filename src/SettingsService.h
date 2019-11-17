@@ -11,7 +11,7 @@ namespace BsaPacker
 	class SettingsService : public ISettingsService
 	{
 	public:
-		SettingsService(MOBase::IOrganizer* organizer);
+		explicit SettingsService(MOBase::IOrganizer* organizer);
 		~SettingsService() override = default;
 		[[nodiscard]] QVariant GetPluginSetting(const QString& setting) const override;
 
@@ -26,6 +26,6 @@ namespace BsaPacker
 	private:
 		MOBase::IOrganizer* m_Organizer = nullptr;
 	};
-}
+} // namespace BsaPacker
 
 #endif // SETTINGSSERVICE_H

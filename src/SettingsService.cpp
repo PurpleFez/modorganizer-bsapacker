@@ -2,10 +2,10 @@
 
 namespace BsaPacker
 {
-	const QString& SettingsService::SETTING_ENABLED = "enabled";
-	const QString& SettingsService::SETTING_HIDE_LOOSE_ASSETS = "hide_loose_assets";
-	const QString& SettingsService::SETTING_CREATE_PLUGINS = "create_plugins";
-	const QString& SettingsService::SETTING_BLACKLISTED_FILES = "blacklisted_files";
+	const QString& SettingsService::SETTING_ENABLED = QStringLiteral("enabled");
+	const QString& SettingsService::SETTING_HIDE_LOOSE_ASSETS = QStringLiteral("hide_loose_assets");
+	const QString& SettingsService::SETTING_CREATE_PLUGINS = QStringLiteral("create_plugins");
+	const QString& SettingsService::SETTING_BLACKLISTED_FILES = QStringLiteral("blacklisted_files");
 	//const QString& SettingsService::SETTING_SPLIT_ARCHIVES = "split_archives";
 
 	const QList<MOBase::PluginSetting>& SettingsService::PluginSettings = {
@@ -23,6 +23,6 @@ namespace BsaPacker
 
 	QVariant SettingsService::GetPluginSetting(const QString& setting) const
 	{
-		return this->m_Organizer->pluginSetting("BSA Packer", setting);
+		return this->m_Organizer->pluginSetting(QStringLiteral("BSA Packer"), setting);
 	}
-}
+} // namespace BsaPacker
