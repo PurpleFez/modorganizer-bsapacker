@@ -165,16 +165,4 @@ install(EXPORT ${PROJ_NAME}-targets
 	NAMESPACE BsaPacker::
 	DESTINATION libs)
 
-#We should do this last, since windeployqt.exe scans the folders in bin for required modules e.g QtQuick.2 required by tutorials.
-# use windeployqt.exe to install all required libraries
-SET(windeploy_parameters "--no-translations --no-plugins --libdir dlls --release-with-debug-info --no-compiler-runtime")
-SET(qt5bin ${Qt5Core_DIR}/../../../bin)
-INSTALL(
-    CODE
-    "EXECUTE_PROCESS(COMMAND
-        ${qt5bin}/windeployqt.exe --verbose 0 plugins/bsa_packer.dll ${windeploy_parameters}
-        WORKING_DIRECTORY ${CMAKE_INSTALL_PREFIX}/bin
-    )"
-)
-
 #add_subdirectory(tests)
