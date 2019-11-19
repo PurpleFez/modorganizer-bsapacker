@@ -6,7 +6,7 @@
 #include <bsapacker/IArchiveBuilder.h>
 #include <bsapacker/IArchiveBuilderHelper.h>
 #include <bsapacker/IModDto.h>
-#include <libbsarch/libbsarch.h>
+#include <libbsarch.h>
 
 namespace BsaPacker
 {

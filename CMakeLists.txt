@@ -104,6 +104,9 @@ target_include_directories(${PROJ_NAME}
 	    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 		$<INSTALL_INTERFACE:include>
 	PRIVATE
+	    ${BOOST_DI_ROOT}/include
+	    ${BOOST_DI_ROOT}/extension/include
+	    ${LIBBSARCH_ROOT}
 	    ${Boost_INCLUDE_DIRS}
 		${CMAKE_CURRENT_SOURCE_DIR}/src
 		${default_project_path}/uibase/src
@@ -113,7 +116,9 @@ target_link_directories(${PROJ_NAME}
 	PUBLIC
 	    ${lib_path}
 		$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/lib>
-		${Boost_LIBRARY_DIRS})
+		${Boost_LIBRARY_DIRS}
+    PRIVATE
+        ${LIBBSARCH_ROOT})
 
 message("Default path is: ${default_project_path}")
 message("Project path is: ${project_path}")
@@ -159,5 +164,17 @@ install(EXPORT ${PROJ_NAME}-targets
 	FILE BsaPackerTargets.cmake
 	NAMESPACE BsaPacker::
 	DESTINATION libs)
+
+#We should do this last, since windeployqt.exe scans the folders in bin for required modules e.g QtQuick.2 required by tutorials.
+# use windeployqt.exe to install all required libraries
+SET(windeploy_parameters "--no-translations --no-plugins --libdir dlls --release-with-debug-info --no-compiler-runtime")
+SET(qt5bin ${Qt5Core_DIR}/../../../bin)
+INSTALL(
+    CODE
+    "EXECUTE_PROCESS(COMMAND
+        ${qt5bin}/windeployqt.exe --verbose 0 plugins/bsa_packer.dll ${windeploy_parameters}
+        WORKING_DIRECTORY ${CMAKE_INSTALL_PREFIX}/bin
+    )"
+)
 
 #add_subdirectory(tests)

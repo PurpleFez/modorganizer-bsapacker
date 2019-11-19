@@ -1,6 +1,6 @@
 #pragma once
 
-#include <libbsarch/libbsarch.h>
+#include <libbsarch.h>
 #include <string>
 #include <QDebug>
 #include <QDir>
