@@ -156,13 +156,13 @@ endif()
 
 install(TARGETS ${PROJ_NAME}
 	EXPORT ${PROJ_NAME}-targets
-	#ARCHIVE DESTINATION libs
+	ARCHIVE DESTINATION libs
 	RUNTIME DESTINATION bin/plugins)
 install(FILES $<TARGET_PDB_FILE:${PROJ_NAME}>
 	DESTINATION pdb)
-install(EXPORT ${PROJ_NAME}-targets
-	FILE BsaPackerTargets.cmake
-	NAMESPACE BsaPacker::
-	DESTINATION libs)
+#install(EXPORT ${PROJ_NAME}-targets
+#	FILE BsaPackerTargets.cmake
+#	NAMESPACE BsaPacker::
+#	DESTINATION libs)
 
 #add_subdirectory(tests)
