@@ -21,6 +21,9 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 find_package(Qt5 COMPONENTS Core Concurrent Widgets REQUIRED)
 
+find_package(Qt5LinguistTools)
+qt5_create_translation(${PROJ_NAME}_translations_qm ${CMAKE_SOURCE_DIR}/src ${CMAKE_SOURCE_DIR}/src/${PROJ_NAME}_en.ts)
+
 set(Boost_USE_STATIC_LIBS ON)
 set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_STATIC_RUNTIME OFF)
@@ -91,6 +94,8 @@ add_library(${PROJ_NAME} SHARED
 	src/SkyrimSEDummyPluginService.cpp
 	src/TextureArchiveBuilder.cpp
 	src/TexturelessArchiveBuilder.cpp
+
+	${${PROJ_NAME}_translations_qm}
 )
 
 add_library(BsaPacker::${PROJ_NAME} ALIAS ${PROJ_NAME})
