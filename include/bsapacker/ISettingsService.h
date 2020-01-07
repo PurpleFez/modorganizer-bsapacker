@@ -1,8 +1,7 @@
 #ifndef ISETTINGSSERVICE_H
 #define ISETTINGSSERVICE_H
 
-#include <QString>
-#include <QVariant>
+#include <QList>
 
 namespace BsaPacker
 {
