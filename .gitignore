@@ -3,3 +3,5 @@ CMakeLists.txt.user
 /msbuild.log
 /*std*.log
 /*build
+/.vs
+/CMakeSettings.json
