@@ -21,6 +21,10 @@ namespace BsaPacker
 		PackerDialog packerDialog(this->m_ModContext);
 		packerDialog.RefreshModList();
 		int result = packerDialog.exec();
+		if (result != QDialog::DialogCode::Accepted) 
+		{
+			return std::make_unique<NullModDto>();
+		}
 
 		const int nexusId = this->m_ModContext->GetNexusId();
 		const QString& modName = packerDialog.SelectedMod();
@@ -31,14 +35,7 @@ namespace BsaPacker
 				? QStringLiteral(".ba2")
 				: QStringLiteral(".bsa");
 
-		switch (result)
-		{
-			case QDialog::DialogCode::Accepted:
-				return std::make_unique<ModDto>(nexusId, modDir, archiveName, archiveExtension);
-			case QDialog::DialogCode::Rejected:
-			default:
-				return std::make_unique<NullModDto>();
-		}
+		return std::make_unique<ModDto>(nexusId, modDir, archiveName, archiveExtension);
 	}
 
 	QString ModDtoFactory::ArchiveNameValidator(const QString& modName, const QString& pluginName)
