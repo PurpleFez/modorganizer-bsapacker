@@ -31,6 +31,9 @@ namespace BsaPacker
 			if (ignored) {
 				continue;
 			}
+			if (filepath.contains("/textures/", Qt::CaseInsensitive)) {
+				continue;
+			}
 
 			this->m_ArchiveBuilderHelper->isIncompressible(filepath) ? ++incompressibleFiles : ++compressibleFiles;
 			this->m_Archive->addFileFromDiskRoot(filepath);
