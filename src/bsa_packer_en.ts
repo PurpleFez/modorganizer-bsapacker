@@ -4,13 +4,13 @@
 <context>
     <name>BsaPacker::Bsa_Packer</name>
     <message>
-        <location filename="BsaPacker.cpp" line="46"/>
-        <location filename="BsaPacker.cpp" line="66"/>
+        <location filename="BsaPacker.cpp" line="47"/>
+        <location filename="BsaPacker.cpp" line="70"/>
         <source>Transform loose files into a Bethesda Softworks Archive file (.bsa/.ba2).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="BsaPacker.cpp" line="76"/>
+        <location filename="BsaPacker.cpp" line="80"/>
         <source>BSA Packer</source>
         <translation type="unfinished"></translation>
     </message>
