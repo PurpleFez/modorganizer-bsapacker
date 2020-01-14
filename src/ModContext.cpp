@@ -7,6 +7,7 @@
 #include "imodlist.h"
 #include <QtConcurrent/QtConcurrentFilter>
 #include <QtConcurrent/QtConcurrentMap>
+#include "ArchiveExtensionService.h"
 
 namespace BsaPacker
 {
@@ -30,14 +31,15 @@ namespace BsaPacker
 
 	QStringList ModContext::GetPlugins(const QDir& modDirectory) const
 	{
-		const QString extension = QStringLiteral(".bsa");
+		ArchiveExtensionService extensionService(this);
+		const QString extension = extensionService.GetFileExtension();
 		const std::function<QString(QString)> replace_extension = [&](QString fname) {
 			return fname.replace(fname.lastIndexOf('.'), 4, extension);
 		};
 
 		QStringList filenames = QtConcurrent::blockingMapped(modDirectory.entryList(PLUGIN_TYPES, QDir::Files), replace_extension);
 		filenames.removeDuplicates();
-		return filenames << QStringLiteral("<new filename>.bsa");
+		return filenames << QStringLiteral("<new filename>") + extensionService.GetFileExtension();
 	}
 
 	QStringList ModContext::GetValidMods() const

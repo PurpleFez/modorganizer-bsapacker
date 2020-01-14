@@ -15,6 +15,7 @@
 #include "SettingsService.h"
 #include <bsapacker/ModDtoFactory.h>
 #include <QMessageBox>
+#include <iplugingame.h>
 
 #include <iostream>
 
@@ -48,11 +49,14 @@ namespace BsaPacker
 
 	MOBase::VersionInfo Bsa_Packer::version() const
 	{
-		return MOBase::VersionInfo(1, 0, 0, MOBase::VersionInfo::RELEASE_FINAL);
+		return MOBase::VersionInfo(1, 0, 1, MOBase::VersionInfo::RELEASE_FINAL);
 	}
 
 	bool Bsa_Packer::isActive() const
 	{
+		if (this->m_Organizer->managedGame()->gameShortName() == "Fallout4") {
+			return false;
+		}
 		return this->m_SettingsService->GetPluginSetting(SettingsService::SETTING_ENABLED).toBool();
 	}
 
