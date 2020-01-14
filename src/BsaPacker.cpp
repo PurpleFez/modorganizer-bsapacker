@@ -15,6 +15,7 @@
 #include "SettingsService.h"
 #include <bsapacker/ModDtoFactory.h>
 #include <QMessageBox>
+#include <iplugingame.h>
 
 #include <iostream>
 
@@ -53,6 +54,9 @@ namespace BsaPacker
 
 	bool Bsa_Packer::isActive() const
 	{
+		if (this->m_Organizer->managedGame()->gameShortName() == "Fallout4") {
+			return false;
+		}
 		return this->m_SettingsService->GetPluginSetting(SettingsService::SETTING_ENABLED).toBool();
 	}
 
