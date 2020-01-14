@@ -43,8 +43,10 @@ namespace BsaPacker
 		}
 		const std::unique_ptr<IDummyPluginService> pluginService = this->m_DummyPluginServiceFactory->Create();
 		pluginService->CreatePlugin(modDto->Directory(), modDto->ArchiveName());
-
-		this->m_HideLooseAssetService->HideLooseAssets(modDto->Directory());
+		
+		if (!modDto->Directory().isEmpty()) {
+			this->m_HideLooseAssetService->HideLooseAssets(modDto->Directory());
+		}
 	}
 }
 
