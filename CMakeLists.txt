@@ -13,15 +13,10 @@ list(APPEND CMAKE_PREFIX_PATH ${QT_ROOT}/lib/cmake)
 
 list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_SOURCE_DIR}/cmake)
 
-
-# pasted
-
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
-find_package(Qt5 COMPONENTS Core Concurrent Widgets REQUIRED)
-
-find_package(Qt5LinguistTools)
+find_package(Qt5 COMPONENTS Core Concurrent LinguistTools Widgets REQUIRED)
 qt5_create_translation(${PROJ_NAME}_translations_qm ${CMAKE_SOURCE_DIR}/src ${CMAKE_SOURCE_DIR}/src/${PROJ_NAME}_en.ts)
 
 set(Boost_USE_STATIC_LIBS ON)
@@ -106,24 +101,24 @@ target_compile_options(${PROJ_NAME} PRIVATE $<$<CXX_COMPILER_ID:GNU>:-Wall>)
 
 target_include_directories(${PROJ_NAME}
 	PUBLIC
-	    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 		$<INSTALL_INTERFACE:include>
 	PRIVATE
-	    ${BOOST_DI_ROOT}/include
-	    ${BOOST_DI_ROOT}/extension/include
-	    ${LIBBSARCH_ROOT}
-	    ${Boost_INCLUDE_DIRS}
+		${BOOST_DI_ROOT}/include
+		${BOOST_DI_ROOT}/extension/include
+		${LIBBSARCH_ROOT}
+		${Boost_INCLUDE_DIRS}
 		${CMAKE_CURRENT_SOURCE_DIR}/src
 		${default_project_path}/uibase/src
 )
 
 target_link_directories(${PROJ_NAME}
 	PUBLIC
-	    ${lib_path}
+		${lib_path}
 		$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/lib>
 		${Boost_LIBRARY_DIRS}
-    PRIVATE
-        ${LIBBSARCH_ROOT})
+	PRIVATE
+		${LIBBSARCH_ROOT})
 
 message("Default path is: ${default_project_path}")
 message("Project path is: ${project_path}")
@@ -132,7 +127,7 @@ message("packer path is ${CMAKE_SOURCE_DIR}/include/bsapacker")
 
 target_link_libraries(${PROJ_NAME}
 	PUBLIC
-	    Qt5::Widgets
+		Qt5::Widgets
 		Qt5::Concurrent
 		Qt5::Gui
 		${Boost_LIBRARIES}
