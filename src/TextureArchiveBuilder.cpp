@@ -1,8 +1,8 @@
 #include <bsapacker/TextureArchiveBuilder.h>
 
 #include <bsapacker/ArchiveBuilderHelper.h>
-#include <QtConcurrent/QtConcurrentMap>
 #include <QDirIterator>
+#include <QApplication>
 
 #include "DirectXTex.h"
 
@@ -20,21 +20,21 @@ namespace BsaPacker
 		uint32_t incompressibleFiles = 0;
 		uint32_t compressibleFiles = 0;
 		int count = 0;
-		const QStringList& rootDirFilenames = this->m_ArchiveBuilderHelper->getRootDirectoryFilenames(this->m_RootDirectory);
+		const QStringList& rootDirFiles = this->m_ArchiveBuilderHelper->getRootDirectoryFilenames(this->m_RootDirectory);
 		QDirIterator iterator(this->m_RootDirectory, QDirIterator::Subdirectories);
 		while (iterator.hasNext()) {
+			QApplication::processEvents();
+
 			if (this->m_Cancelled) {
+				this->m_Archive.reset();
 				return 0;
 			}
 
 			const QString& filepath = iterator.next();
-			const bool ignored = this->m_ArchiveBuilderHelper->isFileIgnorable(filepath, rootDirFilenames);
+			const bool ignored = this->m_ArchiveBuilderHelper->isFileIgnorable(filepath, rootDirFiles);
 
-			Q_EMIT valueChanged(++count);
-			if (ignored) {
-				continue;
-			}
-			if (!filepath.contains("/textures/", Qt::CaseInsensitive)) {
+			Q_EMIT this->valueChanged(++count);
+			if (ignored || !filepath.endsWith(".dds", Qt::CaseInsensitive)) {
 				continue;
 			}
 
@@ -68,10 +68,7 @@ namespace BsaPacker
 		this->m_Cancelled = true;
 	}
 
-	void TextureArchiveBuilder::DDSCallback(bsa_archive_t archive,
-											const wchar_t* file_path,
-											bsa_dds_info_t* dds_info,
-											void* context)
+	void TextureArchiveBuilder::DDSCallback(bsa_archive_t archive, const wchar_t* file_path, bsa_dds_info_t* dds_info, void* context)
 	{
 		auto image = std::make_unique<DirectX::ScratchImage>();
 		DirectX::TexMetadata info;

@@ -2,6 +2,7 @@
 
 #include <bsapacker/ArchiveBuilderHelper.h>
 #include <QDirIterator>
+#include <QApplication>
 
 namespace BsaPacker
 {
@@ -20,18 +21,18 @@ namespace BsaPacker
 		const QStringList& rootDirFilenames = this->m_ArchiveBuilderHelper->getRootDirectoryFilenames(this->m_RootDirectory);
 		QDirIterator iterator(this->m_RootDirectory, QDirIterator::Subdirectories);
 		while (iterator.hasNext()) {
+			QApplication::processEvents();
+
 			if (this->m_Cancelled) {
+				this->m_Archive.reset();
 				return 0;
 			}
 
 			const QString& filepath = iterator.next();
 			const bool ignored = this->m_ArchiveBuilderHelper->isFileIgnorable(filepath, rootDirFilenames);
 
-			Q_EMIT valueChanged(++count);
-			if (ignored) {
-				continue;
-			}
-			if (filepath.contains("/textures/", Qt::CaseInsensitive)) {
+			Q_EMIT this->valueChanged(++count);
+			if (ignored || filepath.endsWith(".dds", Qt::CaseInsensitive)) {
 				continue;
 			}
 
