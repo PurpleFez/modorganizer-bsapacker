@@ -9,16 +9,11 @@
 #include <bsapacker/IModDtoFactory.h>
 #include <bsapacker/ISettingsService.h>
 
-#include <boost/di/extension/injections/factory.hpp>
-
-namespace di = boost::di;
-
 namespace BsaPacker
 {
 	class BsaPackerWorker
 	{
 	public:
-		//WorkClass(const di::extension::ifactory<IModDtoFactory>& modDtoFactory);
 		BsaPackerWorker(
 				const ISettingsService* settingsService,
 				const IModDtoFactory* modDtoFactory,
@@ -29,7 +24,6 @@ namespace BsaPacker
 		void DoWork() const;
 
 	private:
-		//const di::extension::ifactory<IModDto>& m_ModDtoFactory;
 		const ISettingsService* m_SettingsService = nullptr;
 		const IModDtoFactory* m_ModDtoFactory = nullptr;
 		const IArchiveBuilderFactory* m_ArchiveBuilderFactory = nullptr;

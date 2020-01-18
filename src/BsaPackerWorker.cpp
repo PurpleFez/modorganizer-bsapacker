@@ -6,8 +6,6 @@
 #include <bsapacker/IModDto.h>
 #include <bsapacker/ModDtoFactory.h>
 
-#include <QtConcurrent>
-
 namespace BsaPacker
 {
 	BsaPackerWorker::BsaPackerWorker(

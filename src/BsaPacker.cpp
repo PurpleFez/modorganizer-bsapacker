@@ -17,10 +17,9 @@
 #include <QMessageBox>
 #include <iplugingame.h>
 
-#include <iostream>
 
 #include <boost/di.hpp>
-
+namespace di = boost::di;
 
 namespace BsaPacker
 {
@@ -94,7 +93,6 @@ namespace BsaPacker
 			di::bind<IArchiveExtensionService>.to<ArchiveExtensionService>(),
 			di::bind<IDummyPluginLogic>.to<DummyPluginLogic>(),
 			di::bind<IHideLooseAssetService>.to<HideLooseAssetService>()
-			//di::bind<di::extension::ifactory<IModDto, int, QString, QString, QString>>().to(di::extension::factory<ModDto>{})
 		);
 
 		BsaPackerWorker worker = di::create<BsaPackerWorker>(injector);
