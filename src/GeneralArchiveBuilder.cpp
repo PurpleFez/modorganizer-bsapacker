@@ -1,14 +1,8 @@
 #include <bsapacker/GeneralArchiveBuilder.h>
 
 #include <bsapacker/ArchiveBuilderHelper.h>
-
-#include <array>
-#include <QDir>
 #include <QDirIterator>
-#include <QStringList>
-#include <QtConcurrent/QtConcurrentMap>
 #include <QApplication>
-#include <QMessageBox>
 
 namespace BsaPacker
 {
