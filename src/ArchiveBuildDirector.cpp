@@ -1,13 +1,6 @@
 #include <bsapacker/ArchiveBuildDirector.h>
 
-#include <array>
-#include <QDirIterator>
-#include <QObject>
-#include <QMessageBox>
-#include <QtConcurrent>
 #include <QProgressDialog>
-
-#include "SettingsService.h"
 
 namespace BsaPacker
 {
