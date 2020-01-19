@@ -15,11 +15,12 @@ namespace BsaPacker
 	public:
 		explicit TexturelessArchiveBuilder(const IArchiveBuilderHelper* archiveBuilderHelper, const QDir& rootDir);
 		~TexturelessArchiveBuilder() override = default;
+
 		uint32_t setFiles() override;
 		void setShareData(bool) override;
-
 		[[nodiscard]] std::unique_ptr<BSArchiveAuto> getArchive() override;
 		[[nodiscard]] uint32_t getFileCount() const override;
+		[[nodiscard]] QString getRootPath() const override;
 
 	public Q_SLOTS:
 		void cancel() override;

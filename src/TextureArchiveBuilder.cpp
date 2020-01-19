@@ -3,7 +3,6 @@
 #include <bsapacker/ArchiveBuilderHelper.h>
 #include <QDirIterator>
 #include <QApplication>
-
 #include "DirectXTex.h"
 
 namespace BsaPacker
@@ -42,9 +41,7 @@ namespace BsaPacker
 			this->m_Archive->addFileFromDiskRoot(filepath);
 		}
 		this->m_Archive->setCompressed(true);
-		QString path = this->m_RootDirectory.path();
-		QString* pathPtr = &path;
-		this->m_Archive->setDDSCallback(TextureArchiveBuilder::DDSCallback, static_cast<void*>(pathPtr));
+		this->m_Archive->setDDSCallback(TextureArchiveBuilder::DDSCallback, (void*)this);
 		return incompressibleFiles + compressibleFiles;
 	}
 
@@ -63,6 +60,11 @@ namespace BsaPacker
 		return this->m_ArchiveBuilderHelper->getFileCount(this->m_RootDirectory);
 	}
 
+	QString TextureArchiveBuilder::getRootPath() const
+	{
+		return this->m_RootDirectory.path();
+	}
+
 	void TextureArchiveBuilder::cancel()
 	{
 		this->m_Cancelled = true;
@@ -73,8 +75,12 @@ namespace BsaPacker
 		auto image = std::make_unique<DirectX::ScratchImage>();
 		DirectX::TexMetadata info;
 
-		const QString path = *static_cast<QString*>(context) + '/' + QString::fromStdWString(file_path);
-		const auto hr = LoadFromDDSFile(PREPARE_PATH_LIBBSARCH(path), DirectX::DDS_FLAGS_NONE, &info, *image);
+		auto builder = (TextureArchiveBuilder*)context;
+		const QString qsRootPath = builder->getRootPath();
+		const std::wstring wsRootPath(PREPARE_PATH_LIBBSARCH(qsRootPath));
+		const std::wstring path = wsRootPath + L"\\" + std::wstring(file_path);
+
+		const auto hr = LoadFromDDSFile(path.c_str(), DirectX::DDS_FLAGS_NONE, &info, *image);
 
 		if (FAILED(hr))
 			throw std::runtime_error("Failed to open DDS");

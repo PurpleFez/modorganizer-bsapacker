@@ -58,6 +58,11 @@ namespace BsaPacker
 		return this->m_ArchiveBuilderHelper->getFileCount(this->m_RootDirectory);
 	}
 
+	QString TexturelessArchiveBuilder::getRootPath() const
+	{
+		return this->m_RootDirectory.path();
+	}
+
 	void TexturelessArchiveBuilder::cancel()
 	{
 		this->m_Cancelled = true;

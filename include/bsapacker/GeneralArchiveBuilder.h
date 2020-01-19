@@ -23,6 +23,7 @@ namespace BsaPacker
 		void setShareData(bool value) override;
 		[[nodiscard]] std::unique_ptr<BSArchiveAuto> getArchive() override;
 		[[nodiscard]] uint32_t getFileCount() const override;
+		[[nodiscard]] QString getRootPath() const override;
 
 	public Q_SLOTS:
 		void cancel() override;

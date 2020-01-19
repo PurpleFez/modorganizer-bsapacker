@@ -17,6 +17,7 @@ namespace BsaPacker
 		virtual void setShareData(bool) = 0;
 		[[nodiscard]] virtual std::unique_ptr<BSArchiveAuto> getArchive() = 0;
 		[[nodiscard]] virtual uint32_t getFileCount() const = 0;
+		[[nodiscard]] virtual QString getRootPath() const = 0;
 	};
 }  // namespace BsaPacker
 

@@ -21,6 +21,11 @@ namespace BsaPacker
 		return 0;
 	}
 
+	QString NullArchiveBuilder::getRootPath() const
+	{
+		return QString();
+	}
+
 	void NullArchiveBuilder::cancel()
 	{
 	}
