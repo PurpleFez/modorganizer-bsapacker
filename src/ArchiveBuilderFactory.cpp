@@ -4,11 +4,7 @@
 #include <bsapacker/NullArchiveBuilder.h>
 #include <bsapacker/TextureArchiveBuilder.h>
 #include <bsapacker/TexturelessArchiveBuilder.h>
-
-#include <QMessageBox>
-
 #include "NexusId.h"
-
 
 namespace BsaPacker
 {
