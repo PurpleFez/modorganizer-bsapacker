@@ -3,7 +3,6 @@
 
 #include <bsapacker/IArchiveBuilder.h>
 #include <bsapacker/IArchiveBuilderHelper.h>
-#include <QObject>
 
 namespace BsaPacker
 {
