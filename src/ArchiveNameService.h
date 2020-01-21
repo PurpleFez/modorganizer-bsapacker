@@ -11,7 +11,7 @@ namespace BsaPacker
 	public:
 		ArchiveNameService(const IArchiveExtensionService* archiveExtensionService);
 		~ArchiveNameService() override = default;
-		QString GetArchiveName(bsa_archive_type_e type, const IModDto* modDto) const override;
+		QString GetArchiveFullPath(bsa_archive_type_e type, const IModDto* modDto) const override;
 	private:
 		const IArchiveExtensionService* m_ArchiveExtensionService = nullptr;
 

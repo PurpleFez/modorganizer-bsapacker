@@ -35,9 +35,9 @@ namespace BsaPacker
 			director.Construct(); // must check if cancelled
 			const std::unique_ptr<BSArchiveAuto> archive = builder->getArchive();
 			if (archive) {
-				const QString& archiveName = this->m_ArchiveNameService->GetArchiveName(type, modDto.get());
-				this->m_ArchiveAutoService->CreateBSA(archive.get(), archiveName, type);
-				QMessageBox::information(nullptr, "", "Created " + archiveName);
+				const QString& archiveFullPath = this->m_ArchiveNameService->GetArchiveFullPath(type, modDto.get());
+				this->m_ArchiveAutoService->CreateBSA(archive.get(), archiveFullPath, type);
+				QMessageBox::information(nullptr, "", QObject::tr("Created") + " \"" + archiveFullPath + "\"");
 			}
 		}
 		const std::unique_ptr<IDummyPluginService> pluginService = this->m_DummyPluginServiceFactory->Create();

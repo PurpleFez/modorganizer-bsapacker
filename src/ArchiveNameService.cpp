@@ -7,9 +7,9 @@ namespace BsaPacker
 	{
 	}
 
-	QString ArchiveNameService::GetArchiveName(bsa_archive_type_e type, const IModDto* modDto) const
+	QString ArchiveNameService::GetArchiveFullPath(bsa_archive_type_e type, const IModDto* modDto) const
 	{
-		return modDto->ModName() + this->Infix(type) + this->m_ArchiveExtensionService->GetFileExtension();
+		return modDto->Directory() + '/' + modDto->ModName() + this->Infix(type) + this->m_ArchiveExtensionService->GetFileExtension();
 	}
 
 	QString ArchiveNameService::Infix(bsa_archive_type_e type) const
