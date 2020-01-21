@@ -67,5 +67,10 @@
         <source>Specify a semi-colon seperated list of file extensions to ignore when packing.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="BsaPackerWorker.cpp" line="40"/>
+        <source>Created</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
