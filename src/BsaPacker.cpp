@@ -5,6 +5,7 @@
 #include <bsapacker/ArchiveBuilderHelper.h>
 #include <bsapacker/ArchiveBuilderFactory.h>
 #include "ArchiveExtensionService.h"
+#include <ArchiveNameService.h>
 #include "BsaPackerWorker.h"
 #include "DummyPluginLogic.h"
 #include "DummyPluginServiceFactory.h"
@@ -16,7 +17,6 @@
 #include <bsapacker/ModDtoFactory.h>
 #include <QMessageBox>
 #include <iplugingame.h>
-
 
 #include <boost/di.hpp>
 namespace di = boost::di;
@@ -92,7 +92,9 @@ namespace BsaPacker
 			di::bind<IFileWriterService>.to<FileWriterService>(),
 			di::bind<IArchiveExtensionService>.to<ArchiveExtensionService>(),
 			di::bind<IDummyPluginLogic>.to<DummyPluginLogic>(),
-			di::bind<IHideLooseAssetService>.to<HideLooseAssetService>()
+			di::bind<IHideLooseAssetService>.to<HideLooseAssetService>(),
+			// merge ArchiveExtensionService and ArchiveNameService
+			di::bind<IArchiveNameService>.to<ArchiveNameService>()
 		);
 
 		BsaPackerWorker worker = di::create<BsaPackerWorker>(injector);
