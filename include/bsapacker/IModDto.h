@@ -9,7 +9,6 @@ namespace BsaPacker
 	{
 	public:
 		virtual ~IModDto() = default;
-		[[nodiscard]] virtual QString AbsolutePath() const = 0;
 		[[nodiscard]] virtual QString ArchiveExtension() const  = 0;
 		[[nodiscard]] virtual QString ArchiveName() const = 0;
 		[[nodiscard]] virtual QString Directory() const = 0;

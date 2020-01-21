@@ -9,7 +9,6 @@ namespace BsaPacker
 	class NullModDto : public IModDto
 	{
 	public:
-		[[nodiscard]] QString AbsolutePath() const override;
 		[[nodiscard]] QString ArchiveExtension() const override;
 		[[nodiscard]] QString ArchiveName() const override;
 		[[nodiscard]] QString Directory() const override;

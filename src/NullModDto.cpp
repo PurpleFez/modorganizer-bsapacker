@@ -2,11 +2,6 @@
 
 namespace BsaPacker
 {
-	QString NullModDto::AbsolutePath() const
-	{
-		return QString();
-	}
-
 	QString NullModDto::ArchiveExtension() const
 	{
 		return QString();
@@ -32,4 +27,3 @@ namespace BsaPacker
 		return 0;
 	}
 } // namespace BsaPacker
-

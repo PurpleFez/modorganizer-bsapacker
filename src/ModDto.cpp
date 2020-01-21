@@ -16,11 +16,6 @@ namespace BsaPacker
 	{
 	}
 
-	QString ModDto::AbsolutePath() const
-	{
-		return  this->m_Path.path() + '/' + this->m_ArchiveName + this->m_ArchiveExtension;
-	}
-
 	QString ModDto::ArchiveExtension() const
 	{
 		return this->m_ArchiveExtension;
