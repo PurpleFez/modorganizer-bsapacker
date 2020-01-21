@@ -37,6 +37,7 @@ add_library(${PROJ_NAME} SHARED
 	include/bsapacker/IArchiveBuilderFactory.h
 	include/bsapacker/IArchiveBuilderHelper.h
 	include/bsapacker/IArchiveExtensionService.h
+	include/bsapacker/IArchiveNameService.h
 	include/bsapacker/IDummyPluginLogic.h
 	include/bsapacker/IDummyPluginService.h
 	include/bsapacker/IDummyPluginServiceFactory.h
@@ -63,6 +64,7 @@ add_library(${PROJ_NAME} SHARED
 	src/ArchiveBuilderFactory.cpp
 	src/ArchiveBuilderHelper.cpp
 	src/ArchiveExtensionService.cpp
+	src/ArchiveNameService.cpp
 	src/BsaPacker.cpp
 	src/BSArchive.cpp
 	src/BSArchiveAuto.cpp
