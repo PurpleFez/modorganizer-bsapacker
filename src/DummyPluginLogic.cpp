@@ -54,4 +54,3 @@ namespace BsaPacker
 		return true;
 	}
 }
-
