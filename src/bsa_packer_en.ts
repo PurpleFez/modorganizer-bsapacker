@@ -18,17 +18,17 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="ModDtoFactory.cpp" line="50"/>
+        <location filename="ModDtoFactory.cpp" line="49"/>
         <source>Archive name (no file extension):</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ModDtoFactory.cpp" line="73"/>
+        <location filename="ModDtoFactory.cpp" line="72"/>
         <source>File &quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ModDtoFactory.cpp" line="73"/>
+        <location filename="ModDtoFactory.cpp" line="72"/>
         <source>&quot; already exists. Overwrite?</source>
         <translation type="unfinished"></translation>
     </message>
