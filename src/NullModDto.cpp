@@ -17,7 +17,7 @@ namespace BsaPacker
 		return QString();
 	}
 
-	QString BsaPacker::NullModDto::ModName() const
+	QString NullModDto::ModForename() const
 	{
 		return QString();
 	}

@@ -12,7 +12,7 @@ namespace BsaPacker
 		[[nodiscard]] virtual QString ArchiveExtension() const  = 0;
 		[[nodiscard]] virtual QString ArchiveName() const = 0;
 		[[nodiscard]] virtual QString Directory() const = 0;
-		[[nodiscard]] virtual QString ModName() const = 0;
+		[[nodiscard]] virtual QString ModForename() const = 0;
 		[[nodiscard]] virtual int NexusId() const = 0;
 	};
 } // namespace BsaPacker

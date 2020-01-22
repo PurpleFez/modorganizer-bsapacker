@@ -31,7 +31,7 @@ namespace BsaPacker
 		return this->m_Path.path();
 	}
 
-	QString ModDto::ModName() const
+	QString ModDto::ModForename() const
 	{
 		return this->m_Path.dirName();
 	}
