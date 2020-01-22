@@ -4,7 +4,6 @@
 #include <bsapacker/ArchiveBuildDirector.h>
 #include <bsapacker/ArchiveBuilderHelper.h>
 #include <bsapacker/ArchiveBuilderFactory.h>
-#include "ArchiveExtensionService.h"
 #include <ArchiveNameService.h>
 #include "BsaPackerWorker.h"
 #include "DummyPluginLogic.h"
@@ -48,14 +47,11 @@ namespace BsaPacker
 
 	MOBase::VersionInfo Bsa_Packer::version() const
 	{
-		return MOBase::VersionInfo(1, 0, 1, MOBase::VersionInfo::RELEASE_FINAL);
+		return MOBase::VersionInfo(1, 0, 2, MOBase::VersionInfo::RELEASE_FINAL);
 	}
 
 	bool Bsa_Packer::isActive() const
 	{
-		if (this->m_Organizer->managedGame()->gameShortName() == "Fallout4") {
-			return false;
-		}
 		return this->m_SettingsService->GetPluginSetting(SettingsService::SETTING_ENABLED).toBool();
 	}
 
@@ -90,11 +86,9 @@ namespace BsaPacker
 			di::bind<IArchiveAutoService>.to<ArchiveAutoService>(),
 			di::bind<IDummyPluginServiceFactory>.to<DummyPluginServiceFactory>(),
 			di::bind<IFileWriterService>.to<FileWriterService>(),
-			di::bind<IArchiveExtensionService>.to<ArchiveExtensionService>(),
+			di::bind<IArchiveNameService>.to<ArchiveNameService>(),
 			di::bind<IDummyPluginLogic>.to<DummyPluginLogic>(),
-			di::bind<IHideLooseAssetService>.to<HideLooseAssetService>(),
-			// merge ArchiveExtensionService and ArchiveNameService
-			di::bind<IArchiveNameService>.to<ArchiveNameService>()
+			di::bind<IHideLooseAssetService>.to<HideLooseAssetService>()
 		);
 
 		BsaPackerWorker worker = di::create<BsaPackerWorker>(injector);

@@ -1,18 +1,37 @@
 #include "ArchiveNameService.h"
 
+#include "NexusId.h"
+
 namespace BsaPacker
 {
-	ArchiveNameService::ArchiveNameService(const IArchiveExtensionService* archiveExtensionService)
-		: m_ArchiveExtensionService(archiveExtensionService)
+	ArchiveNameService::ArchiveNameService(const IModContext* modContext)
+		: m_ModContext(modContext)
 	{
 	}
 
-	QString ArchiveNameService::GetArchiveFullPath(bsa_archive_type_e type, const IModDto* modDto) const
+	QString ArchiveNameService::GetFileExtension() const
 	{
-		return modDto->Directory() + '/' + modDto->ModName() + this->Infix(type) + this->m_ArchiveExtensionService->GetFileExtension();
+		switch (this->m_ModContext->GetNexusId()) {
+		case NexusId::Morrowind:
+		case NexusId::Oblivion:
+		case NexusId::Fallout3:
+		case NexusId::NewVegas:
+		case NexusId::Skyrim:
+		case NexusId::SkyrimSE:
+			return QStringLiteral(".bsa");
+		case NexusId::Fallout4:
+			return QStringLiteral(".ba2");
+		default:
+			return QString();
+		}
 	}
 
-	QString ArchiveNameService::Infix(bsa_archive_type_e type) const
+	QString ArchiveNameService::GetArchiveFullPath(const bsa_archive_type_e type, const IModDto* modDto) const
+	{
+		return modDto->Directory() + '/' + modDto->ModForename() + this->Infix(type) + this->GetFileExtension();
+	}
+
+	QString ArchiveNameService::Infix(const bsa_archive_type_e type) const
 	{
 		switch (type) {
 		case baFO4:
