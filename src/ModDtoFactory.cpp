@@ -13,7 +13,6 @@ namespace BsaPacker
 	ModDtoFactory::ModDtoFactory(const IModContext* modContext)
 		: m_ModContext(modContext)
 	{
-
 	}
 
 	std::unique_ptr<IModDto> ModDtoFactory::Create() const

@@ -3,26 +3,25 @@
 #include <QMessageBox>
 
 #include <bsapacker/ArchiveBuildDirector.h>
-#include <bsapacker/IModDto.h>
 #include <bsapacker/ModDtoFactory.h>
-
-#include <QtConcurrent>
 
 namespace BsaPacker
 {
 	BsaPackerWorker::BsaPackerWorker(
-			const ISettingsService* settingsService,
-			const IModDtoFactory* modDtoFactory,
-			const IArchiveBuilderFactory* archiveBuilderFactory,
-			const IArchiveAutoService* archiveAutoService,
-			const IDummyPluginServiceFactory* dummyPluginServiceFactory,
-			const IHideLooseAssetService* hideLooseAssetService)
-		: m_SettingsService(settingsService),
-		  m_ModDtoFactory(modDtoFactory),
-		  m_ArchiveBuilderFactory(archiveBuilderFactory),
-		  m_ArchiveAutoService(archiveAutoService),
-		  m_DummyPluginServiceFactory(dummyPluginServiceFactory),
-		  m_HideLooseAssetService(hideLooseAssetService)
+		const ISettingsService* settingsService,
+		const IModDtoFactory* modDtoFactory,
+		const IArchiveBuilderFactory* archiveBuilderFactory,
+		const IArchiveAutoService* archiveAutoService,
+		const IDummyPluginServiceFactory* dummyPluginServiceFactory,
+		const IHideLooseAssetService* hideLooseAssetService,
+		const IArchiveNameService* archiveNameService) :
+		m_SettingsService(settingsService),
+		m_ModDtoFactory(modDtoFactory),
+		m_ArchiveBuilderFactory(archiveBuilderFactory),
+		m_ArchiveAutoService(archiveAutoService),
+		m_DummyPluginServiceFactory(dummyPluginServiceFactory),
+		m_HideLooseAssetService(hideLooseAssetService),
+		m_ArchiveNameService(archiveNameService)
 	{
 	}
 
@@ -36,18 +35,16 @@ namespace BsaPacker
 			director.Construct(); // must check if cancelled
 			const std::unique_ptr<BSArchiveAuto> archive = builder->getArchive();
 			if (archive) {
-				const QString& archiveName = modDto->AbsolutePath();
-				this->m_ArchiveAutoService->CreateBSA(archive.get(), archiveName, type);
-				QMessageBox::information(nullptr, "","Created " + archiveName);
+				const QString& archiveFullPath = this->m_ArchiveNameService->GetArchiveFullPath(type, modDto.get());
+				this->m_ArchiveAutoService->CreateBSA(archive.get(), archiveFullPath, type);
+				QMessageBox::information(nullptr, "", QObject::tr("Created") + " \"" + archiveFullPath + "\"");
 			}
 		}
 		const std::unique_ptr<IDummyPluginService> pluginService = this->m_DummyPluginServiceFactory->Create();
 		pluginService->CreatePlugin(modDto->Directory(), modDto->ArchiveName());
-		
+
 		if (!modDto->Directory().isEmpty()) {
 			this->m_HideLooseAssetService->HideLooseAssets(modDto->Directory());
 		}
 	}
 }
-
-

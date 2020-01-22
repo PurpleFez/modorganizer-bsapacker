@@ -5,9 +5,6 @@
 #include <bsapacker/IModContext.h>
 #include <bsapacker/ISettingsService.h>
 
-#include <boost/di.hpp>
-#include <boost/di/extension/injections/factory.hpp>
-
 namespace BsaPacker
 {
 	class Bsa_Packer : public MOBase::IPluginTool

@@ -8,9 +8,9 @@ namespace BsaPacker
 {
 	DummyPluginLogic::DummyPluginLogic(
 			const ISettingsService* settingsService,
-			const IArchiveExtensionService* archiveExtensionService)
+			const IArchiveNameService* archiveNameService)
 		: m_SettingsService(settingsService),
-		  m_ArchiveExtensionService(archiveExtensionService)
+		  m_ArchiveNameService(archiveNameService)
 	{
 	}
 
@@ -37,7 +37,7 @@ namespace BsaPacker
 	bool DummyPluginLogic::canCreateDummy(const std::array<QString, SIZE>& fileList,
 										  const QString& fileNameNoExtension) const
 	{
-		const QFileInfo& archive(fileNameNoExtension + this->m_ArchiveExtensionService->GetFileExtension());
+		const QFileInfo& archive(fileNameNoExtension + this->m_ArchiveNameService->GetFileExtension());
 		if (!(archive.exists() && archive.isFile())) {
 			return false;
 		}
@@ -54,4 +54,3 @@ namespace BsaPacker
 		return true;
 	}
 }
-

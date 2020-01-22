@@ -1,14 +1,8 @@
 #include <bsapacker/GeneralArchiveBuilder.h>
 
 #include <bsapacker/ArchiveBuilderHelper.h>
-
-#include <array>
-#include <QDir>
 #include <QDirIterator>
-#include <QStringList>
-#include <QtConcurrent/QtConcurrentMap>
 #include <QApplication>
-#include <QMessageBox>
 
 namespace BsaPacker
 {
@@ -62,6 +56,11 @@ namespace BsaPacker
 	uint32_t GeneralArchiveBuilder::getFileCount() const
 	{
 		return this->m_ArchiveBuilderHelper->getFileCount(this->m_RootDirectory);
+	}
+
+	QString GeneralArchiveBuilder::getRootPath() const
+	{
+		return this->m_RootDirectory.path();
 	}
 
 	void GeneralArchiveBuilder::cancel()

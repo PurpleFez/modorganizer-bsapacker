@@ -9,11 +9,10 @@ namespace BsaPacker
 	class NullModDto : public IModDto
 	{
 	public:
-		[[nodiscard]] QString AbsolutePath() const override;
 		[[nodiscard]] QString ArchiveExtension() const override;
 		[[nodiscard]] QString ArchiveName() const override;
 		[[nodiscard]] QString Directory() const override;
-		[[nodiscard]] QString ModName() const override;
+		[[nodiscard]] QString ModForename() const override;
 		[[nodiscard]] int NexusId() const override;
 	};
 } // namespace BsaPacker

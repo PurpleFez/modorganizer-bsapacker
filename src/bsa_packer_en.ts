@@ -4,13 +4,13 @@
 <context>
     <name>BsaPacker::Bsa_Packer</name>
     <message>
-        <location filename="BsaPacker.cpp" line="47"/>
-        <location filename="BsaPacker.cpp" line="70"/>
+        <location filename="BsaPacker.cpp" line="45"/>
+        <location filename="BsaPacker.cpp" line="65"/>
         <source>Transform loose files into a Bethesda Softworks Archive file (.bsa/.ba2).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="BsaPacker.cpp" line="80"/>
+        <location filename="BsaPacker.cpp" line="75"/>
         <source>BSA Packer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -18,17 +18,17 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="ModDtoFactory.cpp" line="50"/>
+        <location filename="ModDtoFactory.cpp" line="49"/>
         <source>Archive name (no file extension):</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ModDtoFactory.cpp" line="73"/>
+        <location filename="ModDtoFactory.cpp" line="72"/>
         <source>File &quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ModDtoFactory.cpp" line="73"/>
+        <location filename="ModDtoFactory.cpp" line="72"/>
         <source>&quot; already exists. Overwrite?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -65,6 +65,11 @@
     <message>
         <location filename="SettingsService.cpp" line="15"/>
         <source>Specify a semi-colon seperated list of file extensions to ignore when packing.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="BsaPackerWorker.cpp" line="40"/>
+        <source>Created</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
