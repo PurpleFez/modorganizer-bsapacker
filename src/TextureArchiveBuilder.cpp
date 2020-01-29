@@ -7,11 +7,11 @@
 
 namespace BsaPacker
 {
-	TextureArchiveBuilder::TextureArchiveBuilder(const IArchiveBuilderHelper* archiveBuilderHelper, const QDir& rootDir)
+	TextureArchiveBuilder::TextureArchiveBuilder(const IArchiveBuilderHelper* archiveBuilderHelper, const QDir& rootDir, const bsa_archive_type_t type)
 		: m_ArchiveBuilderHelper(archiveBuilderHelper), m_RootDirectory(rootDir)
 	{
 		this->m_Cancelled = false;
-		this->m_Archive = std::make_unique<BSArchiveAuto>(this->m_RootDirectory.path());
+		this->m_Archive = std::make_unique<libbsarch::bs_archive_auto>(type);
 	}
 
 	uint32_t TextureArchiveBuilder::setFiles()
@@ -38,19 +38,23 @@ namespace BsaPacker
 			}
 
 			this->m_ArchiveBuilderHelper->isIncompressible(filepath) ? ++incompressibleFiles : ++compressibleFiles;
-			this->m_Archive->addFileFromDiskRoot(filepath);
+
+			const std::string root = this->m_RootDirectory.absolutePath().toStdString();
+			const std::string file = filepath.toStdString();
+			libbsarch::disk_blob blob(root, file);
+			this->m_Archive->add_file_from_disk(blob);
 		}
-		this->m_Archive->setCompressed(true);
-		this->m_Archive->setDDSCallback(TextureArchiveBuilder::DDSCallback, (void*)this);
+		this->m_Archive->set_compressed(true);
+		this->m_Archive->set_dds_callback(TextureArchiveBuilder::DDSCallback, (void*)this);
 		return incompressibleFiles + compressibleFiles;
 	}
 
 	void TextureArchiveBuilder::setShareData(const bool value)
 	{
-		this->m_Archive->setShareData(value);
+		this->m_Archive->set_share_data(value);
 	}
 
-	std::unique_ptr<BSArchiveAuto> TextureArchiveBuilder::getArchive()
+	std::unique_ptr<libbsarch::bs_archive_auto> TextureArchiveBuilder::getArchive()
 	{
 		return std::move(this->m_Archive);
 	}
@@ -77,10 +81,9 @@ namespace BsaPacker
 
 		auto builder = (TextureArchiveBuilder*)context;
 		const QString qsRootPath = builder->getRootPath();
-		const std::wstring wsRootPath(PREPARE_PATH_LIBBSARCH(qsRootPath));
-		const std::wstring path = wsRootPath + L"\\" + std::wstring(file_path);
+		libbsarch::convertible_string path = qsRootPath.toStdWString() + L"\\" + std::wstring(file_path);
 
-		const auto hr = LoadFromDDSFile(path.c_str(), DirectX::DDS_FLAGS_NONE, &info, *image);
+		const auto hr = LoadFromDDSFile(path, DirectX::DDS_FLAGS_NONE, &info, *image);
 
 		if (FAILED(hr))
 			throw std::runtime_error("Failed to open DDS");

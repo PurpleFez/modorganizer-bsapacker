@@ -1,9 +1,7 @@
 #ifndef ARCHIVEAUTOSERVICE_H
 #define ARCHIVEAUTOSERVICE_H
 
-#include <bsapacker/IModDto.h>
 #include <bsapacker/IArchiveAutoService.h>
-#include <qlibbsarch/BSArchiveAuto.h>
 
 namespace BsaPacker
 {
@@ -17,7 +15,7 @@ namespace BsaPacker
 		ArchiveAutoService(ArchiveAutoService&&) = default;
 		ArchiveAutoService& operator=(ArchiveAutoService&&) = default;
 
-		void CreateBSA(BSArchiveAuto* archive, const QString& archiveName, bsa_archive_type_e type) const override;
+		void CreateBSA(libbsarch::bs_archive_auto* archive, const QString& archiveName) const override;
 	};
 } // namespace BsaPacker
 

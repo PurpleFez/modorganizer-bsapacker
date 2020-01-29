@@ -33,10 +33,10 @@ namespace BsaPacker
 			const std::unique_ptr<IArchiveBuilder> builder = this->m_ArchiveBuilderFactory->Create(type, modDto.get());
 			ArchiveBuildDirector director(this->m_SettingsService, builder.get());
 			director.Construct(); // must check if cancelled
-			const std::unique_ptr<BSArchiveAuto> archive = builder->getArchive();
+			const std::unique_ptr<libbsarch::bs_archive_auto> archive = builder->getArchive();
 			if (archive) {
 				const QString& archiveFullPath = this->m_ArchiveNameService->GetArchiveFullPath(type, modDto.get());
-				this->m_ArchiveAutoService->CreateBSA(archive.get(), archiveFullPath, type);
+				this->m_ArchiveAutoService->CreateBSA(archive.get(), archiveFullPath);
 				QMessageBox::information(nullptr, "", QObject::tr("Created") + " \"" + archiveFullPath + "\"");
 			}
 		}

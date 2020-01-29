@@ -33,18 +33,18 @@ namespace BsaPacker
 		}
 	}
 
-	std::unique_ptr<IArchiveBuilder> ArchiveBuilderFactory::Create(const bsa_archive_type_e archiveType, const IModDto* modDto) const
+	std::unique_ptr<IArchiveBuilder> ArchiveBuilderFactory::Create(const bsa_archive_type_t archiveType, const IModDto* modDto) const
 	{
 		switch (archiveType) {
 			case baTES3:
 			case baTES4:
 			case baFO3:
 			case baSSE:
-				return std::make_unique<GeneralArchiveBuilder>(this->m_ArchiveBuilderHelper, modDto->Directory());
+				return std::make_unique<GeneralArchiveBuilder>(this->m_ArchiveBuilderHelper, modDto->Directory(), archiveType);
 			case baFO4:
-				return std::make_unique<TexturelessArchiveBuilder>(this->m_ArchiveBuilderHelper, modDto->Directory());
+				return std::make_unique<TexturelessArchiveBuilder>(this->m_ArchiveBuilderHelper, modDto->Directory(), archiveType);
 			case baFO4dds:
-				return std::make_unique<TextureArchiveBuilder>(this->m_ArchiveBuilderHelper, modDto->Directory());
+				return std::make_unique<TextureArchiveBuilder>(this->m_ArchiveBuilderHelper, modDto->Directory(), archiveType);
 			case baNone:
 			default:
 				return std::make_unique<NullArchiveBuilder>();

@@ -3,15 +3,8 @@
 
 #include <bsapacker/IArchiveBuilderHelper.h>
 #include <bsapacker/ISettingsService.h>
-#include <qlibbsarch/BSArchiveAuto.h>
-
 #include <array>
 #include <cstdint>
-#include <QDir>
-#include <QObject>
-#include <QProgressBar>
-#include <QString>
-#include <QStringList>
 
 namespace BsaPacker
 {
