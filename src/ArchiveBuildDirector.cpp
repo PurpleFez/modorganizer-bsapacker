@@ -5,10 +5,8 @@
 namespace BsaPacker
 {
 	ArchiveBuildDirector::ArchiveBuildDirector(
-			const ISettingsService* settingsService,
 			IArchiveBuilder* archiveFileBuildService)
-		: m_ArchiveFileBuildService(archiveFileBuildService),
-		  m_SettingsService(settingsService)
+		: m_ArchiveFileBuildService(archiveFileBuildService)
 	{
 	}
 

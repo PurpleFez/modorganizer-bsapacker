@@ -1,7 +1,6 @@
 #include "DummyPluginLogic.h"
 
 #include <QFileInfo>
-#include <array>
 #include "SettingsService.h"
 
 namespace BsaPacker
