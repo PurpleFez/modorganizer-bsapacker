@@ -44,6 +44,7 @@ add_library(${PROJ_NAME} SHARED
 	include/bsapacker/IFileWriterService.h
 	include/bsapacker/IHideLooseAssetService.h
 	include/bsapacker/IModDtoFactory.h
+	include/bsapacker/IModDtoProcessService.h
 	include/bsapacker/IPackerDialog.h
 	include/bsapacker/IPackerDialogFactory.h
 	include/bsapacker/ISettingsService.h
@@ -54,9 +55,10 @@ add_library(${PROJ_NAME} SHARED
 	include/bsapacker/TextureArchiveBuilder.h
 	include/bsapacker/TexturelessArchiveBuilder.h
 
-	src/NexusId.h
 	src/BsaPackerWorker.h
 	src/BsaPackerWorker.cpp
+	src/ModDtoProcessService.h
+	src/NexusId.h
 
 	src/ArchiveAutoService.cpp
 	src/ArchiveBuildDirector.cpp
@@ -74,6 +76,7 @@ add_library(${PROJ_NAME} SHARED
 	src/ModContext.cpp
 	src/ModDto.cpp
 	src/ModDtoFactory.cpp
+	src/ModDtoProcessService.cpp
 	src/NewVegasDummyPluginService.cpp
 	src/NullArchiveBuilder.cpp
 	src/NullDummyPluginService.cpp
@@ -103,7 +106,7 @@ target_include_directories(${PROJ_NAME}
 	PRIVATE
 		${BOOST_DI_ROOT}/include
 		${BOOST_DI_ROOT}/extension/include
-		${LIBBSARCH_ROOT}/src
+		${LIBBSARCH_ROOT}
 		${Boost_INCLUDE_DIRS}
 		${CMAKE_CURRENT_SOURCE_DIR}/src
 		${default_project_path}/uibase/src
@@ -115,7 +118,7 @@ target_link_directories(${PROJ_NAME}
 		$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/lib>
 		${Boost_LIBRARY_DIRS}
 	PRIVATE
-		${LIBBSARCH_ROOT}/build/x64-Release/RelWithDebInfo)
+		${LIBBSARCH_ROOT})
 
 message("Default path is: ${default_project_path}")
 message("Project path is: ${project_path}")
