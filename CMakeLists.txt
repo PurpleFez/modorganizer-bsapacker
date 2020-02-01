@@ -13,15 +13,10 @@ list(APPEND CMAKE_PREFIX_PATH ${QT_ROOT}/lib/cmake)
 
 list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_SOURCE_DIR}/cmake)
 
-
-# pasted
-
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
-find_package(Qt5 COMPONENTS Core Concurrent Widgets REQUIRED)
-
-find_package(Qt5LinguistTools)
+find_package(Qt5 COMPONENTS Core Concurrent LinguistTools Widgets REQUIRED)
 qt5_create_translation(${PROJ_NAME}_translations_qm ${CMAKE_SOURCE_DIR}/src ${CMAKE_SOURCE_DIR}/src/${PROJ_NAME}_en.ts)
 
 set(Boost_USE_STATIC_LIBS ON)
@@ -41,7 +36,7 @@ add_library(${PROJ_NAME} SHARED
 	include/bsapacker/IArchiveBuilder.h
 	include/bsapacker/IArchiveBuilderFactory.h
 	include/bsapacker/IArchiveBuilderHelper.h
-	include/bsapacker/IArchiveExtensionService.h
+	include/bsapacker/IArchiveNameService.h
 	include/bsapacker/IDummyPluginLogic.h
 	include/bsapacker/IDummyPluginService.h
 	include/bsapacker/IDummyPluginServiceFactory.h
@@ -49,6 +44,7 @@ add_library(${PROJ_NAME} SHARED
 	include/bsapacker/IFileWriterService.h
 	include/bsapacker/IHideLooseAssetService.h
 	include/bsapacker/IModDtoFactory.h
+	include/bsapacker/IModDtoProcessService.h
 	include/bsapacker/IPackerDialog.h
 	include/bsapacker/IPackerDialogFactory.h
 	include/bsapacker/ISettingsService.h
@@ -59,19 +55,17 @@ add_library(${PROJ_NAME} SHARED
 	include/bsapacker/TextureArchiveBuilder.h
 	include/bsapacker/TexturelessArchiveBuilder.h
 
-	src/NexusId.h
 	src/BsaPackerWorker.h
 	src/BsaPackerWorker.cpp
+	src/ModDtoProcessService.h
+	src/NexusId.h
 
 	src/ArchiveAutoService.cpp
 	src/ArchiveBuildDirector.cpp
 	src/ArchiveBuilderFactory.cpp
 	src/ArchiveBuilderHelper.cpp
-	src/ArchiveExtensionService.cpp
+	src/ArchiveNameService.cpp
 	src/BsaPacker.cpp
-	src/BSArchive.cpp
-	src/BSArchiveAuto.cpp
-	src/BSArchiveEntries.cpp
 	src/DummyPluginLogic.cpp
 	src/DummyPluginServiceFactory.cpp
 	src/Fallout3DummyPluginService.cpp
@@ -82,6 +76,7 @@ add_library(${PROJ_NAME} SHARED
 	src/ModContext.cpp
 	src/ModDto.cpp
 	src/ModDtoFactory.cpp
+	src/ModDtoProcessService.cpp
 	src/NewVegasDummyPluginService.cpp
 	src/NullArchiveBuilder.cpp
 	src/NullDummyPluginService.cpp
@@ -106,24 +101,24 @@ target_compile_options(${PROJ_NAME} PRIVATE $<$<CXX_COMPILER_ID:GNU>:-Wall>)
 
 target_include_directories(${PROJ_NAME}
 	PUBLIC
-	    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 		$<INSTALL_INTERFACE:include>
 	PRIVATE
-	    ${BOOST_DI_ROOT}/include
-	    ${BOOST_DI_ROOT}/extension/include
-	    ${LIBBSARCH_ROOT}
-	    ${Boost_INCLUDE_DIRS}
+		${BOOST_DI_ROOT}/include
+		${BOOST_DI_ROOT}/extension/include
+		${LIBBSARCH_ROOT}
+		${Boost_INCLUDE_DIRS}
 		${CMAKE_CURRENT_SOURCE_DIR}/src
 		${default_project_path}/uibase/src
 )
 
 target_link_directories(${PROJ_NAME}
 	PUBLIC
-	    ${lib_path}
+		${lib_path}
 		$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/lib>
 		${Boost_LIBRARY_DIRS}
-    PRIVATE
-        ${LIBBSARCH_ROOT})
+	PRIVATE
+		${LIBBSARCH_ROOT})
 
 message("Default path is: ${default_project_path}")
 message("Project path is: ${project_path}")
@@ -132,12 +127,13 @@ message("packer path is ${CMAKE_SOURCE_DIR}/include/bsapacker")
 
 target_link_libraries(${PROJ_NAME}
 	PUBLIC
-	    Qt5::Widgets
+		Qt5::Widgets
 		Qt5::Concurrent
 		Qt5::Gui
 		${Boost_LIBRARIES}
 		uibase
 		libbsarch
+		libbsarch_OOP
 		DirectXTex
 )
 

@@ -24,6 +24,6 @@ namespace BsaPacker
 	};
 } // namespace BsaPacker
 
-Q_DECLARE_INTERFACE(BsaPacker::IPackerDialog, "com.MattyFez.BSA_Packer/1.0")
+Q_DECLARE_INTERFACE(BsaPacker::IPackerDialog, "com.PurpleFez.BSA_Packer/1.0")
 
 #endif // IPACKERDIALOG_H

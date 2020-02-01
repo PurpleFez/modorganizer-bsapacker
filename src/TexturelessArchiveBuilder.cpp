@@ -2,14 +2,15 @@
 
 #include <bsapacker/ArchiveBuilderHelper.h>
 #include <QDirIterator>
+#include <QApplication>
 
 namespace BsaPacker
 {
-	TexturelessArchiveBuilder::TexturelessArchiveBuilder(const IArchiveBuilderHelper* archiveBuilderHelper, const QDir& rootDir)
+	TexturelessArchiveBuilder::TexturelessArchiveBuilder(const IArchiveBuilderHelper* archiveBuilderHelper, const QDir& rootDir, const bsa_archive_type_t type)
 		: m_ArchiveBuilderHelper(archiveBuilderHelper), m_RootDirectory(rootDir)
 	{
 		this->m_Cancelled = false;
-		this->m_Archive = std::make_unique<BSArchiveAuto>(this->m_RootDirectory.path());
+		this->m_Archive = std::make_unique<libbsarch::bs_archive_auto>(type);
 	}
 
 	uint32_t TexturelessArchiveBuilder::setFiles()
@@ -20,31 +21,38 @@ namespace BsaPacker
 		const QStringList& rootDirFilenames = this->m_ArchiveBuilderHelper->getRootDirectoryFilenames(this->m_RootDirectory);
 		QDirIterator iterator(this->m_RootDirectory, QDirIterator::Subdirectories);
 		while (iterator.hasNext()) {
+			QApplication::processEvents();
+
 			if (this->m_Cancelled) {
+				this->m_Archive.reset();
 				return 0;
 			}
 
 			const QString& filepath = iterator.next();
 			const bool ignored = this->m_ArchiveBuilderHelper->isFileIgnorable(filepath, rootDirFilenames);
 
-			Q_EMIT valueChanged(++count);
-			if (ignored) {
+			Q_EMIT this->valueChanged(++count);
+			if (ignored || filepath.endsWith(".dds", Qt::CaseInsensitive)) {
 				continue;
 			}
 
 			this->m_ArchiveBuilderHelper->isIncompressible(filepath) ? ++incompressibleFiles : ++compressibleFiles;
-			this->m_Archive->addFileFromDiskRoot(filepath);
+
+			const std::string root = this->m_RootDirectory.absolutePath().toStdString();
+			const std::string file = filepath.toStdString();
+			libbsarch::disk_blob blob(root, file);
+			this->m_Archive->add_file_from_disk(blob);
 		}
-		this->m_Archive->setCompressed(!static_cast<bool>(incompressibleFiles));
+		this->m_Archive->set_compressed(!static_cast<bool>(incompressibleFiles));
 		return incompressibleFiles + compressibleFiles;
 	}
 
 	void TexturelessArchiveBuilder::setShareData(const bool value)
 	{
-		this->m_Archive->setShareData(value);
+		this->m_Archive->set_share_data(value);
 	}
 
-	std::unique_ptr<BSArchiveAuto> TexturelessArchiveBuilder::getArchive()
+	std::unique_ptr<libbsarch::bs_archive_auto> TexturelessArchiveBuilder::getArchive()
 	{
 		return std::move(this->m_Archive);
 	}
@@ -52,6 +60,11 @@ namespace BsaPacker
 	uint32_t TexturelessArchiveBuilder::getFileCount() const
 	{
 		return this->m_ArchiveBuilderHelper->getFileCount(this->m_RootDirectory);
+	}
+
+	QString TexturelessArchiveBuilder::getRootPath() const
+	{
+		return this->m_RootDirectory.path();
 	}
 
 	void TexturelessArchiveBuilder::cancel()

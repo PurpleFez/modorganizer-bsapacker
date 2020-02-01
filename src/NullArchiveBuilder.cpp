@@ -11,7 +11,7 @@ namespace BsaPacker
 	{
 	}
 
-	std::unique_ptr<BSArchiveAuto> NullArchiveBuilder::getArchive()
+	std::unique_ptr<libbsarch::bs_archive_auto> NullArchiveBuilder::getArchive()
 	{
 		return nullptr;
 	}
@@ -19,6 +19,11 @@ namespace BsaPacker
 	uint32_t NullArchiveBuilder::getFileCount() const
 	{
 		return 0;
+	}
+
+	QString NullArchiveBuilder::getRootPath() const
+	{
+		return QString();
 	}
 
 	void NullArchiveBuilder::cancel()

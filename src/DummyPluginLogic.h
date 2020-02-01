@@ -3,7 +3,7 @@
 
 #include <bsapacker/IDummyPluginLogic.h>
 #include <bsapacker/ISettingsService.h>
-#include <bsapacker/IArchiveExtensionService.h>
+#include <bsapacker/IArchiveNameService.h>
 
 namespace BsaPacker
 {
@@ -11,7 +11,7 @@ namespace BsaPacker
 	{
 	public:
 		DummyPluginLogic(const ISettingsService* settingsService,
-						 const IArchiveExtensionService* archiveExtensionService);
+						 const IArchiveNameService* archiveNameService);
 		~DummyPluginLogic() override = default;
 		[[nodiscard]] bool canCreateDummyESP(const QString& fileNameNoExtension) const override;
 		[[nodiscard]] bool canCreateDummyESL(const QString& fileNameNoExtension) const override;
@@ -22,7 +22,7 @@ namespace BsaPacker
 							const QString& fileNameNoExtension) const;
 
 		const ISettingsService* m_SettingsService = nullptr;
-		const IArchiveExtensionService* m_ArchiveExtensionService = nullptr;
+		const IArchiveNameService* m_ArchiveNameService = nullptr;
 	};
 }
 

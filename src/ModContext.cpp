@@ -5,6 +5,7 @@
 #include "iplugingame.h"
 #include "imodinterface.h"
 #include "imodlist.h"
+#include "NexusId.h"
 #include <QtConcurrent/QtConcurrentFilter>
 #include <QtConcurrent/QtConcurrentMap>
 
@@ -30,14 +31,14 @@ namespace BsaPacker
 
 	QStringList ModContext::GetPlugins(const QDir& modDirectory) const
 	{
-		const QString extension = QStringLiteral(".bsa");
+		const QString extension = this->GetNexusId() == NexusId::Fallout4 ? ".ba2" : ".bsa";
 		const std::function<QString(QString)> replace_extension = [&](QString fname) {
 			return fname.replace(fname.lastIndexOf('.'), 4, extension);
 		};
 
 		QStringList filenames = QtConcurrent::blockingMapped(modDirectory.entryList(PLUGIN_TYPES, QDir::Files), replace_extension);
 		filenames.removeDuplicates();
-		return filenames << QStringLiteral("<new filename>.bsa");
+		return filenames << QStringLiteral("<new filename>") + extension;
 	}
 
 	QStringList ModContext::GetValidMods() const

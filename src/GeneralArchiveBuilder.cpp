@@ -1,22 +1,16 @@
 #include <bsapacker/GeneralArchiveBuilder.h>
 
 #include <bsapacker/ArchiveBuilderHelper.h>
-
-#include <array>
-#include <QDir>
 #include <QDirIterator>
-#include <QStringList>
-#include <QtConcurrent/QtConcurrentMap>
 #include <QApplication>
-#include <QMessageBox>
 
 namespace BsaPacker
 {
-	GeneralArchiveBuilder::GeneralArchiveBuilder(const IArchiveBuilderHelper* archiveBuilderHelper, const QDir& rootDir)
+	GeneralArchiveBuilder::GeneralArchiveBuilder(const IArchiveBuilderHelper* archiveBuilderHelper, const QDir& rootDir, const bsa_archive_type_t type)
 		: m_ArchiveBuilderHelper(archiveBuilderHelper), m_RootDirectory(rootDir)
 	{
 		this->m_Cancelled = false;
-		this->m_Archive = std::make_unique<BSArchiveAuto>(this->m_RootDirectory.path());
+		this->m_Archive = std::make_unique<libbsarch::bs_archive_auto>(type);
 	}
 
 	uint32_t GeneralArchiveBuilder::setFiles()
@@ -43,18 +37,22 @@ namespace BsaPacker
 			}
 
 			this->m_ArchiveBuilderHelper->isIncompressible(filepath) ? ++incompressibleFiles : ++compressibleFiles;
-			this->m_Archive->addFileFromDiskRoot(filepath);
+			
+			const std::string root = this->m_RootDirectory.absolutePath().toStdString();
+			const std::string file = filepath.toStdString();
+			libbsarch::disk_blob blob(root, file);
+			this->m_Archive->add_file_from_disk(blob);
 		}
-		this->m_Archive->setCompressed(!static_cast<bool>(incompressibleFiles));
+		this->m_Archive->set_compressed(!static_cast<bool>(incompressibleFiles));
 		return incompressibleFiles + compressibleFiles;
 	}
 
 	void GeneralArchiveBuilder::setShareData(const bool value)
 	{
-		this->m_Archive->setShareData(value);
+		this->m_Archive->set_share_data(value);
 	}
 
-	std::unique_ptr<BSArchiveAuto> GeneralArchiveBuilder::getArchive()
+	std::unique_ptr<libbsarch::bs_archive_auto> GeneralArchiveBuilder::getArchive()
 	{
 		return std::move(this->m_Archive);
 	}
@@ -62,6 +60,11 @@ namespace BsaPacker
 	uint32_t GeneralArchiveBuilder::getFileCount() const
 	{
 		return this->m_ArchiveBuilderHelper->getFileCount(this->m_RootDirectory);
+	}
+
+	QString GeneralArchiveBuilder::getRootPath() const
+	{
+		return this->m_RootDirectory.path();
 	}
 
 	void GeneralArchiveBuilder::cancel()

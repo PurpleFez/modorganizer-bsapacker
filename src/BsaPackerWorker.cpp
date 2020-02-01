@@ -3,49 +3,48 @@
 #include <QMessageBox>
 
 #include <bsapacker/ArchiveBuildDirector.h>
-#include <bsapacker/IModDto.h>
 #include <bsapacker/ModDtoFactory.h>
-
-#include <QtConcurrent>
 
 namespace BsaPacker
 {
 	BsaPackerWorker::BsaPackerWorker(
-			const ISettingsService* settingsService,
-			const IModDtoFactory* modDtoFactory,
-			const IArchiveBuilderFactory* archiveBuilderFactory,
-			const IArchiveAutoService* archiveAutoService,
-			const IDummyPluginServiceFactory* dummyPluginServiceFactory,
-			const IHideLooseAssetService* hideLooseAssetService)
-		: m_SettingsService(settingsService),
-		  m_ModDtoFactory(modDtoFactory),
-		  m_ArchiveBuilderFactory(archiveBuilderFactory),
-		  m_ArchiveAutoService(archiveAutoService),
-		  m_DummyPluginServiceFactory(dummyPluginServiceFactory),
-		  m_HideLooseAssetService(hideLooseAssetService)
+		const ISettingsService* settingsService,
+		const IModDtoFactory* modDtoFactory,
+		const IArchiveBuilderFactory* archiveBuilderFactory,
+		const IArchiveAutoService* archiveAutoService,
+		const IDummyPluginServiceFactory* dummyPluginServiceFactory,
+		const IHideLooseAssetService* hideLooseAssetService,
+		const IArchiveNameService* archiveNameService) :
+		m_SettingsService(settingsService),
+		m_ModDtoFactory(modDtoFactory),
+		m_ArchiveBuilderFactory(archiveBuilderFactory),
+		m_ArchiveAutoService(archiveAutoService),
+		m_DummyPluginServiceFactory(dummyPluginServiceFactory),
+		m_HideLooseAssetService(hideLooseAssetService),
+		m_ArchiveNameService(archiveNameService)
 	{
 	}
 
 	void BsaPackerWorker::DoWork() const
 	{
-		const std::unique_ptr<IModDto> modDto = this->m_ModDtoFactory->Create(); // handles PackerDialog and validation, implements Null Object pattern
+		const std::unique_ptr<IModDto> modDto = this->m_ModDtoFactory->Create(); // does GUI stuff
 		const std::vector<bsa_archive_type_e> types = this->m_ArchiveBuilderFactory->GetArchiveTypes(modDto.get());
 		for (auto&& type : types) {
 			const std::unique_ptr<IArchiveBuilder> builder = this->m_ArchiveBuilderFactory->Create(type, modDto.get());
-			ArchiveBuildDirector director(this->m_SettingsService, builder.get());
-			director.Construct(); // must check if cancelled
-			const std::unique_ptr<BSArchiveAuto> archive = builder->getArchive();
+			ArchiveBuildDirector director(builder.get());
+			director.Construct(); // must check if cancelled, does GUI stuff
+			const std::unique_ptr<libbsarch::bs_archive_auto> archive = builder->getArchive();
 			if (archive) {
-				const QString& archiveName = modDto->AbsolutePath();
-				this->m_ArchiveAutoService->CreateBSA(archive.get(), archiveName, type);
-				QMessageBox::information(nullptr, "","Created " + archiveName);
+				const QString& archiveFullPath = this->m_ArchiveNameService->GetArchiveFullPath(type, modDto.get());
+				this->m_ArchiveAutoService->CreateBSA(archive.get(), archiveFullPath); // needs threading
+				QMessageBox::information(nullptr, "", QObject::tr("Created") + " \"" + archiveFullPath + "\"");
 			}
 		}
 		const std::unique_ptr<IDummyPluginService> pluginService = this->m_DummyPluginServiceFactory->Create();
 		pluginService->CreatePlugin(modDto->Directory(), modDto->ArchiveName());
 
-		this->m_HideLooseAssetService->HideLooseAssets(modDto->Directory());
+		if (!modDto->Directory().isEmpty()) {
+			this->m_HideLooseAssetService->HideLooseAssets(modDto->Directory());
+		}
 	}
 }
-
-
