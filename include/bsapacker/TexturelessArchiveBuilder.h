@@ -14,6 +14,10 @@ namespace BsaPacker
 	public:
 		explicit TexturelessArchiveBuilder(const IArchiveBuilderHelper* archiveBuilderHelper, const QDir& rootDir, const bsa_archive_type_t);
 		~TexturelessArchiveBuilder() override = default;
+		TexturelessArchiveBuilder(const TexturelessArchiveBuilder&) = delete;
+		TexturelessArchiveBuilder& operator=(const TexturelessArchiveBuilder&) = delete;
+		TexturelessArchiveBuilder(TexturelessArchiveBuilder&&) = delete;
+		TexturelessArchiveBuilder& operator=(TexturelessArchiveBuilder&&) = delete;
 
 		uint32_t setFiles() override;
 		void setShareData(bool) override;
