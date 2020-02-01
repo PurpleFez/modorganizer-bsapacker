@@ -23,17 +23,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ModDtoFactory.cpp" line="49"/>
+        <location filename="ModDtoFactory.cpp" line="12"/>
         <source>Archive name (no file extension):</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ModDtoFactory.cpp" line="72"/>
+        <location filename="ModDtoFactory.cpp" line="13"/>
         <source>File &quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ModDtoFactory.cpp" line="72"/>
+        <location filename="ModDtoFactory.cpp" line="14"/>
         <source>&quot; already exists. Overwrite?</source>
         <translation type="unfinished"></translation>
     </message>
