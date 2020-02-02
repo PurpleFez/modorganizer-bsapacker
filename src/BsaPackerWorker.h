@@ -25,6 +25,8 @@ namespace BsaPacker
 		void DoWork() const;
 
 	private:
+		void BuildArchive(libbsarch::bs_archive_auto*, const QString&) const;
+
 		const ISettingsService* m_SettingsService = nullptr;
 		const IModDtoFactory* m_ModDtoFactory = nullptr;
 		const IArchiveBuilderFactory* m_ArchiveBuilderFactory = nullptr;

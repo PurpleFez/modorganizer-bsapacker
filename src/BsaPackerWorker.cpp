@@ -1,6 +1,10 @@
 #include "BsaPackerWorker.h"
 
 #include <QMessageBox>
+#include <QProgressDialog>
+#include <QFutureWatcher>
+#include <QFuture>
+#include <QtConcurrent/qtconcurrentrun.h>
 
 #include <bsapacker/ArchiveBuildDirector.h>
 #include <bsapacker/ModDtoFactory.h>
@@ -32,12 +36,13 @@ namespace BsaPacker
 		for (auto&& type : types) {
 			const std::unique_ptr<IArchiveBuilder> builder = this->m_ArchiveBuilderFactory->Create(type, modDto.get());
 			ArchiveBuildDirector director(builder.get());
-			director.Construct(); // must check if cancelled, does GUI stuff
+			if (!director.Construct()) { // must check if cancelled, does GUI stuff
+				continue;
+			}
 			const std::unique_ptr<libbsarch::bs_archive_auto> archive = builder->getArchive();
 			if (archive) {
 				const QString& archiveFullPath = this->m_ArchiveNameService->GetArchiveFullPath(type, modDto.get());
-				this->m_ArchiveAutoService->CreateBSA(archive.get(), archiveFullPath); // needs threading
-				QMessageBox::information(nullptr, "", QObject::tr("Created") + " \"" + archiveFullPath + "\"");
+				this->BuildArchive(archive.get(), archiveFullPath);
 			}
 		}
 		const std::unique_ptr<IDummyPluginService> pluginService = this->m_DummyPluginServiceFactory->Create();
@@ -46,5 +51,20 @@ namespace BsaPacker
 		if (!modDto->Directory().isEmpty()) {
 			this->m_HideLooseAssetService->HideLooseAssets(modDto->Directory());
 		}
+	}
+
+	void BsaPackerWorker::BuildArchive(libbsarch::bs_archive_auto* archive, const QString& archiveFullPath) const
+	{
+		QProgressDialog dialog("Building archive", "Cancel", 0, 0);
+		QFutureWatcher<void> futureWatcher;
+		QObject::connect(&futureWatcher, &QFutureWatcher<void>::finished, &dialog, &QProgressDialog::reset);
+		QObject::connect(&dialog, &QProgressDialog::canceled, &futureWatcher, &QFutureWatcher<void>::cancel);
+		QObject::connect(&futureWatcher,  &QFutureWatcher<void>::progressRangeChanged, &dialog, &QProgressDialog::setRange);
+		QObject::connect(&futureWatcher, &QFutureWatcher<void>::progressValueChanged,  &dialog, &QProgressDialog::setValue);
+		QFuture<void> future = QtConcurrent::run(this->m_ArchiveAutoService, &IArchiveAutoService::CreateBSA, archive, archiveFullPath);
+		futureWatcher.setFuture(future);
+		dialog.exec();
+		future.waitForFinished();
+		QMessageBox::information(nullptr, "", QObject::tr("Created") + " \"" + archiveFullPath + "\"");
 	}
 }
