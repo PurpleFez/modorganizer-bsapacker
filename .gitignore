@@ -6,3 +6,6 @@ CMakeLists.txt.user
 .vs
 CMakeSettings.json
 .vscode
+GPATH
+GRTAGS
+GTAGS
