@@ -16,7 +16,7 @@ namespace BsaPacker
 		ArchiveBuildDirector(ArchiveBuildDirector&&) = default;
 		ArchiveBuildDirector& operator=(ArchiveBuildDirector&&) = default;
 
-		void Construct();
+		uint32_t Construct();
 
 	private:
 		IArchiveBuilder* m_ArchiveFileBuildService = nullptr;

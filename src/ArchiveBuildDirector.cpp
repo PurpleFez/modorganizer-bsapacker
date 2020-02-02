@@ -10,7 +10,7 @@ namespace BsaPacker
 	{
 	}
 
-	void ArchiveBuildDirector::Construct()
+	uint32_t ArchiveBuildDirector::Construct()
 	{
 		QProgressDialog dialog("Adding to archive",
 							   "Abort",
@@ -20,7 +20,8 @@ namespace BsaPacker
 		QObject::connect(this->m_ArchiveFileBuildService, SIGNAL(valueChanged(int)), &dialog, SLOT(setValue(int)));
 		dialog.show();
 		this->m_ArchiveFileBuildService->setShareData(true);
-		this->m_ArchiveFileBuildService->setFiles();
+		uint32_t count = this->m_ArchiveFileBuildService->setFiles();
 		dialog.close();
+		return count;
 	}
 } // namespace BsaPacker
