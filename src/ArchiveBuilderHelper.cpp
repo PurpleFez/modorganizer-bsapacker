@@ -13,16 +13,6 @@ namespace BsaPacker
 		: m_SettingsService(settingsService)
 	{
 	}
-	uint32_t ArchiveBuilderHelper::getFileCount(const QDir& rootDirectory) const
-	{
-		QDirIterator it(rootDirectory, QDirIterator::Subdirectories);
-		uint32_t count = 0;
-		while (it.hasNext()) {
-			it.next();
-			count++;
-		}
-		return count;
-	}
 
 	QStringList ArchiveBuilderHelper::getRootDirectoryFilenames(const QDir& rootDirectory) const
 	{
