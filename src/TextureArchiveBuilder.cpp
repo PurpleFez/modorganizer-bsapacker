@@ -12,6 +12,7 @@ namespace BsaPacker
 	{
 		this->m_Cancelled = false;
 		this->m_Archive = std::make_unique<libbsarch::bs_archive_auto>(type);
+		this->m_RootDirectory.setFilter(QDir::Files | QDir::NoDotAndDotDot);
 	}
 
 	uint32_t TextureArchiveBuilder::setFiles()
@@ -22,8 +23,6 @@ namespace BsaPacker
 		const QStringList& rootDirFiles = this->m_ArchiveBuilderHelper->getRootDirectoryFilenames(this->m_RootDirectory);
 		QDirIterator iterator(this->m_RootDirectory, QDirIterator::Subdirectories);
 		while (iterator.hasNext()) {
-			QApplication::processEvents();
-
 			if (this->m_Cancelled) {
 				this->m_Archive.reset();
 				return 0;
@@ -39,9 +38,9 @@ namespace BsaPacker
 
 			this->m_ArchiveBuilderHelper->isIncompressible(filepath) ? ++incompressibleFiles : ++compressibleFiles;
 
-			const std::string root = this->m_RootDirectory.absolutePath().toStdString();
+			const std::string root = this->m_RootDirectory.absolutePath().toStdString() + '/';
 			const std::string file = filepath.toStdString();
-			libbsarch::disk_blob blob(root, file);
+			const libbsarch::disk_blob blob(root, file);
 			this->m_Archive->add_file_from_disk(blob);
 		}
 		this->m_Archive->set_compressed(true);
@@ -61,7 +60,7 @@ namespace BsaPacker
 
 	uint32_t TextureArchiveBuilder::getFileCount() const
 	{
-		return this->m_ArchiveBuilderHelper->getFileCount(this->m_RootDirectory);
+		return this->m_RootDirectory.count();
 	}
 
 	QString TextureArchiveBuilder::getRootPath() const
