@@ -4,12 +4,15 @@
 #include <bsapacker/IArchiveBuilder.h>
 #include <bsapacker/ISettingsService.h>
 
+#include <QProgressDialog>
+#include <QFutureWatcher>
+
 namespace BsaPacker
 {
 	class ArchiveBuildDirector
 	{
 	public:
-		explicit ArchiveBuildDirector(IArchiveBuilder* archiveFileBuildService);
+		explicit ArchiveBuildDirector(IArchiveBuilder* archiveBuilder);
 		~ArchiveBuildDirector() = default;
 		ArchiveBuildDirector(const ArchiveBuildDirector&) = default;
 		ArchiveBuildDirector& operator=(const ArchiveBuildDirector&) = default;
@@ -19,7 +22,9 @@ namespace BsaPacker
 		uint32_t Construct();
 
 	private:
-		IArchiveBuilder* m_ArchiveFileBuildService = nullptr;
+		IArchiveBuilder* m_ArchiveBuilder = nullptr;
+		QFutureWatcher<void> futureWatcher;
+		QProgressDialog dialog;
 	};
 } // namespace BsaPacker
 
