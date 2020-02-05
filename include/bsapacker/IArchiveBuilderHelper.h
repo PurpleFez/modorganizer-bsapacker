@@ -15,6 +15,7 @@ namespace BsaPacker
 		[[nodiscard]] virtual bool isFileIgnorable(const QString&, const QStringList&) const = 0;
 		[[nodiscard]] virtual bool isIncompressible(const QString&) const = 0;
 		[[nodiscard]] virtual bool isExtensionBlacklisted(const QString&) const = 0;
+		[[nodiscard]] virtual uint32_t getFileCount(const QDir&) const = 0;
 		[[nodiscard]] virtual QStringList getRootDirectoryFilenames(const QDir&) const = 0;
 	};
 } // namespace BsaPacker

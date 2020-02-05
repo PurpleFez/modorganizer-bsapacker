@@ -11,7 +11,7 @@ namespace BsaPacker
 	class ArchiveBuilderHelper : public IArchiveBuilderHelper
 	{
 	public:
-		explicit ArchiveBuilderHelper(const ISettingsService* settingsService);
+		ArchiveBuilderHelper(const ISettingsService* settingsService);
 		~ArchiveBuilderHelper() override = default;
 		ArchiveBuilderHelper(const ArchiveBuilderHelper&) = delete;
 		ArchiveBuilderHelper& operator=(const ArchiveBuilderHelper&) = delete;
@@ -21,6 +21,7 @@ namespace BsaPacker
 		[[nodiscard]] bool isFileIgnorable(const QString&, const QStringList&) const override;
 		[[nodiscard]] bool isIncompressible(const QString&) const override;
 		[[nodiscard]] bool isExtensionBlacklisted(const QString&) const override;
+		[[nodiscard]] uint32_t getFileCount(const QDir&) const override;
 		[[nodiscard]] QStringList getRootDirectoryFilenames(const QDir&) const override;
 
 		const static std::array <QString, 3> INCOMPRESSIBLE_TYPES;
