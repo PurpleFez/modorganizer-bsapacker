@@ -10,7 +10,7 @@ namespace BsaPacker
 		: m_ArchiveBuilderHelper(archiveBuilderHelper), m_RootDirectory(rootDir)
 	{
 		this->m_Cancelled = false;
-		this->m_Archive = std::make_unique<libbsarch::bs_archive_auto>(type);
+		this->m_Archive = std::make_unique<QBSArchiveAuto>(type);
 		this->m_RootDirectory.setFilter(QDir::Files | QDir::NoDotAndDotDot);
 	}
 
@@ -51,14 +51,14 @@ namespace BsaPacker
 		this->m_Archive->set_share_data(value);
 	}
 
-	std::unique_ptr<libbsarch::bs_archive_auto> GeneralArchiveBuilder::getArchive()
+	std::unique_ptr<QBSArchiveAuto> GeneralArchiveBuilder::getArchive()
 	{
 		return std::move(this->m_Archive);
 	}
 
 	uint32_t GeneralArchiveBuilder::getFileCount() const
 	{
-		return this->m_RootDirectory.count();
+		return this->m_ArchiveBuilderHelper->getFileCount(this->m_RootDirectory);
 	}
 
 	QString GeneralArchiveBuilder::getRootPath() const
