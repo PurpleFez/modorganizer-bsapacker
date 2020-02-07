@@ -1,7 +1,6 @@
 #include "HideLooseAssetService.h"
 
 #include <QDir>
-#include <QString>
 #include <QtConcurrent/QtConcurrentMap>
 
 #include "SettingsService.h"
@@ -13,14 +12,15 @@ namespace BsaPacker
 	{
 	}
 
-	bool HideLooseAssetService::HideLooseAssets(const QDir& modDirectory) const
+	bool HideLooseAssetService::HideLooseAssets(const std::string& modDirectory) const
 	{
 		if (!this->m_SettingsService->GetPluginSetting(SettingsService::SETTING_HIDE_LOOSE_ASSETS).toBool()) {
 			return false;
 		}
 
-		const QString& absModDir = modDirectory.absolutePath();
-		for (const QString& subDir : modDirectory.entryList(QDir::Dirs | QDir::NoDotAndDotDot)) {
+		const QDir& modDir = QDir(QString::fromStdString(modDirectory));
+		const QString& absModDir = modDir.absolutePath();
+		for (const QString& subDir : modDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot)) {
 			const QString& absPath = absModDir + '/' + subDir;
 			QDir dir(absPath);
 			if (!dir.dirName().endsWith(".mohidden")) {
@@ -38,6 +38,6 @@ namespace BsaPacker
 				dir.rename(absPath, absPath + ".mohidden");
 		};
 		*/
-		//QtConcurrent::blockingMap(modDirectory.entryList(QDir::Dirs | QDir::NoDotAndDotDot), hideFolder);
+		//QtConcurrent::blockingMap(modDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot), hideFolder);
 	}
 }

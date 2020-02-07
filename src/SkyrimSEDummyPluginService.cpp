@@ -10,15 +10,14 @@ namespace BsaPacker
 	{
 	}
 
-	bool SkyrimSEDummyPluginService::CreatePlugin(const QString& modPath,
-												  const QString& archiveNameBase) const
+	bool SkyrimSEDummyPluginService::CreatePlugin(const std::string& modPath, const std::string& archiveNameBase) const
 	{
-		const QString& fileNameNoExtension = modPath + '/' + archiveNameBase;
+		const std::string& fileNameNoExtension = modPath + '/' + archiveNameBase;
 		if (!this->m_DummyPluginLogic->canCreateDummyESP(fileNameNoExtension))
 		{
 			return false;
 		}
-		const std::string& absoluteFileName = fileNameNoExtension.toStdString() + ".esp";
+		const std::string& absoluteFileName = fileNameNoExtension + ".esp";
 		return this->m_FileWriterService->Write(absoluteFileName,
 												reinterpret_cast<const char*>(SkyrimSEDummyPluginService::RAW_SKYRIMSE),
 												sizeof(SkyrimSEDummyPluginService::RAW_SKYRIMSE));

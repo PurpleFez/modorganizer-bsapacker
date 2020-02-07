@@ -12,15 +12,14 @@ namespace BsaPacker
 	{
 	}
 
-	bool NewVegasDummyPluginService::CreatePlugin(const QString& modPath,
-												  const QString& archiveNameBase) const
+	bool NewVegasDummyPluginService::CreatePlugin(const std::string& modPath, const std::string& archiveNameBase) const
 	{
-		const QString& absoluteFileNameNoExtension = modPath + '/' + archiveNameBase;
+		const std::string& absoluteFileNameNoExtension = modPath + '/' + archiveNameBase;
 		if (!this->m_DummyPluginLogic->canCreateDummyESP(absoluteFileNameNoExtension))
 		{
 			return false;
 		}
-		const std::string& absoluteFileName = absoluteFileNameNoExtension.toStdString() + ".esp";
+		const std::string& absoluteFileName = absoluteFileNameNoExtension + ".esp";
 		return this->m_FileWriterService->Write(absoluteFileName,
 												reinterpret_cast<const char*>(NewVegasDummyPluginService::RAW_NEWVEGAS),
 												sizeof(NewVegasDummyPluginService::RAW_NEWVEGAS));

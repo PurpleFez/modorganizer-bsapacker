@@ -12,7 +12,7 @@ namespace BsaPacker
 		HideLooseAssetService() = default;
 		HideLooseAssetService(const ISettingsService* settingsService);
 		~HideLooseAssetService() override = default;
-		bool HideLooseAssets(const QDir& modDirectory) const override;
+		bool HideLooseAssets(const std::string& modDirectory) const override;
 
 	private:
 		const ISettingsService* m_SettingsService = nullptr;

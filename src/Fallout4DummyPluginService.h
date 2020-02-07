@@ -13,8 +13,7 @@ namespace BsaPacker
 		Fallout4DummyPluginService(const IFileWriterService* fileWriterService,
 								   const IDummyPluginLogic* dummyPluginLogic);
 		~Fallout4DummyPluginService() override = default;
-		bool CreatePlugin(const QString& modPath,
-						  const QString& archiveNameBase) const override;
+		bool CreatePlugin(const std::string& modPath, const std::string& archiveNameBase) const override;
 
 		static constexpr unsigned char RAW_FALLOUT4[] = {
 			0x54, 0x45, 0x53, 0x34, 0x19, 0x00, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00,

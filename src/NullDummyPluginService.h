@@ -10,7 +10,7 @@ namespace BsaPacker
 	public:
 		NullDummyPluginService() = default;
 		~NullDummyPluginService() override = default;
-		bool CreatePlugin(const QString& modPath, const QString& archiveNameBase) const override;
+		bool CreatePlugin(const std::string& modPath, const std::string& archiveNameBase) const override;
 	};
 }
 
