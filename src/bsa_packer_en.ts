@@ -18,6 +18,11 @@
 <context>
     <name>QObject</name>
     <message>
+        <location filename="BsaPackerWorker.cpp" line="96"/>
+        <source>Created</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="ModDtoFactory.cpp" line="12"/>
         <source>Archive name (no file extension):</source>
         <translation type="unfinished"></translation>
@@ -65,11 +70,6 @@
     <message>
         <location filename="SettingsService.cpp" line="15"/>
         <source>Specify a semi-colon seperated list of file extensions to ignore when packing.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="BsaPackerWorker.cpp" line="68"/>
-        <source>Created</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
