@@ -9,7 +9,7 @@ namespace BsaPacker
 	{
 	}
 
-	QString ArchiveNameService::GetFileExtension() const
+	std::string ArchiveNameService::GetFileExtension() const
 	{
 		switch (this->m_ModContext->GetNexusId()) {
 		case NexusId::Morrowind:
@@ -18,33 +18,38 @@ namespace BsaPacker
 		case NexusId::NewVegas:
 		case NexusId::Skyrim:
 		case NexusId::SkyrimSE:
-			return QStringLiteral(".bsa");
+			return ".bsa";
 		case NexusId::Fallout4:
-			return QStringLiteral(".ba2");
+			return ".ba2";
 		default:
-			return QString();
+			return std::string();
 		}
 	}
 
-	QString ArchiveNameService::GetArchiveFullPath(const bsa_archive_type_e type, const IModDto* modDto) const
+	std::string ArchiveNameService::GetArchiveFullPath(const bsa_archive_type_t type, const IModDto* modDto) const
 	{
 		return modDto->Directory() + '/' + modDto->ModForename() + this->Infix(type) + this->GetFileExtension();
 	}
 
-	QString ArchiveNameService::Infix(const bsa_archive_type_e type) const
+	std::string ArchiveNameService::GetArchiveFullPathPartial(bsa_archive_type_t type, const IModDto* modDto) const
+	{
+		return modDto->Directory() + '/' + modDto->ModForename() + this->Infix(type) + this->GetFileExtension() + ".part";
+	}
+
+	std::string ArchiveNameService::Infix(const bsa_archive_type_t type) const
 	{
 		switch (type) {
 		case baFO4:
-			return QStringLiteral(" - Main");
+			return " - Main";
 		case baFO4dds:
-			return QStringLiteral(" - Textures");
+			return " - Textures";
 		case baTES3:
 		case baTES4:
 		case baFO3:
 		case baSSE:
 		case baNone:
 		default:
-			return QString();
+			return std::string();
 		};
 	}
 }

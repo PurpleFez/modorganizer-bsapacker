@@ -13,8 +13,7 @@ namespace BsaPacker
 		OblivionDummyPluginService(const IFileWriterService* fileWriterService,
 								   const IDummyPluginLogic* dummyPluginLogic);
 		~OblivionDummyPluginService() override = default;
-		bool CreatePlugin(const QString& modPath,
-						  const QString& archiveNameBase) const override;
+		bool CreatePlugin(const std::string& modPath, const std::string& archiveNameBase) const override;
 
 		static constexpr unsigned char RAW_OBLIVION[] = {
 			0x54, 0x45, 0x53, 0x34, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
