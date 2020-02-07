@@ -9,6 +9,8 @@
 #include <bsapacker/IHideLooseAssetService.h>
 #include <bsapacker/IArchiveNameService.h>
 
+#include "src/QBSArchiveAuto.h"
+
 namespace BsaPacker
 {
 	class BsaPackerWorker
@@ -25,7 +27,7 @@ namespace BsaPacker
 		void DoWork() const;
 
 	private:
-		void BuildArchive(libbsarch::bs_archive_auto*, const QString&) const;
+		bool BuildArchive(QBSArchiveAuto*, const bsa_archive_type_t, const IModDto*) const;
 
 		const ISettingsService* m_SettingsService = nullptr;
 		const IModDtoFactory* m_ModDtoFactory = nullptr;

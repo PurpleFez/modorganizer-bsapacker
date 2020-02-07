@@ -1,16 +1,23 @@
 #include "BsaPackerWorker.h"
 
+#include <QtGlobal>
+
 #include <QMessageBox>
 #include <QProgressDialog>
 #include <QFutureWatcher>
 #include <QFuture>
+#include <QFileInfo>
 #include <QtConcurrent/qtconcurrentrun.h>
 
 #include <bsapacker/ArchiveBuildDirector.h>
 #include <bsapacker/ModDtoFactory.h>
 
+#include <cstdio>
+#include <sys/stat.h>
+
 namespace BsaPacker
 {
+	const QString INCOMPLETE_EXTENSION = ".part";
 	BsaPackerWorker::BsaPackerWorker(
 		const ISettingsService* settingsService,
 		const IModDtoFactory* modDtoFactory,
@@ -33,38 +40,64 @@ namespace BsaPacker
 	{
 		const std::unique_ptr<IModDto> modDto = this->m_ModDtoFactory->Create(); // does GUI stuff
 		const std::vector<bsa_archive_type_e> types = this->m_ArchiveBuilderFactory->GetArchiveTypes(modDto.get());
+		int built = 0;
 		for (auto&& type : types) {
 			const std::unique_ptr<IArchiveBuilder> builder = this->m_ArchiveBuilderFactory->Create(type, modDto.get());
 			ArchiveBuildDirector director(builder.get());
 			if (!director.Construct()) { // must check if cancelled, does GUI stuff
 				continue;
 			}
-			const std::unique_ptr<libbsarch::bs_archive_auto> archive = builder->getArchive();
+			const std::unique_ptr<QBSArchiveAuto> archive = builder->getArchive();
 			if (archive) {
-				const QString& archiveFullPath = this->m_ArchiveNameService->GetArchiveFullPath(type, modDto.get());
-				this->BuildArchive(archive.get(), archiveFullPath);
+
+				built += this->BuildArchive(archive.get(), type, modDto.get()) ? 1 : 0;
 			}
 		}
-		const std::unique_ptr<IDummyPluginService> pluginService = this->m_DummyPluginServiceFactory->Create();
-		pluginService->CreatePlugin(modDto->Directory(), modDto->ArchiveName());
+		if (built > 0) {
+			const std::unique_ptr<IDummyPluginService> pluginService = this->m_DummyPluginServiceFactory->Create();
+			pluginService->CreatePlugin(modDto->Directory(), modDto->ArchiveName());
 
-		if (!modDto->Directory().isEmpty()) {
-			this->m_HideLooseAssetService->HideLooseAssets(modDto->Directory());
+			if (!modDto->Directory().empty()) {
+				this->m_HideLooseAssetService->HideLooseAssets(modDto->Directory());
+			}
 		}
 	}
 
-	void BsaPackerWorker::BuildArchive(libbsarch::bs_archive_auto* archive, const QString& archiveFullPath) const
+	bool BsaPackerWorker::BuildArchive(QBSArchiveAuto* archive, const bsa_archive_type_t type, const IModDto* modDto) const
 	{
+		const std::string& archiveFullPathPartial = this->m_ArchiveNameService->GetArchiveFullPathPartial(type, modDto);
+		bool cancelled = false;
 		QProgressDialog dialog("Building archive", "Cancel", 0, 0);
 		QFutureWatcher<void> futureWatcher;
 		QObject::connect(&futureWatcher, &QFutureWatcher<void>::finished, &dialog, &QProgressDialog::reset);
-		QObject::connect(&dialog, &QProgressDialog::canceled, &futureWatcher, &QFutureWatcher<void>::cancel);
+		QObject::connect(&dialog, &QProgressDialog::canceled, archive, &QBSArchiveAuto::cancel);
+		QObject::connect(&dialog, &QProgressDialog::canceled, [&]() {
+			cancelled = true;
+		});
 		QObject::connect(&futureWatcher,  &QFutureWatcher<void>::progressRangeChanged, &dialog, &QProgressDialog::setRange);
 		QObject::connect(&futureWatcher, &QFutureWatcher<void>::progressValueChanged,  &dialog, &QProgressDialog::setValue);
-		QFuture<void> future = QtConcurrent::run(this->m_ArchiveAutoService, &IArchiveAutoService::CreateBSA, archive, archiveFullPath);
+		QFuture<void> future = QtConcurrent::run(this->m_ArchiveAutoService, &IArchiveAutoService::CreateBSA, archive, archiveFullPathPartial);
 		futureWatcher.setFuture(future);
 		dialog.exec();
 		future.waitForFinished();
-		QMessageBox::information(nullptr, "", QObject::tr("Created") + " \"" + archiveFullPath + "\"");
+		if (cancelled) {
+			return false;
+		}
+		const std::string& archiveFullPath = this->m_ArchiveNameService->GetArchiveFullPath(type, modDto);
+		struct stat buffer;
+		if (stat(archiveFullPath.c_str(), &buffer)) {
+			if(remove(archiveFullPath.c_str())) {
+				qCritical() << "Error deleting file";
+			} else {
+				qInfo() << "File successfully deleted";
+			}
+		}
+		if(rename(archiveFullPathPartial.c_str(), archiveFullPath.c_str())) {
+			qCritical() << "Error renaming file";
+		} else {
+			qInfo() << "File successfully renamed";
+		}
+		QMessageBox::information(nullptr, "", QObject::tr("Created") + " \"" + QString::fromStdString(archiveFullPath) + "\"");
+		return true;
 	}
 }
