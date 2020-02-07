@@ -21,7 +21,7 @@ namespace BsaPacker
 
 		uint32_t setFiles() override;
 		void setShareData(bool) override;
-		[[nodiscard]] std::unique_ptr<libbsarch::bs_archive_auto> getArchive() override;
+		[[nodiscard]] std::unique_ptr<QBSArchiveAuto> getArchive() override;
 		[[nodiscard]] uint32_t getFileCount() const override;
 		[[nodiscard]] QString getRootPath() const override;
 
@@ -30,7 +30,7 @@ namespace BsaPacker
 
 	private:
 		const IArchiveBuilderHelper* m_ArchiveBuilderHelper = nullptr;
-		std::unique_ptr<libbsarch::bs_archive_auto> m_Archive;
+		std::unique_ptr<QBSArchiveAuto> m_Archive;
 		bool m_Cancelled;
 		QDir m_RootDirectory;
 	};
