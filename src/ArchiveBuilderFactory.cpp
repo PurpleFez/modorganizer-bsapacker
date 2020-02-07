@@ -5,6 +5,7 @@
 #include <bsapacker/TextureArchiveBuilder.h>
 #include <bsapacker/TexturelessArchiveBuilder.h>
 #include "NexusId.h"
+#include <string>
 
 namespace BsaPacker
 {
@@ -35,16 +36,17 @@ namespace BsaPacker
 
 	std::unique_ptr<IArchiveBuilder> ArchiveBuilderFactory::Create(const bsa_archive_type_t archiveType, const IModDto* modDto) const
 	{
+		const QDir& directory = QDir(QString::fromStdString(modDto->Directory()));
 		switch (archiveType) {
 			case baTES3:
 			case baTES4:
 			case baFO3:
 			case baSSE:
-				return std::make_unique<GeneralArchiveBuilder>(this->m_ArchiveBuilderHelper, modDto->Directory(), archiveType);
+				return std::make_unique<GeneralArchiveBuilder>(this->m_ArchiveBuilderHelper, directory, archiveType);
 			case baFO4:
-				return std::make_unique<TexturelessArchiveBuilder>(this->m_ArchiveBuilderHelper, modDto->Directory(), archiveType);
+				return std::make_unique<TexturelessArchiveBuilder>(this->m_ArchiveBuilderHelper, directory, archiveType);
 			case baFO4dds:
-				return std::make_unique<TextureArchiveBuilder>(this->m_ArchiveBuilderHelper, modDto->Directory(), archiveType);
+				return std::make_unique<TextureArchiveBuilder>(this->m_ArchiveBuilderHelper, directory, archiveType);
 			case baNone:
 			default:
 				return std::make_unique<NullArchiveBuilder>();
