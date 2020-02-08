@@ -1,2 +1,16 @@
-# bsapacker ![master](https://ci.appveyor.com/api/projects/status/github/PurpleFez/modorganizer-bsapacker?branch=master&svg=true)
-During development, I used Qt 5.12.5 for building and running it in MO2. It also depends upon QtConcurrent, so if you're finding MO explodes make sure you add that to the dll folder.
+# bsapacker [![Build status](https://ci.appveyor.com/api/projects/status/qisdcc9r65mprcfo/branch/master?svg=true)](https://ci.appveyor.com/project/PurpleFez/modorganizer-bsapacker/branch/master)
+
+Transform loose files into a Bethesda Softworks Archive file (.bsa/.ba2).
+
+## Dependencies
+- Qt 5.14
+  - Core
+  - Concurrent
+  - LinguistTools
+  - Widgets
+- [libbsarch 0.0.8](https://github.com/ModOrganizer2/libbsarch)
+  - libbsarch
+  - libbsarch_OOP
+- DirectXTex
+- Boost 1.72.0
+- Boost.DI
