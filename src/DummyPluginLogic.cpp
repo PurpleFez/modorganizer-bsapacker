@@ -13,18 +13,18 @@ namespace BsaPacker
 	{
 	}
 
-	bool DummyPluginLogic::canCreateDummyESP(const QString& fileNameNoExtension) const
+	bool DummyPluginLogic::canCreateDummyESP(const std::string& fileNameNoExtension) const
 	{
-		const std::array<QString, 2>& fileList = {
+		const std::array<std::string, 2>& fileList = {
 			fileNameNoExtension + ".esm",
 			fileNameNoExtension + ".esp"
 		};
 		return this->canCreateDummy(fileList, fileNameNoExtension);
 	}
 
-	bool DummyPluginLogic::canCreateDummyESL(const QString& fileNameNoExtension) const
+	bool DummyPluginLogic::canCreateDummyESL(const std::string& fileNameNoExtension) const
 	{
-		const std::array<QString, 3>& fileList = {
+		const std::array<std::string, 3>& fileList = {
 			fileNameNoExtension + ".esm",
 			fileNameNoExtension + ".esp",
 			fileNameNoExtension + ".esl"
@@ -33,10 +33,9 @@ namespace BsaPacker
 	}
 
 	template<std::size_t SIZE>
-	bool DummyPluginLogic::canCreateDummy(const std::array<QString, SIZE>& fileList,
-										  const QString& fileNameNoExtension) const
+	bool DummyPluginLogic::canCreateDummy(const std::array<std::string, SIZE>& fileList, const std::string& fileNameNoExtension) const
 	{
-		const QFileInfo& archive(fileNameNoExtension + this->m_ArchiveNameService->GetFileExtension());
+		const QFileInfo& archive(QString::fromStdString(fileNameNoExtension + this->m_ArchiveNameService->GetFileExtension()));
 		if (!(archive.exists() && archive.isFile())) {
 			return false;
 		}
@@ -45,7 +44,8 @@ namespace BsaPacker
 			return false;
 		}
 
-		for (const QFileInfo fileInfo : fileList) {
+		for (const std::string& filePath : fileList) {
+			const QFileInfo fileInfo(QString::fromStdString(filePath));
 			if (fileInfo.exists() && fileInfo.isFile()) {
 				return false;
 			}

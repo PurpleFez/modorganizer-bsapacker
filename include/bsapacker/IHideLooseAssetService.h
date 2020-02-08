@@ -1,7 +1,7 @@
 #ifndef IHIDELOOSEASSETSERVICE_H
 #define IHIDELOOSEASSETSERVICE_H
 
-#include <QDir>
+#include <string>
 
 namespace BsaPacker
 {
@@ -9,7 +9,7 @@ namespace BsaPacker
 	{
 	public:
 		virtual ~IHideLooseAssetService() = default;
-		virtual bool HideLooseAssets(const QDir& modDirectory) const = 0;
+		virtual bool HideLooseAssets(const std::string& modDirectory) const = 0;
 	};
 }
 

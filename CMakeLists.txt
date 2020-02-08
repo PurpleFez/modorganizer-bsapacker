@@ -59,6 +59,7 @@ add_library(${PROJ_NAME} SHARED
 	src/BsaPackerWorker.cpp
 	src/ModDtoProcessService.h
 	src/NexusId.h
+	src/QBSArchiveAuto.h
 
 	src/ArchiveAutoService.cpp
 	src/ArchiveBuildDirector.cpp
@@ -84,6 +85,7 @@ add_library(${PROJ_NAME} SHARED
 	src/OblivionDummyPluginService.cpp
 	src/PackerDialog.cpp
 	src/PackerDialogFactory.cpp
+	src/QBSArchiveAuto.cpp
 	src/SettingsService.cpp
 	src/SkyrimDummyPluginService.cpp
 	src/SkyrimSEDummyPluginService.cpp

@@ -1,8 +1,7 @@
 #ifndef IDUMMYPLUGINLOGIC_H
 #define IDUMMYPLUGINLOGIC_H
 
-#include <QString>
-#include <array>
+#include <string>
 
 namespace BsaPacker
 {
@@ -10,8 +9,8 @@ namespace BsaPacker
 	{
 	public:
 		virtual ~IDummyPluginLogic() = default;
-		[[nodiscard]] virtual bool canCreateDummyESP(const QString& fileNameNoExtension) const = 0;
-		[[nodiscard]] virtual bool canCreateDummyESL(const QString& fileNameNoExtension) const = 0;
+		[[nodiscard]] virtual bool canCreateDummyESP(const std::string& fileNameNoExtension) const = 0;
+		[[nodiscard]] virtual bool canCreateDummyESL(const std::string& fileNameNoExtension) const = 0;
 	};
 }
 

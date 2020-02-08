@@ -1,26 +1,36 @@
 #include <bsapacker/ArchiveBuildDirector.h>
 
-#include <QProgressDialog>
+#include <QtConcurrent/QtConcurrentRun>
+
+#include <QDebug>
 
 namespace BsaPacker
 {
 	ArchiveBuildDirector::ArchiveBuildDirector(
-			IArchiveBuilder* archiveFileBuildService)
-		: m_ArchiveFileBuildService(archiveFileBuildService)
+		IArchiveBuilder* archiveBuilder) :
+		m_ArchiveBuilder(archiveBuilder),
+		dialog("Finding and marking files for archival", "Cancel", 0, this->m_ArchiveBuilder->getFileCount())
 	{
+		QObject::connect(&futureWatcher, &QFutureWatcher<void>::finished, &dialog, &QProgressDialog::reset);
+		QObject::connect(&dialog, &QProgressDialog::canceled, this->m_ArchiveBuilder, &IArchiveBuilder::cancel);
+		QObject::connect(&futureWatcher,  &QFutureWatcher<void>::progressRangeChanged, &dialog, &QProgressDialog::setRange);
+		QObject::connect(&futureWatcher, &QFutureWatcher<void>::progressValueChanged,  &dialog, &QProgressDialog::setValue);
 	}
 
-	void ArchiveBuildDirector::Construct()
+	uint32_t ArchiveBuildDirector::Construct()
 	{
-		QProgressDialog dialog("Adding to archive",
-							   "Abort",
-							   0,
-							   static_cast<int>(this->m_ArchiveFileBuildService->getFileCount()));
-		QObject::connect(&dialog, &QProgressDialog::canceled, this->m_ArchiveFileBuildService, &IArchiveBuilder::cancel);
-		QObject::connect(this->m_ArchiveFileBuildService, SIGNAL(valueChanged(int)), &dialog, SLOT(setValue(int)));
-		dialog.show();
-		this->m_ArchiveFileBuildService->setShareData(true);
-		this->m_ArchiveFileBuildService->setFiles();
-		dialog.close();
+		qDebug() << this->m_ArchiveBuilder->getFileCount() << "files in directory";
+		//QObject::connect(this->m_ArchiveBuilder, &IArchiveBuilder::valueChanged, &dialog, &QProgressDialog::setValue);
+		qDebug() << "Beginning async marking operation";
+		this->m_ArchiveBuilder->setShareData(true);
+		QFuture<uint32_t> future = QtConcurrent::run(this->m_ArchiveBuilder, &IArchiveBuilder::setFiles);
+		futureWatcher.setFuture(future);
+		qDebug() << "Progress dialog imminent";
+		dialog.exec();
+		qDebug() << "Waiting for marking to complete";
+		future.waitForFinished();
+		auto result = future.result();
+		qDebug() << "Result obtained:" << result << "files marked";
+		return result;
 	}
 } // namespace BsaPacker

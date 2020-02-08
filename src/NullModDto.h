@@ -2,17 +2,17 @@
 #define NULLMODDTO_H
 
 #include <bsapacker/IModDto.h>
-#include <QString>
+#include <string>
 
 namespace BsaPacker
 {
 	class NullModDto : public IModDto
 	{
 	public:
-		[[nodiscard]] QString ArchiveExtension() const override;
-		[[nodiscard]] QString ArchiveName() const override;
-		[[nodiscard]] QString Directory() const override;
-		[[nodiscard]] QString ModForename() const override;
+		[[nodiscard]] std::string ArchiveExtension() const override;
+		[[nodiscard]] std::string ArchiveName() const override;
+		[[nodiscard]] std::string Directory() const override;
+		[[nodiscard]] std::string ModForename() const override;
 		[[nodiscard]] int NexusId() const override;
 	};
 } // namespace BsaPacker

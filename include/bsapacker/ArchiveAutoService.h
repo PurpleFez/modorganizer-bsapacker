@@ -15,7 +15,7 @@ namespace BsaPacker
 		ArchiveAutoService(ArchiveAutoService&&) = default;
 		ArchiveAutoService& operator=(ArchiveAutoService&&) = default;
 
-		void CreateBSA(libbsarch::bs_archive_auto* archive, const QString& archiveName) const override;
+		void CreateBSA(QBSArchiveAuto* archive, const std::string& archiveName) const override;
 	};
 } // namespace BsaPacker
 

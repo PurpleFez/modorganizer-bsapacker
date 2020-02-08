@@ -1,7 +1,7 @@
 #ifndef IMODDTO_H
 #define IMODDTO_H
 
-#include <QString>
+#include <string>
 
 namespace BsaPacker
 {
@@ -9,10 +9,10 @@ namespace BsaPacker
 	{
 	public:
 		virtual ~IModDto() = default;
-		[[nodiscard]] virtual QString ArchiveExtension() const  = 0;
-		[[nodiscard]] virtual QString ArchiveName() const = 0;
-		[[nodiscard]] virtual QString Directory() const = 0;
-		[[nodiscard]] virtual QString ModForename() const = 0;
+		[[nodiscard]] virtual std::string ArchiveExtension() const  = 0;
+		[[nodiscard]] virtual std::string ArchiveName() const = 0;
+		[[nodiscard]] virtual std::string Directory() const = 0;
+		[[nodiscard]] virtual std::string ModForename() const = 0;
 		[[nodiscard]] virtual int NexusId() const = 0;
 	};
 } // namespace BsaPacker

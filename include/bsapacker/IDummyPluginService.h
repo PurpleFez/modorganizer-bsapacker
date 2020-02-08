@@ -1,7 +1,7 @@
 #ifndef IDUMMYPLUGINSERVICE_H
 #define IDUMMYPLUGINSERVICE_H
 
-#include <QString>
+#include <string>
 
 namespace BsaPacker
 {
@@ -9,8 +9,7 @@ namespace BsaPacker
 	{
 	public:
 		virtual ~IDummyPluginService() = default;
-		virtual bool CreatePlugin(const QString& modPath,
-								  const QString& archiveNameBase) const = 0;
+		virtual bool CreatePlugin(const std::string& modPath, const std::string& archiveNameBase) const = 0;
 	};
 }
 

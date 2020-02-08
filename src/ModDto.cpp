@@ -16,24 +16,24 @@ namespace BsaPacker
 	{
 	}
 
-	QString ModDto::ArchiveExtension() const
+	std::string ModDto::ArchiveExtension() const
 	{
-		return this->m_ArchiveExtension;
+		return this->m_ArchiveExtension.toStdString();
 	}
 
-	QString ModDto::ArchiveName() const
+	std::string ModDto::ArchiveName() const
 	{
-		return this->m_ArchiveName;
+		return this->m_ArchiveName.toStdString();
 	}
 
-	QString ModDto::Directory() const
+	std::string ModDto::Directory() const
 	{
-		return this->m_Path.path();
+		return this->m_Path.path().toStdString();
 	}
 
-	QString ModDto::ModForename() const
+	std::string ModDto::ModForename() const
 	{
-		return this->m_Path.dirName();
+		return this->m_Path.dirName().toStdString();
 	}
 
 	int ModDto::NexusId() const

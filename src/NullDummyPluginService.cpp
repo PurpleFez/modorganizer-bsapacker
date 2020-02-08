@@ -2,7 +2,7 @@
 
 namespace BsaPacker
 {
-	bool NullDummyPluginService::CreatePlugin(const QString& modPath, const QString& archiveNameBase) const
+	bool NullDummyPluginService::CreatePlugin(const std::string& modPath, const std::string& archiveNameBase) const
 	{
 		return false;
 	}

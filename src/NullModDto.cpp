@@ -2,24 +2,24 @@
 
 namespace BsaPacker
 {
-	QString NullModDto::ArchiveExtension() const
+	std::string NullModDto::ArchiveExtension() const
 	{
-		return QString();
+		return std::string();
 	}
 
-	QString NullModDto::ArchiveName() const
+	std::string NullModDto::ArchiveName() const
 	{
-		return QString();
+		return std::string();
 	}
 
-	QString NullModDto::Directory() const
+	std::string NullModDto::Directory() const
 	{
-		return QString();
+		return std::string();
 	}
 
-	QString NullModDto::ModForename() const
+	std::string NullModDto::ModForename() const
 	{
-		return QString();
+		return std::string();
 	}
 
 	int NullModDto::NexusId() const

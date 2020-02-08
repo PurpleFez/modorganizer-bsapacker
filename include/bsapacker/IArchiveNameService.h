@@ -10,8 +10,9 @@ namespace BsaPacker
 	{
 	public:
 		virtual ~IArchiveNameService() = default;
-		virtual QString GetFileExtension() const = 0;
-		virtual QString GetArchiveFullPath(bsa_archive_type_t, const IModDto*) const = 0;
+		virtual std::string GetFileExtension() const = 0;
+		virtual std::string GetArchiveFullPath(bsa_archive_type_t, const IModDto*) const = 0;
+		virtual std::string GetArchiveFullPathPartial(bsa_archive_type_t, const IModDto*) const = 0;
 	};
 } // namespace BsaPacker
 

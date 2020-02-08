@@ -18,7 +18,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="BsaPackerWorker.cpp" line="40"/>
+        <location filename="BsaPackerWorker.cpp" line="96"/>
         <source>Created</source>
         <translation type="unfinished"></translation>
     </message>

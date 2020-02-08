@@ -1,9 +1,13 @@
 #include <bsapacker/ArchiveAutoService.h>
 
+#include <QDebug>
+
 namespace BsaPacker
 {
-	void ArchiveAutoService::CreateBSA(libbsarch::bs_archive_auto* archive, const QString& archiveName) const
+	void ArchiveAutoService::CreateBSA(QBSArchiveAuto* archive, const std::string& archiveName) const
 	{
-		archive->save_to_disk(archiveName.toStdString());
+		qDebug() << "Saving archive " + QString::fromStdString(archiveName) + " to disk";
+		archive->save_to_disk(archiveName);
+		qDebug() << "Finished writing archive " + QString::fromStdString(archiveName) + " to disk";
 	}
 } // namespace BsaPacker
