@@ -12,3 +12,5 @@ Transform loose files into a Bethesda Softworks Archive file (.bsa/.ba2).
   - libbsarch
   - libbsarch_OOP
 - DirectXTex
+- Boost 1.72.0
+- Boost.DI
