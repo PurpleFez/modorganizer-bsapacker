@@ -2,6 +2,7 @@
 #define IMODDTOFACTORY_H
 
 #include "IModDto.h"
+#include <memory>
 
 namespace BsaPacker
 {

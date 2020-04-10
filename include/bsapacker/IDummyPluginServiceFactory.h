@@ -2,6 +2,7 @@
 #define IDUMMYPLUGINSERVICEFACTORY_H
 
 #include <bsapacker/IDummyPluginService.h>
+#include <memory>
 
 namespace BsaPacker
 {

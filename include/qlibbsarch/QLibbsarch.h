@@ -2,6 +2,7 @@
 
 #include <libbsarch.h>
 #include <string>
+#include <stdexcept>
 #include <QDebug>
 #include <QDir>
 #include <QStringList>
