@@ -20,7 +20,7 @@ namespace BsaPacker
 		PackerDialog packerDialog(this->m_ModContext);
 		packerDialog.RefreshModList();
 		int result = packerDialog.exec();
-		if (result != QDialog::DialogCode::Accepted) 
+		if (result != QDialog::DialogCode::Accepted)
 		{
 			return std::make_unique<NullModDto>();
 		}
