@@ -120,11 +120,6 @@ target_link_directories(${PROJ_NAME}
 	PRIVATE
 		${LIBBSARCH_ROOT})
 
-message("Default path is: ${default_project_path}")
-message("Project path is: ${project_path}")
-message("Lib path is: ${lib_path}")
-message("packer path is ${CMAKE_SOURCE_DIR}/include/bsapacker")
-
 target_link_libraries(${PROJ_NAME}
 	PUBLIC
 		Qt5::Widgets
