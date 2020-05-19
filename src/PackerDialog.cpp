@@ -49,7 +49,7 @@ namespace BsaPacker
 
 	bool PackerDialog::IsNewFilename() const
 	{
-		const int currentIndex = this->listArchiveNames.currentIndex().row();
+		const int currentIndex = this->listArchiveNames.currentIndex().row() + 1;
 		const int count = this->listArchiveNames.count();
 		return currentIndex == count;
 	}
