@@ -22,6 +22,7 @@ namespace BsaPacker
 		~PackerDialog() override = default;
 
 		// IPackerDialog interface
+		[[nodiscard]] bool IsNewFilename() const override;
 		void RefreshModList() override;
 		[[nodiscard]] QString SelectedMod() const override;
 		[[nodiscard]] QString SelectedPluginItem() const override;
