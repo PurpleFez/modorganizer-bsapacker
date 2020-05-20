@@ -13,6 +13,7 @@ namespace BsaPacker
 
 	public:
 		virtual ~IPackerDialog() override = default;
+		[[nodiscard]] virtual bool IsNewFilename() const = 0;
 		[[nodiscard]] virtual QString SelectedMod() const = 0;
 		virtual void RefreshModList() = 0;
 		[[nodiscard]] virtual QString SelectedPluginItem() const = 0;

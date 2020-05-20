@@ -29,7 +29,8 @@ namespace BsaPacker
 		const QString& modName = packerDialog.SelectedMod();
 		const QString& modDir = this->m_ModContext->GetAbsoluteModPath(modName);
 		const QString& pluginName = packerDialog.SelectedPluginItem();
-		const QString& archiveName = ModDtoFactory::ArchiveNameValidator(modName, pluginName);
+		const bool needsNewName = packerDialog.IsNewFilename();
+		const QString& archiveName = ModDtoFactory::ArchiveNameValidator(modName, pluginName, needsNewName);
 		const QString& archiveExtension = nexusId == FALLOUT_4_NEXUS_ID
 				? QStringLiteral(".ba2")
 				: QStringLiteral(".bsa");
@@ -37,11 +38,12 @@ namespace BsaPacker
 		return std::make_unique<ModDto>(nexusId, modDir, archiveName, archiveExtension);
 	}
 
-	QString ModDtoFactory::ArchiveNameValidator(const QString& modName, const QString& pluginName)
+	QString ModDtoFactory::ArchiveNameValidator(
+		const QString& modName,
+		const QString& pluginName,
+		const bool needsNewName)
 	{
 		QString archive_name_base;
-		// check if it is the "new filename" text
-		const bool needsNewName = !static_cast<bool>(QString::compare(pluginName.chopped(4), QStringLiteral("<new filename>")));
 		if (needsNewName) {
 			bool ok = false;
 			const QString& name = QInputDialog::getText(nullptr,
