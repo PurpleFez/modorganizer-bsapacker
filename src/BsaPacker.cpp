@@ -47,7 +47,7 @@ namespace BsaPacker
 
 	MOBase::VersionInfo Bsa_Packer::version() const
 	{
-		return MOBase::VersionInfo(1, 0, 2, MOBase::VersionInfo::RELEASE_FINAL);
+		return MOBase::VersionInfo(1, 0, 4, MOBase::VersionInfo::RELEASE_FINAL);
 	}
 
 	bool Bsa_Packer::isActive() const
