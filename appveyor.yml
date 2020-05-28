@@ -5,7 +5,7 @@ build:
   parallel: true
 build_script:
 - cmd: >-
-    git clone --depth=1 --branch=master https://github.com/ModOrganizer2/modorganizer-umbrella.git c:\projects\modorganizer-umbrella 2> $null
+    git clone --depth=1 --branch=unit-testing https://github.com/ModOrganizer2/modorganizer-umbrella.git c:\projects\modorganizer-umbrella 2> $null
 
     mkdir c:\projects\modorganizer-build -type directory
 
