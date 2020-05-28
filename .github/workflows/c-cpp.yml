@@ -12,6 +12,8 @@ jobs:
     runs-on: windows-late
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2.2.0
       - name: run-cmake
         uses: lukka/run-cmake@v2.5
         with:
