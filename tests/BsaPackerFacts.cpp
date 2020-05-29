@@ -11,6 +11,15 @@ using ::testing::StrictMock;
 using ::testing::Return;
 using ::testing::Eq;
 
+
+TEST(BsaPackerFacts, CtorAndInit_Always_Constructs)
+{
+	auto strictMockOrganizer = NaggyMock<MockOrganizer>();
+
+	auto result = Bsa_Packer();
+	EXPECT_NO_THROW(result.init(&strictMockOrganizer));
+}
+
 TEST(BsaPackerFacts, IsActive_WhenPluginEnabled_ReturnsTrue)
 {
 	// Arrange
@@ -42,4 +51,3 @@ TEST(BsaPackerFacts, IsActive_WhenPluginDisabled_ReturnsFalse)
 	// Assert
 	EXPECT_FALSE(result);
 }
-
