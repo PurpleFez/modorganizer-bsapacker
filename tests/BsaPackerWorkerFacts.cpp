@@ -19,14 +19,6 @@ namespace BsaPackerTests
 	class BsaPackerWorkerFacts : public ::testing::Test
 	{
 	protected:
-		NaggyMock<MockSettingsService>* naggyMockSettingsService;
-		NaggyMock<MockModDtoFactory>* naggyMockModDtoFactory;
-		NaggyMock<MockArchiveBuilderFactory>* naggyMockArchiveBuilderFactory;
-		NaggyMock<MockArchiveAutoService>* naggyMockArchiveAutoService;
-		NaggyMock<MockDummyPluginServiceFactory>* naggyMockDummyPluginServiceFactory;
-		NaggyMock<MockHideLooseAssetService>* naggyMockHideLooseAssetService;
-		NaggyMock<MockArchiveNameService>* naggyMockArchiveNameService;
-
 		void SetUp() override {
 			naggyMockSettingsService = new NaggyMock<MockSettingsService>();
 			naggyMockModDtoFactory = new NaggyMock<MockModDtoFactory>();
@@ -46,6 +38,14 @@ namespace BsaPackerTests
 			delete naggyMockHideLooseAssetService;
 			delete naggyMockArchiveNameService;
 		}
+
+		NaggyMock<MockSettingsService>* naggyMockSettingsService;
+		NaggyMock<MockModDtoFactory>* naggyMockModDtoFactory;
+		NaggyMock<MockArchiveBuilderFactory>* naggyMockArchiveBuilderFactory;
+		NaggyMock<MockArchiveAutoService>* naggyMockArchiveAutoService;
+		NaggyMock<MockDummyPluginServiceFactory>* naggyMockDummyPluginServiceFactory;
+		NaggyMock<MockHideLooseAssetService>* naggyMockHideLooseAssetService;
+		NaggyMock<MockArchiveNameService>* naggyMockArchiveNameService;
 	};
 
 	TEST_F(BsaPackerWorkerFacts, Ctor_Always_Constructs)
