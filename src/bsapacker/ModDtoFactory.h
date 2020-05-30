@@ -1,13 +1,14 @@
 #ifndef MODDTOFACTORY_H
 #define MODDTOFACTORY_H
 
+#include "bsapacker_global.h"
 #include <bsapacker/IModDtoFactory.h>
 #include <bsapacker/IModContext.h>
 #include <bsapacker/IModDto.h>
 
 namespace BsaPacker
 {
-	class ModDtoFactory : public IModDtoFactory
+	class BSAPACKER_EXPORT ModDtoFactory : public IModDtoFactory
 	{
 	public:
 		ModDtoFactory(const IModContext* modContext);
