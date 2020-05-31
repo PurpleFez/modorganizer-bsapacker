@@ -50,15 +50,13 @@ namespace BsaPackerTests
 
 	TEST_F(BsaPackerWorkerFacts, Ctor_Always_Constructs)
 	{
-		auto result = BsaPackerWorker(
+		EXPECT_NO_THROW(BsaPackerWorker(
 			naggyMockSettingsService,
 			naggyMockModDtoFactory,
 			naggyMockArchiveBuilderFactory,
 			naggyMockArchiveAutoService,
 			naggyMockDummyPluginServiceFactory,
 			naggyMockHideLooseAssetService,
-			naggyMockArchiveNameService);
-
-		EXPECT_EQ(1,1);
+			naggyMockArchiveNameService));
 	}
 }
