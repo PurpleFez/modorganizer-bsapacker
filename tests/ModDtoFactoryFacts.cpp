@@ -35,9 +35,10 @@ namespace BsaPackerTests
 			naggyMockModContext,
 			naggyMockPackerDialog
 		);
-
 		ON_CALL(*naggyMockModContext, GetNexusId())
 			.WillByDefault(Return(1));
+		ON_CALL(*naggyMockPackerDialog, Exec())
+			.WillByDefault(Return(QDialog::DialogCode::Accepted));
 
 		auto result = sut.Create();
 
