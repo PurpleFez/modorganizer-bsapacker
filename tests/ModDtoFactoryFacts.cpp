@@ -28,13 +28,19 @@ namespace BsaPackerTests
 		NaggyMock<MockPackerDialog>* naggyMockPackerDialog;
 	};
 
+	TEST_F(ModDtoFactoryFacts, Ctor_Always_Constructs)
+	{
+		EXPECT_NO_THROW(ModDtoFactory(
+			naggyMockModContext,
+			naggyMockPackerDialog));
+	}
+
 	TEST_F(ModDtoFactoryFacts, Create_WhenGameIsNewVegas_ReturnsNewVegasIdInDto)
 	{
 		// Arrange
 		auto sut = ModDtoFactory(
 			naggyMockModContext,
-			naggyMockPackerDialog
-		);
+			naggyMockPackerDialog);
 		ON_CALL(*naggyMockModContext, GetNexusId())
 			.WillByDefault(Return(1));
 		ON_CALL(*naggyMockPackerDialog, Exec())
