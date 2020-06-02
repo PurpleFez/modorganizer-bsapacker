@@ -1,7 +1,6 @@
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
 
-#include "BsaPacker.h"
 #include "BsaPackerWorker.h"
 #include "MockSettingsService.h"
 #include "MockModDtoFactory.h"
