@@ -19,6 +19,7 @@ namespace BsaPackerTests
 		}
 
 		void TearDown() override {
+			delete naggyMockOrganizer;
 		}
 
 		NaggyMock<MockOrganizer>* naggyMockOrganizer;
