@@ -18,7 +18,9 @@ namespace BsaPacker
 		uint32_t incompressibleFiles = 0;
 		uint32_t compressibleFiles = 0;
 		int count = 0;
-		const QStringList& rootDirFiles = this->m_ArchiveBuilderHelper->getRootDirectoryFilenames(this->m_RootDirectory);
+		const std::string dirString = this->m_RootDirectory.path().toStdString();
+		const auto& rootDirFiles = this->m_ArchiveBuilderHelper->getRootDirectoryFilenames(dirString);
+
 		QDirIterator iterator(this->m_RootDirectory, QDirIterator::Subdirectories);
 		while (iterator.hasNext()) {
 			QApplication::processEvents();
@@ -29,14 +31,14 @@ namespace BsaPacker
 			}
 
 			const QString& filepath = iterator.next();
-			const bool ignored = this->m_ArchiveBuilderHelper->isFileIgnorable(filepath, rootDirFiles);
+			const bool ignored = this->m_ArchiveBuilderHelper->isFileIgnorable(filepath.toStdString(), rootDirFiles);
 
 			Q_EMIT this->valueChanged(++count);
 			if (ignored) {
 				continue;
 			}
 
-			this->m_ArchiveBuilderHelper->isIncompressible(filepath) ? ++incompressibleFiles : ++compressibleFiles;
+			this->m_ArchiveBuilderHelper->isIncompressible(filepath.toStdString()) ? ++incompressibleFiles : ++compressibleFiles;
 			this->m_Archive->addFileFromDiskRoot(filepath);
 		}
 		this->m_Archive->setCompressed(!static_cast<bool>(incompressibleFiles));
@@ -55,7 +57,7 @@ namespace BsaPacker
 
 	uint32_t GeneralArchiveBuilder::getFileCount() const
 	{
-		return this->m_ArchiveBuilderHelper->getFileCount(this->m_RootDirectory);
+		return this->m_ArchiveBuilderHelper->getFileCount(this->m_RootDirectory.path().toStdString());
 	}
 
 	QString GeneralArchiveBuilder::getRootPath() const

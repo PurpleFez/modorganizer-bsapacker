@@ -1,39 +1,29 @@
 #ifndef ARCHIVEBUILDERHELPER_H
 #define ARCHIVEBUILDERHELPER_H
 
+#include "bsapacker_global.h"
 #include <bsapacker/IArchiveBuilderHelper.h>
 #include <bsapacker/ISettingsService.h>
-#include <qlibbsarch/BSArchiveAuto.h>
 
 #include <array>
-#include <cstdint>
-#include <QDir>
-#include <QObject>
-#include <QProgressBar>
-#include <QString>
-#include <QStringList>
 
 namespace BsaPacker
 {
-	class ArchiveBuilderHelper : public IArchiveBuilderHelper
+	class BSAPACKER_EXPORT ArchiveBuilderHelper : public IArchiveBuilderHelper
 	{
 	public:
 		ArchiveBuilderHelper(const ISettingsService* settingsService);
-		~ArchiveBuilderHelper() override = default;
-		ArchiveBuilderHelper(const ArchiveBuilderHelper&) = delete;
-		ArchiveBuilderHelper& operator=(const ArchiveBuilderHelper&) = delete;
-		ArchiveBuilderHelper(ArchiveBuilderHelper&&) = delete;
-		ArchiveBuilderHelper& operator=(ArchiveBuilderHelper&&) = delete;
+		[[nodiscard]] bool isFileIgnorable(const std::filesystem::path&, const std::vector<std::string>&) const override;
+		[[nodiscard]] bool isIncompressible(const std::filesystem::path&) const override;
+		[[nodiscard]] bool isExtensionBlacklisted(const std::filesystem::path&) const override;
+		[[nodiscard]] uint32_t getFileCount(const std::filesystem::path&) const override;
+		[[nodiscard]] std::vector<std::string> getRootDirectoryFilenames(const std::filesystem::path&) const override;
+		[[nodiscard]] bool doesPathContainFiles(const std::filesystem::path&, const std::vector<std::string>&) const override;
 
-		[[nodiscard]] bool isFileIgnorable(const QString&, const QStringList&) const override;
-		[[nodiscard]] bool isIncompressible(const QString&) const override;
-		[[nodiscard]] bool isExtensionBlacklisted(const QString&) const override;
-		[[nodiscard]] uint32_t getFileCount(const QDir&) const override;
-		[[nodiscard]] QStringList getRootDirectoryFilenames(const QDir&) const override;
-
-		const static std::array <QString, 3> INCOMPRESSIBLE_TYPES;
+		const static std::array <std::string, 3> INCOMPRESSIBLE_TYPES;
 
 	private:
+
 		const ISettingsService* m_SettingsService = nullptr;
 	};
 } // namespace BsaPacker

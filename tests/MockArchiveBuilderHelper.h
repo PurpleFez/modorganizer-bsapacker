@@ -6,9 +6,10 @@ using namespace BsaPacker;
 class MockArchiveBuilderHelper : public IArchiveBuilderHelper
 {
 public:
-	MOCK_METHOD(bool, isFileIgnorable, (const QString&, const QStringList&), (const, override));
-	MOCK_METHOD(bool, isIncompressible, (const QString&), (const, override));
-	MOCK_METHOD(bool, isExtensionBlacklisted, (const QString&), (const, override));
-	MOCK_METHOD(uint32_t, getFileCount, (const QDir&), (const, override));
-	MOCK_METHOD(QStringList, getRootDirectoryFilenames, (const QDir&), (const, override));
+	MOCK_METHOD(bool, isFileIgnorable, (const std::filesystem::path&, const std::vector<std::string>&), (const, override));
+	MOCK_METHOD(bool, isIncompressible, (const std::filesystem::path&), (const, override));
+	MOCK_METHOD(bool, isExtensionBlacklisted, (const std::filesystem::path&), (const, override));
+	MOCK_METHOD(uint32_t, getFileCount, (const std::filesystem::path&), (const, override));
+	MOCK_METHOD(std::vector<std::string>, getRootDirectoryFilenames, (const std::filesystem::path&), (const, override));
+	MOCK_METHOD(bool, doesPathContainFiles, (const std::filesystem::path&, const std::vector<std::string>&), (const, override));
 };
