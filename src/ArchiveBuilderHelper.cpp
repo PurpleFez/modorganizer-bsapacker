@@ -1,7 +1,5 @@
 #include <bsapacker/ArchiveBuilderHelper.h>
 
-//#include <QDirIterator>
-//#include <QtConcurrent/QtConcurrentMap>
 #include <algorithm>
 #include <boost/algorithm/string.hpp>
 
