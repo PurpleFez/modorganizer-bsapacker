@@ -27,7 +27,7 @@ namespace BsaPackerTests
 		NaggyMock<MockDummyPluginLogic>* naggyMockDummyPluginLogic;
 	};
 
-	TEST_F(NewVegasDummyPluginServiceFacts, CtorAndInit_Always_Constructs)
+	TEST_F(NewVegasDummyPluginServiceFacts, Ctor_Always_Constructs)
 	{
 		EXPECT_NO_THROW(
 			auto result = NewVegasDummyPluginService(

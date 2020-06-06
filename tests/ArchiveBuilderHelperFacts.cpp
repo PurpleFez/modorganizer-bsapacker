@@ -28,7 +28,7 @@ namespace BsaPackerTests
 		NaggyMock<std::filesystem::path>* naggyPath;
 	};
 
-	TEST_F(ArchiveBuilderHelperFacts, CtorAndInit_Always_Constructs)
+	TEST_F(ArchiveBuilderHelperFacts, Ctor_Always_Constructs)
 	{
 		EXPECT_NO_THROW(
 			auto result = ArchiveBuilderHelper(naggyMockSettingsService);

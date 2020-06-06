@@ -27,7 +27,7 @@ namespace BsaPackerTests
 		NaggyMock<MockDummyPluginLogic>* naggyMockDummyPluginLogic;
 	};
 
-	TEST_F(SkyrimDummyPluginServiceFacts, CtorAndInit_Always_Constructs)
+	TEST_F(SkyrimDummyPluginServiceFacts, Ctor_Always_Constructs)
 	{
 		EXPECT_NO_THROW(
 			auto result = SkyrimDummyPluginService(
