@@ -1,24 +1,19 @@
 #ifndef GENERALARCHIVEBUILDER_H
 #define GENERALARCHIVEBUILDER_H
 
+#include "bsapacker_global.h"
 #include <bsapacker/IArchiveBuilder.h>
 #include <bsapacker/IArchiveBuilderHelper.h>
 
 namespace BsaPacker
 {
-	class GeneralArchiveBuilder : public IArchiveBuilder
+	class BSAPACKER_EXPORT GeneralArchiveBuilder : public IArchiveBuilder
 	{
 		Q_OBJECT
 			Q_INTERFACES(BsaPacker::IEmitsValueChanged)
 
 	public:
 		explicit GeneralArchiveBuilder(const IArchiveBuilderHelper* archiveBuilderHelper, const QDir& rootDir);
-		~GeneralArchiveBuilder() override = default;
-		GeneralArchiveBuilder(const GeneralArchiveBuilder&) = delete;
-		GeneralArchiveBuilder& operator=(const GeneralArchiveBuilder&) = delete;
-		GeneralArchiveBuilder(GeneralArchiveBuilder&&) = delete;
-		GeneralArchiveBuilder& operator=(GeneralArchiveBuilder&&) = delete;
-
 		uint32_t setFiles() override;
 		void setShareData(bool value) override;
 		[[nodiscard]] std::unique_ptr<BSArchiveAuto> getArchive() override;
