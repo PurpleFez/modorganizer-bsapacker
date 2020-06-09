@@ -1,12 +1,13 @@
 #ifndef TEXTUREARCHIVEBUILDER_H
 #define TEXTUREARCHIVEBUILDER_H
 
+#include "bsapacker_global.h"
 #include <bsapacker/IArchiveBuilder.h>
 #include <bsapacker/IArchiveBuilderHelper.h>
 
 namespace BsaPacker
 {
-	class TextureArchiveBuilder : public IArchiveBuilder
+	class BSAPACKER_EXPORT TextureArchiveBuilder : public IArchiveBuilder
 	{
 		Q_OBJECT
 			Q_INTERFACES(BsaPacker::IEmitsValueChanged)
