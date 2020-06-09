@@ -34,16 +34,4 @@ namespace BsaPackerTests
 			auto result = ArchiveBuilderHelper(naggyMockSettingsService);
 		);
 	}
-
-	TEST_F(ArchiveBuilderHelperFacts, getFileCount_WhenEmptyDir_Returns0)
-	{
-		// Arrange
-		auto sut = ArchiveBuilderHelper(naggyMockSettingsService);
-
-		// Act
-		auto result = sut.getFileCount(*naggyPath);
-
-		// Assert
-		FAIL();
-	}
 }
