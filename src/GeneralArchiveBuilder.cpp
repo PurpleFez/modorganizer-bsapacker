@@ -4,13 +4,17 @@
 #include <QDirIterator>
 #include <QApplication>
 
+#include <QDebug>
+
+using namespace libbsarch;
+
 namespace BsaPacker
 {
-	GeneralArchiveBuilder::GeneralArchiveBuilder(const IArchiveBuilderHelper* archiveBuilderHelper, const QDir& rootDir)
+	GeneralArchiveBuilder::GeneralArchiveBuilder(const IArchiveBuilderHelper* archiveBuilderHelper, const QDir& rootDir, const bsa_archive_type_t& type)
 		: m_ArchiveBuilderHelper(archiveBuilderHelper), m_RootDirectory(rootDir)
 	{
 		this->m_Cancelled = false;
-		this->m_Archive = std::make_unique<BSArchiveAuto>(this->m_RootDirectory.path());
+		this->m_Archive = std::make_unique<libbsarch::bs_archive_auto>(type);
 	}
 
 	uint32_t GeneralArchiveBuilder::setFiles()
@@ -39,18 +43,22 @@ namespace BsaPacker
 			}
 
 			this->m_ArchiveBuilderHelper->isIncompressible(filepath.toStdString()) ? ++incompressibleFiles : ++compressibleFiles;
-			this->m_Archive->addFileFromDiskRoot(filepath);
+			auto fileBlob = disk_blob(
+				 this->m_RootDirectory.path().toStdString(),
+				 filepath.toStdString());
+			this->m_Archive->add_file_from_disk(fileBlob);
+			qDebug() << "file is: " << filepath;
 		}
-		this->m_Archive->setCompressed(!static_cast<bool>(incompressibleFiles));
+		this->m_Archive->set_compressed(!static_cast<bool>(incompressibleFiles));
 		return incompressibleFiles + compressibleFiles;
 	}
 
 	void GeneralArchiveBuilder::setShareData(const bool value)
 	{
-		this->m_Archive->setShareData(value);
+		this->m_Archive->set_share_data(value);
 	}
 
-	std::unique_ptr<BSArchiveAuto> GeneralArchiveBuilder::getArchive()
+	std::unique_ptr<libbsarch::bs_archive_auto> GeneralArchiveBuilder::getArchive()
 	{
 		return std::move(this->m_Archive);
 	}

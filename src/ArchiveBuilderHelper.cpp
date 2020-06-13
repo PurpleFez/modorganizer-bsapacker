@@ -31,8 +31,7 @@ namespace BsaPacker
 	{
 		std::vector<std::string> filenames;
 		for (const auto& entry : directory_iterator(rootDirectory)) {
-			const auto& path = entry.path().filename().generic_string();
-			filenames.push_back(path);
+			filenames.push_back(entry.path().filename().string());
 		}
 		return filenames;
 	}
@@ -71,6 +70,6 @@ namespace BsaPacker
 
 	bool ArchiveBuilderHelper::doesPathContainFiles(const path& filepath, const std::vector<std::string>& files) const
 	{
-		return std::find(files.begin(), files.end(), filepath) != files.end();
+		return std::find(files.begin(), files.end(), filepath.filename()) != files.end();
 	}
 } // namespace BsaPacker

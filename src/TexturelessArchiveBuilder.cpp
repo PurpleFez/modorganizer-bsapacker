@@ -4,13 +4,15 @@
 #include <QDirIterator>
 #include <QApplication>
 
+using namespace libbsarch;
+
 namespace BsaPacker
 {
-	TexturelessArchiveBuilder::TexturelessArchiveBuilder(const IArchiveBuilderHelper* archiveBuilderHelper, const QDir& rootDir)
+	TexturelessArchiveBuilder::TexturelessArchiveBuilder(const IArchiveBuilderHelper* archiveBuilderHelper, const QDir& rootDir, const bsa_archive_type_t& type)
 		: m_ArchiveBuilderHelper(archiveBuilderHelper), m_RootDirectory(rootDir)
 	{
 		this->m_Cancelled = false;
-		this->m_Archive = std::make_unique<BSArchiveAuto>(this->m_RootDirectory.path());
+		this->m_Archive = std::make_unique<libbsarch::bs_archive_auto>(type);
 	}
 
 	uint32_t TexturelessArchiveBuilder::setFiles()
@@ -38,18 +40,21 @@ namespace BsaPacker
 			}
 
 			this->m_ArchiveBuilderHelper->isIncompressible(filepath.toStdString()) ? ++incompressibleFiles : ++compressibleFiles;
-			this->m_Archive->addFileFromDiskRoot(filepath);
+			auto fileBlob = disk_blob(
+				 this->m_RootDirectory.path().toStdString(),
+				 filepath.toStdString());
+			this->m_Archive->add_file_from_disk(fileBlob);
 		}
-		this->m_Archive->setCompressed(!static_cast<bool>(incompressibleFiles));
+		this->m_Archive->set_compressed(!static_cast<bool>(incompressibleFiles));
 		return incompressibleFiles + compressibleFiles;
 	}
 
 	void TexturelessArchiveBuilder::setShareData(const bool value)
 	{
-		this->m_Archive->setShareData(value);
+		this->m_Archive->set_share_data(value);
 	}
 
-	std::unique_ptr<BSArchiveAuto> TexturelessArchiveBuilder::getArchive()
+	std::unique_ptr<libbsarch::bs_archive_auto> TexturelessArchiveBuilder::getArchive()
 	{
 		return std::move(this->m_Archive);
 	}

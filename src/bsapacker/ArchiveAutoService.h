@@ -10,7 +10,7 @@ namespace BsaPacker
 	{
 	public:
 		ArchiveAutoService() = default;
-		void CreateBSA(BSArchiveAuto* archive, const QString& archiveName, bsa_archive_type_e type) const override;
+		void CreateBSA(libbsarch::bs_archive_auto* archive, const QString& archiveName, bsa_archive_type_e type) const override;
 	};
 } // namespace BsaPacker
 

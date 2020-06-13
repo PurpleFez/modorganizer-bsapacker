@@ -28,7 +28,8 @@ namespace BsaPackerTests
 		EXPECT_NO_THROW(
 			auto result = TextureArchiveBuilder(
 				naggyMockArchiveBuilderHelper,
-				QDir());
+				QDir(),
+				baNone);
 		);
 	}
 }
