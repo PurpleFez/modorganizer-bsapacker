@@ -20,7 +20,7 @@ namespace BsaPacker
 		uint32_t incompressibleFiles = 0;
 		uint32_t compressibleFiles = 0;
 		int count = 0;
-		const std::string dirString = this->m_RootDirectory.path().toStdString();
+		const auto& dirString = this->m_RootDirectory.path().toStdWString();
 		const auto& rootDirFiles = this->m_ArchiveBuilderHelper->getRootDirectoryFilenames(dirString);
 		QDirIterator iterator(this->m_RootDirectory, QDirIterator::Subdirectories);
 		while (iterator.hasNext()) {
@@ -32,17 +32,17 @@ namespace BsaPacker
 			}
 
 			const QString& filepath = iterator.next();
-			const bool ignored = this->m_ArchiveBuilderHelper->isFileIgnorable(filepath.toStdString(), rootDirFiles);
+			const bool ignored = this->m_ArchiveBuilderHelper->isFileIgnorable(filepath.toStdWString(), rootDirFiles);
 
 			Q_EMIT this->valueChanged(++count);
 			if (ignored || filepath.endsWith(".dds", Qt::CaseInsensitive)) {
 				continue;
 			}
 
-			this->m_ArchiveBuilderHelper->isIncompressible(filepath.toStdString()) ? ++incompressibleFiles : ++compressibleFiles;
+			this->m_ArchiveBuilderHelper->isIncompressible(filepath.toStdWString()) ? ++incompressibleFiles : ++compressibleFiles;
 			auto fileBlob = disk_blob(
-				 this->m_RootDirectory.path().toStdString(),
-				 filepath.toStdString());
+				 this->m_RootDirectory.path().toStdWString(),
+				 filepath.toStdWString());
 			this->m_Archive->add_file_from_disk(fileBlob);
 		}
 		this->m_Archive->set_compressed(!static_cast<bool>(incompressibleFiles));
@@ -61,7 +61,7 @@ namespace BsaPacker
 
 	uint32_t TexturelessArchiveBuilder::getFileCount() const
 	{
-		return this->m_ArchiveBuilderHelper->getFileCount(this->m_RootDirectory.path().toStdString());
+		return this->m_ArchiveBuilderHelper->getFileCount(this->m_RootDirectory.path().toStdWString());
 	}
 
 	QString TexturelessArchiveBuilder::getRootPath() const

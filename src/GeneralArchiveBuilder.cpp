@@ -22,7 +22,7 @@ namespace BsaPacker
 		uint32_t incompressibleFiles = 0;
 		uint32_t compressibleFiles = 0;
 		int count = 0;
-		const std::string dirString = this->m_RootDirectory.path().toStdString();
+		const auto& dirString = this->m_RootDirectory.path().toStdWString();
 		const auto& rootDirFiles = this->m_ArchiveBuilderHelper->getRootDirectoryFilenames(dirString);
 
 		QDirIterator iterator(this->m_RootDirectory, QDirIterator::Subdirectories);
@@ -35,17 +35,17 @@ namespace BsaPacker
 			}
 
 			const QString& filepath = iterator.next();
-			const bool ignored = this->m_ArchiveBuilderHelper->isFileIgnorable(filepath.toStdString(), rootDirFiles);
+			const bool ignored = this->m_ArchiveBuilderHelper->isFileIgnorable(filepath.toStdWString(), rootDirFiles);
 
 			Q_EMIT this->valueChanged(++count);
 			if (ignored) {
 				continue;
 			}
 
-			this->m_ArchiveBuilderHelper->isIncompressible(filepath.toStdString()) ? ++incompressibleFiles : ++compressibleFiles;
+			this->m_ArchiveBuilderHelper->isIncompressible(filepath.toStdWString()) ? ++incompressibleFiles : ++compressibleFiles;
 			auto fileBlob = disk_blob(
-				 this->m_RootDirectory.path().toStdString(),
-				 filepath.toStdString());
+				 this->m_RootDirectory.path().toStdWString(),
+				 filepath.toStdWString());
 			this->m_Archive->add_file_from_disk(fileBlob);
 			qDebug() << "file is: " << filepath;
 		}
@@ -65,7 +65,7 @@ namespace BsaPacker
 
 	uint32_t GeneralArchiveBuilder::getFileCount() const
 	{
-		return this->m_ArchiveBuilderHelper->getFileCount(this->m_RootDirectory.path().toStdString());
+		return this->m_ArchiveBuilderHelper->getFileCount(this->m_RootDirectory.path().toStdWString());
 	}
 
 	QString GeneralArchiveBuilder::getRootPath() const

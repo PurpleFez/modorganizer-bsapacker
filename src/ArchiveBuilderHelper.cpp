@@ -12,7 +12,7 @@ using std::filesystem::recursive_directory_iterator;
 
 namespace BsaPacker
 {
-	const std::array <std::string, 3> ArchiveBuilderHelper::INCOMPRESSIBLE_TYPES = { ".wav", ".ogg", ".mp3" };
+	const std::array<std::string, 3> ArchiveBuilderHelper::INCOMPRESSIBLE_TYPES = { ".wav", ".ogg", ".mp3" };
 
 	ArchiveBuilderHelper::ArchiveBuilderHelper(const ISettingsService* settingsService)
 		: m_SettingsService(settingsService)
@@ -27,16 +27,16 @@ namespace BsaPacker
 		return count;
 	}
 
-	std::vector<std::string> ArchiveBuilderHelper::getRootDirectoryFilenames(const path& rootDirectory) const
+	std::vector<path::string_type> ArchiveBuilderHelper::getRootDirectoryFilenames(const path& rootDirectory) const
 	{
-		std::vector<std::string> filenames;
+		std::vector<path::string_type> filenames;
 		for (const auto& entry : directory_iterator(rootDirectory)) {
-			filenames.push_back(entry.path().filename().string());
+			filenames.push_back(entry.path().filename().native());
 		}
 		return filenames;
 	}
 
-	bool ArchiveBuilderHelper::isFileIgnorable(const path& filepath, const std::vector<std::string>& rootDirFilenames) const
+	bool ArchiveBuilderHelper::isFileIgnorable(const path& filepath, const std::vector<path::string_type>& rootDirFilenames) const
 	{
 		const auto& filename = filepath.filename();
 		return this->doesPathContainFiles(filepath, rootDirFilenames) || // ignore files within mod directory
@@ -48,7 +48,7 @@ namespace BsaPacker
 	bool ArchiveBuilderHelper::isIncompressible(const path& filename) const
 	{
 		for (const auto& ext : ArchiveBuilderHelper::INCOMPRESSIBLE_TYPES) {
-			if (boost::iequals(filename.extension().generic_string(), ext)) {
+			if (boost::iequals(filename.extension().string(), ext)) {
 				return true;
 			}
 		}
@@ -61,14 +61,14 @@ namespace BsaPacker
 		std::vector<std::string> blacklist;
 		boost::split(blacklist, setting, [](char c){return c == ';';});
 		for (const auto& ext : blacklist) {
-			if (boost::iequals(filename.extension().generic_string(), ext)) {
+			if (boost::iequals(filename.extension().string(), ext)) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	bool ArchiveBuilderHelper::doesPathContainFiles(const path& filepath, const std::vector<std::string>& files) const
+	bool ArchiveBuilderHelper::doesPathContainFiles(const path& filepath, const std::vector<path::string_type>& files) const
 	{
 		return std::find(files.begin(), files.end(), filepath.filename()) != files.end();
 	}
