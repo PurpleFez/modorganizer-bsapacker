@@ -1,75 +1,66 @@
 #include <bsapacker/ArchiveBuilderHelper.h>
 
-#include <algorithm>
-#include <boost/algorithm/string.hpp>
+#include <QDirIterator>
+#include <QtConcurrent/QtConcurrentMap>
 
 #include "SettingsService.h"
 
-using std::filesystem::path;
-using std::filesystem::directory_entry;
-using std::filesystem::directory_iterator;
-using std::filesystem::recursive_directory_iterator;
-
 namespace BsaPacker
 {
-	const std::array<std::string, 3> ArchiveBuilderHelper::INCOMPRESSIBLE_TYPES = { ".wav", ".ogg", ".mp3" };
+	const std::array <QString, 3> ArchiveBuilderHelper::INCOMPRESSIBLE_TYPES = { "wav", "ogg", "mp3" };
 
 	ArchiveBuilderHelper::ArchiveBuilderHelper(const ISettingsService* settingsService)
 		: m_SettingsService(settingsService)
 	{
 	}
-	uint32_t ArchiveBuilderHelper::getFileCount(const path& rootDirectory) const
+	uint32_t ArchiveBuilderHelper::getFileCount(const QDir& rootDirectory) const
 	{
+		QDirIterator it(rootDirectory, QDirIterator::Subdirectories);
 		uint32_t count = 0;
-		for(auto& p : recursive_directory_iterator(rootDirectory)) {
+		while (it.hasNext()) {
+			it.next();
 			count++;
 		}
 		return count;
 	}
 
-	std::vector<path::string_type> ArchiveBuilderHelper::getRootDirectoryFilenames(const path& rootDirectory) const
+	QStringList ArchiveBuilderHelper::getRootDirectoryFilenames(const QDir& rootDirectory) const
 	{
-		std::vector<path::string_type> filenames;
-		for (const auto& entry : directory_iterator(rootDirectory)) {
-			filenames.push_back(entry.path().filename().native());
-		}
-		return filenames;
+		const std::function<QString(const QFileInfo&)> getFilename = [](const QFileInfo& fi) {
+			return fi.fileName();
+		};
+		return QtConcurrent::blockingMapped(rootDirectory.entryInfoList(QDir::Files),
+											getFilename);
 	}
 
-	bool ArchiveBuilderHelper::isFileIgnorable(const path& filepath, const std::vector<path::string_type>& rootDirFilenames) const
+	bool ArchiveBuilderHelper::isFileIgnorable(const QString& filepath, const QStringList& rootDirFilenames) const
 	{
-		const auto& filename = filepath.filename();
-		return this->doesPathContainFiles(filepath, rootDirFilenames) || // ignore files within mod directory
-			directory_entry(filepath).is_directory() || // ignore directories
+		const QFileInfo& fileInfo(filepath);
+		const QString& filename = fileInfo.fileName();
+		return rootDirFilenames.contains(filename) || // ignore files within mod directory
+			fileInfo.isDir() || // ignore directories
 			filename == "." || filename == ".." || // ignore current dir and parent dir entries
-			this->isExtensionBlacklisted(filename); // ignore user blacklisted file types
+			ArchiveBuilderHelper::isExtensionBlacklisted(filename); // ignore user blacklisted file types
 	}
 
-	bool ArchiveBuilderHelper::isIncompressible(const path& filename) const
+	bool ArchiveBuilderHelper::isIncompressible(const QString& filename) const
 	{
-		for (const auto& ext : ArchiveBuilderHelper::INCOMPRESSIBLE_TYPES) {
-			if (boost::iequals(filename.extension().string(), ext)) {
+		for (const QString& str : ArchiveBuilderHelper::INCOMPRESSIBLE_TYPES) {
+			if (filename.endsWith(str, Qt::CaseInsensitive)) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	bool ArchiveBuilderHelper::isExtensionBlacklisted(const path& filename) const
+	bool ArchiveBuilderHelper::isExtensionBlacklisted(const QString& filename) const
 	{
-		const auto& setting = this->m_SettingsService->GetPluginSetting(SettingsService::SETTING_BLACKLISTED_FILES).toString().toStdString();
-		std::vector<std::string> blacklist;
-		boost::split(blacklist, setting, [](char c){return c == ';';});
-		for (const auto& ext : blacklist) {
-			if (boost::iequals(filename.extension().string(), ext)) {
+		const QStringList& blacklist = this->m_SettingsService->GetPluginSetting(SettingsService::SETTING_BLACKLISTED_FILES).toString().split(';');
+		for (const QString& ext : blacklist) {
+			if (filename.endsWith(ext, Qt::CaseInsensitive)) {
 				return true;
 			}
 		}
 		return false;
-	}
-
-	bool ArchiveBuilderHelper::doesPathContainFiles(const path& filepath, const std::vector<path::string_type>& files) const
-	{
-		return std::find(files.begin(), files.end(), filepath.filename()) != files.end();
 	}
 } // namespace BsaPacker
