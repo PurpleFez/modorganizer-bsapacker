@@ -1,13 +1,14 @@
 #ifndef OBLIVIONDUMMYPLUGINSERVICE_H
 #define OBLIVIONDUMMYPLUGINSERVICE_H
 
+#include "bsapacker_global.h"
 #include <bsapacker/IDummyPluginLogic.h>
 #include <bsapacker/IDummyPluginService.h>
 #include <bsapacker/IFileWriterService.h>
 
 namespace BsaPacker
 {
-	class OblivionDummyPluginService : public IDummyPluginService
+	class BSAPACKER_EXPORT OblivionDummyPluginService : public IDummyPluginService
 	{
 	public:
 		OblivionDummyPluginService(const IFileWriterService* fileWriterService,
@@ -29,6 +30,5 @@ namespace BsaPacker
 		const IDummyPluginLogic* m_DummyPluginLogic = nullptr;
 	};
 }
-
 
 #endif // OBLIVIONDUMMYPLUGINSERVICE_H

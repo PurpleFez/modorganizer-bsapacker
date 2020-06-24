@@ -10,26 +10,28 @@ namespace BsaPacker
 {
 	const uint16_t FALLOUT_4_NEXUS_ID = 1151;
 
-	ModDtoFactory::ModDtoFactory(const IModContext* modContext)
-		: m_ModContext(modContext)
+	ModDtoFactory::ModDtoFactory(
+		const IModContext* modContext,
+		IPackerDialog* packerDialog) :
+		m_ModContext(modContext),
+		m_PackerDialog(packerDialog)
 	{
 	}
 
 	std::unique_ptr<IModDto> ModDtoFactory::Create() const
 	{
-		PackerDialog packerDialog(this->m_ModContext);
-		packerDialog.RefreshModList();
-		int result = packerDialog.exec();
+		this->m_PackerDialog->RefreshModList();
+		int result = m_PackerDialog->Exec();
 		if (result != QDialog::DialogCode::Accepted)
 		{
 			return std::make_unique<NullModDto>();
 		}
 
 		const int nexusId = this->m_ModContext->GetNexusId();
-		const QString& modName = packerDialog.SelectedMod();
+		const QString& modName = this->m_PackerDialog->SelectedMod();
 		const QString& modDir = this->m_ModContext->GetAbsoluteModPath(modName);
-		const QString& pluginName = packerDialog.SelectedPluginItem();
-		const bool needsNewName = packerDialog.IsNewFilename();
+		const QString& pluginName = this->m_PackerDialog->SelectedPluginItem();
+		const bool needsNewName = this->m_PackerDialog->IsNewFilename();
 		const QString& archiveName = ModDtoFactory::ArchiveNameValidator(modName, pluginName, needsNewName);
 		const QString& archiveExtension = nexusId == FALLOUT_4_NEXUS_ID
 				? QStringLiteral(".ba2")

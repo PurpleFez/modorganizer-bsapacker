@@ -13,10 +13,9 @@
 
 namespace BsaPacker
 {
-	class PackerDialog : public IPackerDialog
+	class PackerDialog : public QDialog, public IPackerDialog
 	{
 		Q_OBJECT
-			Q_INTERFACES(BsaPacker::IPackerDialog)
 	public:
 		explicit PackerDialog(const IModContext* modContext);
 		~PackerDialog() override = default;
@@ -28,6 +27,7 @@ namespace BsaPacker
 		[[nodiscard]] QString SelectedPluginItem() const override;
 		void UpdateNameList(const QString&) override;
 		void RefreshSelectedName() override;
+		int Exec() override;
 
 	public Q_SLOTS:
 		void RefreshOkButton() override;
