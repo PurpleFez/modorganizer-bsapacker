@@ -6,13 +6,15 @@
 #include <QDebug>
 #include "DirectXTex.h"
 
+using namespace libbsarch;
+
 namespace BsaPacker
 {
-	TextureArchiveBuilder::TextureArchiveBuilder(const IArchiveBuilderHelper* archiveBuilderHelper, const QDir& rootDir)
+	TextureArchiveBuilder::TextureArchiveBuilder(const IArchiveBuilderHelper* archiveBuilderHelper, const QDir& rootDir, const bsa_archive_type_t& type)
 		: m_ArchiveBuilderHelper(archiveBuilderHelper), m_RootDirectory(rootDir)
 	{
 		this->m_Cancelled = false;
-		this->m_Archive = std::make_unique<BSArchiveAuto>(this->m_RootDirectory.path());
+		this->m_Archive = std::make_unique<libbsarch::bs_archive_auto>(type);
 	}
 
 	uint32_t TextureArchiveBuilder::setFiles()
@@ -34,7 +36,7 @@ namespace BsaPacker
 			}
 
 			const QString& filepath = iterator.next();
-			const bool ignored = this->m_ArchiveBuilderHelper->isFileIgnorable(filepath, rootDirFiles);
+			const bool ignored = this->m_ArchiveBuilderHelper->isFileIgnorable(filepath.toStdWString(), rootDirFiles);
 
 			Q_EMIT this->valueChanged(++count);
 			if (ignored || !filepath.endsWith(".dds", Qt::CaseInsensitive)) {
@@ -48,24 +50,24 @@ namespace BsaPacker
 			this->m_Archive->add_file_from_disk(fileBlob);
 			qDebug() << "file is: " << filepath;
 		}
-		this->m_Archive->setCompressed(true);
-		this->m_Archive->setDDSCallback(TextureArchiveBuilder::DDSCallback, (void*)this);
+		this->m_Archive->set_compressed(!static_cast<bool>(incompressibleFiles));
+		this->m_Archive->set_dds_callback(TextureArchiveBuilder::DDSCallback, (void*)this);
 		return incompressibleFiles + compressibleFiles;
 	}
 
 	void TextureArchiveBuilder::setShareData(const bool value)
 	{
-		this->m_Archive->setShareData(value);
+		this->m_Archive->set_share_data(value);
 	}
 
-	std::unique_ptr<BSArchiveAuto> TextureArchiveBuilder::getArchive()
+	std::unique_ptr<libbsarch::bs_archive_auto> TextureArchiveBuilder::getArchive()
 	{
 		return std::move(this->m_Archive);
 	}
 
 	uint32_t TextureArchiveBuilder::getFileCount() const
 	{
-		return this->m_ArchiveBuilderHelper->getFileCount(this->m_RootDirectory);
+		return this->m_ArchiveBuilderHelper->getFileCount(this->m_RootDirectory.path().toStdWString());
 	}
 
 	QString TextureArchiveBuilder::getRootPath() const
@@ -85,7 +87,10 @@ namespace BsaPacker
 
 		auto builder = (TextureArchiveBuilder*)context;
 		const QString qsRootPath = builder->getRootPath();
-		const std::wstring wsRootPath(PREPARE_PATH_LIBBSARCH(qsRootPath));
+		//auto cstring = convertible_string(qsRootPath);
+		//cstring.to_native_path();
+		const std::wstring wsRootPath = qsRootPath.toStdWString();
+		//const std::wstring wsRootPath(PREPARE_PATH_LIBBSARCH(qsRootPath));
 		const std::wstring path = wsRootPath + L"\\" + std::wstring(file_path);
 
 		const auto hr = LoadFromDDSFile(path.c_str(), DirectX::DDS_FLAGS_NONE, &info, *image);
