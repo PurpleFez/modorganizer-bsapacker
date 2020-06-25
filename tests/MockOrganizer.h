@@ -28,6 +28,7 @@ public:
 	MOCK_METHOD(QString, resolvePath, (const QString &fileName), (const, override));
 	MOCK_METHOD(QStringList, listDirectories, (const QString &directoryName), (const, override));
 	MOCK_METHOD(QStringList, findFiles, (const QString &path, const std::function<bool(const QString&)> &filter), (const, override));
+	MOCK_METHOD(QStringList, findFiles, (const QString &path, const QStringList &filter), (const, override));
 	MOCK_METHOD(QStringList, getFileOrigins, (const QString &fileName) ,(const, override));
 	MOCK_METHOD(QList<FileInfo>, findFileInfos, (const QString &path, const std::function<bool(const FileInfo&)> &filter), (const, override));
 	MOCK_METHOD(MOBase::IDownloadManager*, downloadManager, (), (const, override));
@@ -42,4 +43,7 @@ public:
 	MOCK_METHOD(void, refreshModList,(bool saveChanges), (override));
 	MOCK_METHOD(MOBase::IPluginGame const *, managedGame, (), (const, override));
 	MOCK_METHOD(QStringList, modsSortedByProfilePriority, (), (const, override));
+	MOCK_METHOD(bool, onUserInterfaceInitialized, (const std::function<void (QMainWindow *)> &), (override));
+	MOCK_METHOD(bool, onProfileChanged, (const std::function<void (MOBase::IProfile *,MOBase::IProfile *)> &), (override));
+	MOCK_METHOD(bool, onPluginSettingChanged, (const std::function<void (const QString &,const QString &,const QVariant &,const QVariant &)> &), (override));
 };
