@@ -2,7 +2,7 @@
 #define IARCHIVENAMESERVICE_H
 
 #include <QString>
-#include <qlibbsarch/QLibbsarch.h>
+#include <libbsarch.h>
 #include <bsapacker/IModDto.h>
 
 namespace BsaPacker
