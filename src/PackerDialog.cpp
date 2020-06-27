@@ -80,6 +80,11 @@ namespace BsaPacker
 		this->listArchiveNames.addItems(filenames);
 	}
 
+	int PackerDialog::Exec()
+	{
+	 	return QDialog::exec();
+	}
+
 	void PackerDialog::RefreshSelectedName()
 	{
 		Q_EMIT this->comboModList.currentTextChanged(this->comboModList.currentText());

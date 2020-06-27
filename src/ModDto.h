@@ -1,14 +1,13 @@
 #ifndef MODMETADTO_H
 #define MODMETADTO_H
 
+#include "bsapacker_global.h"
 #include <bsapacker/IModDto.h>
-
 #include <QDir>
-#include <QString>
 
 namespace BsaPacker
 {
-	class ModDto : public IModDto
+	class BSAPACKER_EXPORT ModDto : public IModDto
 	{
 	public:
 		ModDto(const int nexusId, const QString& modDir, const QString& archiveName, const QString& archiveExtension);
