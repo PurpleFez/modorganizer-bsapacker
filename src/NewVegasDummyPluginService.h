@@ -1,13 +1,14 @@
 #ifndef NEWVEGASDUMMYPLUGINSERVICE_H
 #define NEWVEGASDUMMYPLUGINSERVICE_H
 
+#include "bsapacker_global.h"
 #include <bsapacker/IDummyPluginLogic.h>
 #include <bsapacker/IDummyPluginService.h>
 #include <bsapacker/IFileWriterService.h>
 
 namespace BsaPacker
 {
-	class NewVegasDummyPluginService : public IDummyPluginService
+	class BSAPACKER_EXPORT NewVegasDummyPluginService : public IDummyPluginService
 	{
 	public:
 		NewVegasDummyPluginService(const IFileWriterService* fileWriterService,

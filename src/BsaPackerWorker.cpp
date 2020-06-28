@@ -43,11 +43,9 @@ namespace BsaPacker
 		int built = 0;
 		for (auto&& type : types) {
 			const std::unique_ptr<IArchiveBuilder> builder = this->m_ArchiveBuilderFactory->Create(type, modDto.get());
-			ArchiveBuildDirector director(builder.get());
-			if (!director.Construct()) { // must check if cancelled, does GUI stuff
-				continue;
-			}
-			const std::unique_ptr<QBSArchiveAuto> archive = builder->getArchive();
+			ArchiveBuildDirector director(this->m_SettingsService, builder.get());
+			director.Construct(); // must check if cancelled
+			const std::unique_ptr<libbsarch::bs_archive_auto> archive = builder->getArchive();
 			if (archive) {
 
 				built += this->BuildArchive(archive.get(), type, modDto.get()) ? 1 : 0;

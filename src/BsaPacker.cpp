@@ -12,6 +12,7 @@
 #include "HideLooseAssetService.h"
 #include "ModContext.h"
 #include "ModDto.h"
+#include "PackerDialog.h"
 #include "SettingsService.h"
 #include <bsapacker/ModDtoFactory.h>
 #include <QMessageBox>
@@ -47,7 +48,7 @@ namespace BsaPacker
 
 	MOBase::VersionInfo Bsa_Packer::version() const
 	{
-		return MOBase::VersionInfo(1, 0, 2, MOBase::VersionInfo::RELEASE_FINAL);
+		return MOBase::VersionInfo(1, 0, 4, MOBase::VersionInfo::RELEASE_FINAL);
 	}
 
 	bool Bsa_Packer::isActive() const
@@ -88,7 +89,8 @@ namespace BsaPacker
 			di::bind<IFileWriterService>.to<FileWriterService>(),
 			di::bind<IArchiveNameService>.to<ArchiveNameService>(),
 			di::bind<IDummyPluginLogic>.to<DummyPluginLogic>(),
-			di::bind<IHideLooseAssetService>.to<HideLooseAssetService>()
+			di::bind<IHideLooseAssetService>.to<HideLooseAssetService>(),
+			di::bind<IPackerDialog>.to<PackerDialog>()
 		);
 
 		BsaPackerWorker worker = di::create<BsaPackerWorker>(injector);

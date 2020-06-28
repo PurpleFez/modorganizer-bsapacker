@@ -1,8 +1,8 @@
 #ifndef IMODDTOFACTORY_H
 #define IMODDTOFACTORY_H
 
-#include <QObject>
-#include <bsapacker/IModDto.h>
+#include "IModDto.h"
+#include <memory>
 
 namespace BsaPacker
 {

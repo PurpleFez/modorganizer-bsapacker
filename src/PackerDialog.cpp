@@ -47,6 +47,13 @@ namespace BsaPacker
 		QObject::connect(&comboModList, qOverload<const QString&>(&QComboBox::currentTextChanged), [this](auto&& text) { this->UpdateNameList(text); });
 	}
 
+	bool PackerDialog::IsNewFilename() const
+	{
+		const int currentIndex = this->listArchiveNames.currentIndex().row() + 1;
+		const int count = this->listArchiveNames.count();
+		return currentIndex == count;
+	}
+
 	QString PackerDialog::SelectedMod() const
 	{
 		return this->comboModList.currentText();
@@ -71,6 +78,11 @@ namespace BsaPacker
 		const QString& modPath = this->m_ModContext->GetAbsoluteModPath(modName);
 		const QStringList& filenames = this->m_ModContext->GetPlugins(modPath);
 		this->listArchiveNames.addItems(filenames);
+	}
+
+	int PackerDialog::Exec()
+	{
+	 	return QDialog::exec();
 	}
 
 	void PackerDialog::RefreshSelectedName()

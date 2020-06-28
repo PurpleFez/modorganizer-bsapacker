@@ -1,9 +1,8 @@
 #ifndef IARCHIVEAUTOSERVICE_H
 #define IARCHIVEAUTOSERVICE_H
 
-//#include <bs_archive_auto.hpp>
-#include "src/QBSArchiveAuto.h"
-#include <string>
+#include <bs_archive_auto.hpp>
+#include <bsapacker/IModDto.h>
 
 namespace BsaPacker
 {
@@ -11,7 +10,7 @@ namespace BsaPacker
 	{
 	public:
 		virtual ~IArchiveAutoService() = default;
-		virtual void CreateBSA(QBSArchiveAuto*, const  std::string&) const = 0;
+		virtual void CreateBSA(libbsarch::bs_archive_auto*, const QString&, bsa_archive_type_e) const = 0;
 	};
 } // namespace BsaPacker
 

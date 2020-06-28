@@ -1,18 +1,16 @@
 #ifndef MOD_CONTEXT_H
 #define MOD_CONTEXT_H
 
+#include "bsapacker_global.h"
 #include <bsapacker/IModContext.h>
 #include <imoinfo.h>
 
 namespace BsaPacker
 {
-	class ModContext : public IModContext
+	class BSAPACKER_EXPORT ModContext : public IModContext
 	{
 	public:
 		explicit ModContext(MOBase::IOrganizer* moInfo);
-		~ModContext() override = default;
-
-		// IModContext interface
 		[[nodiscard]] QString GetAbsoluteModPath(const QString& modName) const override;
 		[[nodiscard]] int GetNexusId() const override;
 		[[nodiscard]] QStringList GetPlugins(const QDir& modDirectory) const override;

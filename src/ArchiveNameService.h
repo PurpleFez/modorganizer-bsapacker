@@ -1,12 +1,13 @@
 #ifndef ARCHIVENAMESERVICE_H
 #define ARCHIVENAMESERVICE_H
 
+#include "bsapacker_global.h"
 #include <bsapacker/IArchiveNameService.h>
 #include <bsapacker/IModContext.h>
 
 namespace BsaPacker
 {
-	class ArchiveNameService : public IArchiveNameService
+	class BSAPACKER_EXPORT ArchiveNameService : public IArchiveNameService
 	{
 	public:
 		ArchiveNameService(const IModContext* modContext);

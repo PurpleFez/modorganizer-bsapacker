@@ -1,6 +1,5 @@
 #include "SkyrimDummyPluginService.h"
 
-
 namespace BsaPacker
 {
 	SkyrimDummyPluginService::SkyrimDummyPluginService(

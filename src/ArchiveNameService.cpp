@@ -28,7 +28,7 @@ namespace BsaPacker
 
 	std::string ArchiveNameService::GetArchiveFullPath(const bsa_archive_type_t type, const IModDto* modDto) const
 	{
-		return modDto->Directory() + '/' + modDto->ModForename() + this->Infix(type) + this->GetFileExtension();
+		return modDto->Directory() + '/' + modDto->ArchiveName() + this->Infix(type) + this->GetFileExtension();
 	}
 
 	std::string ArchiveNameService::GetArchiveFullPathPartial(bsa_archive_type_t type, const IModDto* modDto) const

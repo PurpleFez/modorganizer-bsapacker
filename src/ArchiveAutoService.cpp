@@ -4,10 +4,8 @@
 
 namespace BsaPacker
 {
-	void ArchiveAutoService::CreateBSA(QBSArchiveAuto* archive, const std::string& archiveName) const
+	void ArchiveAutoService::CreateBSA(libbsarch::bs_archive_auto* archive, const QString& archiveName, const bsa_archive_type_e type) const
 	{
-		qDebug() << "Saving archive " + QString::fromStdString(archiveName) + " to disk";
-		archive->save_to_disk(archiveName);
-		qDebug() << "Finished writing archive " + QString::fromStdString(archiveName) + " to disk";
+		archive->save_to_disk(archiveName.toStdString());
 	}
 } // namespace BsaPacker

@@ -13,26 +13,29 @@ namespace BsaPacker
 	const QString& FILE_MSG = QObject::tr("File \"");
 	const QString& ALREADYEXISTS_MSG = QObject::tr("\" already exists. Overwrite?");
 
-	ModDtoFactory::ModDtoFactory(const IModContext* modContext)
-		: m_ModContext(modContext)
+	ModDtoFactory::ModDtoFactory(
+		const IModContext* modContext,
+		IPackerDialog* packerDialog) :
+		m_ModContext(modContext),
+		m_PackerDialog(packerDialog)
 	{
 	}
 
 	std::unique_ptr<IModDto> ModDtoFactory::Create() const
 	{
-		PackerDialog packerDialog(this->m_ModContext);
-		packerDialog.RefreshModList();
-		int result = packerDialog.exec();
+		this->m_PackerDialog->RefreshModList();
+		int result = m_PackerDialog->Exec();
 		if (result != QDialog::DialogCode::Accepted)
 		{
 			return std::make_unique<NullModDto>();
 		}
 
 		const int nexusId = this->m_ModContext->GetNexusId();
-		const QString& modName = packerDialog.SelectedMod();
+		const QString& modName = this->m_PackerDialog->SelectedMod();
 		const QString& modDir = this->m_ModContext->GetAbsoluteModPath(modName);
-		const QString& pluginName = packerDialog.SelectedPluginItem();
-		const QString& archiveName = ModDtoFactory::ArchiveNameValidator(modName, pluginName);
+		const QString& pluginName = this->m_PackerDialog->SelectedPluginItem();
+		const bool needsNewName = this->m_PackerDialog->IsNewFilename();
+		const QString& archiveName = ModDtoFactory::ArchiveNameValidator(modName, pluginName, needsNewName);
 		const QString& archiveExtension = nexusId == FALLOUT_4_NEXUS_ID
 				? QStringLiteral(".ba2")
 				: QStringLiteral(".bsa");
@@ -42,11 +45,12 @@ namespace BsaPacker
 		return dto;
 	}
 
-	QString ModDtoFactory::ArchiveNameValidator(const QString& modName, const QString& pluginName)
+	QString ModDtoFactory::ArchiveNameValidator(
+		const QString& modName,
+		const QString& pluginName,
+		const bool needsNewName)
 	{
 		QString archive_name_base;
-		// check if it is the "new filename" text
-		const bool needsNewName = !static_cast<bool>(QString::compare(pluginName.chopped(4), QStringLiteral("<new filename>")));
 		if (needsNewName) {
 			bool ok = false;
 			const QString& name = QInputDialog::getText(nullptr,
