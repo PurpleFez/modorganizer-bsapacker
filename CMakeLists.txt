@@ -33,6 +33,8 @@ target_include_directories(${PROJECT_NAME} PRIVATE src)
 project(bsa_packer)
 set(project_type plugin)
 set(enable_warnings OFF)
+set(create_translations ON)
+
 if(DEFINED DEPENDENCIES_DIR)
 	include(${DEPENDENCIES_DIR}/modorganizer_super/cmake_common/project.cmake)
 else()
