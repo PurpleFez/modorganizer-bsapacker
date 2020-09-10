@@ -12,13 +12,9 @@ else()
 endif()
 add_subdirectory(src)
 
-find_package(Qt5 COMPONENTS Concurrent REQUIRED)
-
 target_include_directories(bsa_packer PRIVATE ${BOOST_DI_ROOT}/include)
 target_link_directories(bsa_packer PRIVATE lib)
-target_link_libraries(bsa_packer
-	DirectXTex
-	Qt5::Concurrent)
+target_link_libraries(bsa_packer DirectXTex)
 requires_library(libbsarch)
 target_compile_definitions(bsa_packer PRIVATE BSAPACKER_LIBRARY)
 

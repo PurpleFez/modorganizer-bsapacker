@@ -17,6 +17,5 @@ target_include_directories(bsa_packer_tests PRIVATE ${BOOST_DI_ROOT}/include ../
 target_link_directories(bsa_packer_tests PRIVATE ../lib ../src)
 target_link_libraries(bsa_packer_tests
 	DirectXTex
-	Qt5::Concurrent
 	bsa_packer)
 requires_library(libbsarch)
