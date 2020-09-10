@@ -17,7 +17,6 @@ find_package(Qt5Concurrent REQUIRED)
 target_include_directories(${PROJECT_NAME} PRIVATE ${BOOST_DI_ROOT}/include)
 target_link_directories(${PROJECT_NAME} PRIVATE lib)
 target_link_libraries(${PROJECT_NAME}
-	Qt5::Concurrent
 	DirectXTex)
 requires_library(libbsarch)
 target_compile_definitions(bsa_packer PRIVATE BSAPACKER_LIBRARY)
