@@ -13,8 +13,6 @@ else()
 	include(../../cmake_common/src.cmake)
 endif()
 
-find_package(Qt5 COMPONENTS Concurrent REQUIRED)
-
 target_include_directories(bsa_packer_tests PRIVATE ${BOOST_DI_ROOT}/include ../src)
 target_link_directories(bsa_packer_tests PRIVATE ../lib ../src)
 target_link_libraries(bsa_packer_tests
