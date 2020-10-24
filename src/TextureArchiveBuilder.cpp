@@ -51,7 +51,7 @@ namespace BsaPacker
 			qDebug() << "file is: " << filepath;
 		}
 		this->m_Archive->set_compressed(!static_cast<bool>(incompressibleFiles));
-		this->m_Archive->set_dds_callback(TextureArchiveBuilder::DDSCallback, (void*)this);
+		this->m_Archive->set_dds_callback(TextureArchiveBuilder::DDSCallback, this->getRootPath().toStdWString());
 		return incompressibleFiles + compressibleFiles;
 	}
 
@@ -82,16 +82,10 @@ namespace BsaPacker
 
 	void TextureArchiveBuilder::DDSCallback(bsa_archive_t archive, const wchar_t* file_path, bsa_dds_info_t* dds_info, void* context)
 	{
+		const auto& path = *static_cast<std::wstring*>(context) + L'/' + std::wstring(file_path);
+
 		auto image = std::make_unique<DirectX::ScratchImage>();
 		DirectX::TexMetadata info;
-
-		auto builder = (TextureArchiveBuilder*)context;
-		const QString qsRootPath = builder->getRootPath();
-		//auto cstring = convertible_string(qsRootPath);
-		//cstring.to_native_path();
-		const std::wstring wsRootPath = qsRootPath.toStdWString();
-		//const std::wstring wsRootPath(PREPARE_PATH_LIBBSARCH(qsRootPath));
-		const std::wstring path = wsRootPath + L"\\" + std::wstring(file_path);
 
 		const auto hr = LoadFromDDSFile(path.c_str(), DirectX::DDS_FLAGS_NONE, &info, *image);
 

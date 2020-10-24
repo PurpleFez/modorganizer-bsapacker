@@ -2,7 +2,7 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="en_US">
 <context>
-    <name>BsaPacker::Bsa_Packer</name>
+    <name>Bsa_Packer</name>
     <message>
         <location filename="BsaPacker.cpp" line="46"/>
         <location filename="BsaPacker.cpp" line="66"/>
@@ -17,41 +17,6 @@
 </context>
 <context>
     <name>QObject</name>
-    <message>
-        <location filename="BsaPackerWorker.cpp" line="40"/>
-        <source>Created</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ModDtoFactory.cpp" line="53"/>
-        <source>Archive name (no file extension):</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ModDtoFactory.cpp" line="76"/>
-        <source>File &quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ModDtoFactory.cpp" line="76"/>
-        <source>&quot; already exists. Overwrite?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="PackerDialog.cpp" line="22"/>
-        <source>Choose a mod to pack:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="PackerDialog.cpp" line="23"/>
-        <source>Choose a name for the packed archive:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="PackerDialog.cpp" line="26"/>
-        <source>BSA Packer</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <location filename="SettingsService.cpp" line="12"/>
         <source>After creating the archive, set loose assets to hidden.</source>
@@ -70,6 +35,41 @@
     <message>
         <location filename="SettingsService.cpp" line="15"/>
         <source>Specify a semi-colon seperated list of file extensions to ignore when packing.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="PackerDialog.cpp" line="22"/>
+        <source>Choose a mod to pack:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="PackerDialog.cpp" line="23"/>
+        <source>Choose a name for the packed archive:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="PackerDialog.cpp" line="26"/>
+        <source>BSA Packer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ModDtoFactory.cpp" line="53"/>
+        <source>Archive name (no file extension):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ModDtoFactory.cpp" line="76"/>
+        <source>File &quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ModDtoFactory.cpp" line="76"/>
+        <source>&quot; already exists. Overwrite?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="BsaPackerWorker.cpp" line="40"/>
+        <source>Created</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
