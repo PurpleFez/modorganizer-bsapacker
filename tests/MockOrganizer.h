@@ -44,6 +44,9 @@ public:
 	MOCK_METHOD(MOBase::IPluginGame const *, managedGame, (), (const, override));
 	MOCK_METHOD(QStringList, modsSortedByProfilePriority, (), (const, override));
 	MOCK_METHOD(bool, onUserInterfaceInitialized, (const std::function<void (QMainWindow *)> &), (override));
+	MOCK_METHOD(bool, onProfileCreated, (const std::function<void(MOBase::IProfile*)>&), (override));
+	MOCK_METHOD(bool, onProfileRemoved, (const std::function<void(const QString&)>&), (override));
+	MOCK_METHOD(bool, onProfileRenamed, (const std::function<void(MOBase::IProfile*, QString const&, QString const&)>&), (override));
 	MOCK_METHOD(bool, onProfileChanged, (const std::function<void (MOBase::IProfile *,MOBase::IProfile *)> &), (override));
 	MOCK_METHOD(bool, onPluginSettingChanged, (const std::function<void (const QString &,const QString &,const QVariant &,const QVariant &)> &), (override));
 };
