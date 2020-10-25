@@ -17,7 +17,6 @@ public:
 	MOCK_METHOD(IModInterface*, getMod, (const QString &name), (const, override));
 	MOCK_METHOD(IModInterface*, createMod, (GuessedValue<QString> &name), (override));
 	MOCK_METHOD(IPluginGame*, getGame, (const QString &gameName), (const, override));
-	MOCK_METHOD(bool, removeMod, (IModInterface *mod), (override));
 	MOCK_METHOD(void, modDataChanged, (IModInterface *mod), (override));
 	MOCK_METHOD(QVariant, pluginSetting, (const QString &pluginName, const QString &key), (const, override));
 	MOCK_METHOD(void, setPluginSetting, (const QString &pluginName, const QString &key, const QVariant &value), (override));
