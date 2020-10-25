@@ -14,7 +14,6 @@ public:
 	MOCK_METHOD(QString, basePath, (), (const, override));
 	MOCK_METHOD(QString, modsPath, (), (const, override));
 	MOCK_METHOD(VersionInfo, appVersion, (), (const, override));
-	MOCK_METHOD(IModInterface*, getMod, (const QString &name), (const, override));
 	MOCK_METHOD(IModInterface*, createMod, (GuessedValue<QString> &name), (override));
 	MOCK_METHOD(IPluginGame*, getGame, (const QString &gameName), (const, override));
 	MOCK_METHOD(void, modDataChanged, (IModInterface *mod), (override));
