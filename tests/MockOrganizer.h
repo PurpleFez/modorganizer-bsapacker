@@ -37,12 +37,10 @@ public:
 	MOCK_METHOD(MOBase::IProfile*, profile, (), (const, override));
 	MOCK_METHOD(HANDLE, startApplication, (const QString &executable, const QStringList &args, const QString &cwd, const QString &profile, const QString &forcedCustomOverwrite, bool ignoreCustomOverwrite), (override));
 	MOCK_METHOD(bool, waitForApplication, (HANDLE handle, LPDWORD exitCode), (const, override));
-	MOCK_METHOD(bool, onModInstalled, (const std::function<void (const QString &)> &func), (override));
 	MOCK_METHOD(bool, onAboutToRun, (const std::function<bool(const QString&)> &func), (override));
 	MOCK_METHOD(bool, onFinishedRun, (const std::function<void(const QString&, unsigned int)> &func), (override));
-	MOCK_METHOD(void, refreshModList,(bool saveChanges), (override));
+	MOCK_METHOD(void, refresh, (bool saveChanges), (override));
 	MOCK_METHOD(MOBase::IPluginGame const *, managedGame, (), (const, override));
-	MOCK_METHOD(QStringList, modsSortedByProfilePriority, (), (const, override));
 	MOCK_METHOD(bool, onUserInterfaceInitialized, (const std::function<void (QMainWindow *)> &), (override));
 	MOCK_METHOD(bool, onProfileChanged, (const std::function<void (MOBase::IProfile *,MOBase::IProfile *)> &), (override));
 	MOCK_METHOD(bool, onPluginSettingChanged, (const std::function<void (const QString &,const QString &,const QVariant &,const QVariant &)> &), (override));
