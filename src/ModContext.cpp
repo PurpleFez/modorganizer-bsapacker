@@ -19,7 +19,7 @@ namespace BsaPacker
 
 	QString ModContext::GetAbsoluteModPath(const QString &modName) const
 	{
-		const MOBase::IModInterface* const mod = m_Organizer->getMod(modName);
+		const MOBase::IModInterface* const mod = m_Organizer->modList()->getMod(modName);
 		return mod->absolutePath();
 	}
 
