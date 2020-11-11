@@ -51,11 +51,6 @@ namespace BsaPacker
 		return MOBase::VersionInfo(1, 0, 4, MOBase::VersionInfo::RELEASE_FINAL);
 	}
 
-	bool Bsa_Packer::isActive() const
-	{
-		return this->m_SettingsService->GetPluginSetting(SettingsService::SETTING_ENABLED).toBool();
-	}
-
 	QList<MOBase::PluginSetting> Bsa_Packer::settings() const
 	{
 		return SettingsService::PluginSettings;

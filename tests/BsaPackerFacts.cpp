@@ -31,33 +31,4 @@ namespace BsaPackerTests
 		EXPECT_NO_THROW(result.init(naggyMockOrganizer));
 	}
 
-	TEST_F(BsaPackerFacts, IsActive_WhenPluginEnabled_ReturnsTrue)
-	{
-		// Arrange
-		Bsa_Packer sut;
-		ON_CALL(*naggyMockOrganizer, pluginSetting(Eq("BSA Packer"), Eq(QStringLiteral("enabled"))))
-			.WillByDefault(Return(true));
-		sut.init(naggyMockOrganizer);
-
-		// Act
-		auto result = sut.isActive();
-
-		// Assert
-		EXPECT_TRUE(result);
-	}
-
-	TEST_F(BsaPackerFacts, IsActive_WhenPluginDisabled_ReturnsFalse)
-	{
-		// Arrange
-		Bsa_Packer sut;
-		ON_CALL(*naggyMockOrganizer, pluginSetting(Eq("BSA Packer"), Eq("enabled")))
-			.WillByDefault(Return(false));
-		sut.init(naggyMockOrganizer);
-
-		// Act
-		auto result = sut.isActive();
-
-		// Assert
-		EXPECT_FALSE(result);
-	}
 }

@@ -23,7 +23,6 @@ namespace BsaPacker
 		[[nodiscard]] QString author() const override;
 		[[nodiscard]] QString description() const override;
 		[[nodiscard]] MOBase::VersionInfo version() const override;
-		[[nodiscard]] bool isActive() const override;
 		[[nodiscard]] QList<MOBase::PluginSetting> settings() const override;
 
 		// IPluginTool interface

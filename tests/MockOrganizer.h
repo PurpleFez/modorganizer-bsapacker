@@ -19,6 +19,8 @@ public:
 	MOCK_METHOD(void, modDataChanged, (IModInterface *mod), (override));
 	MOCK_METHOD(QVariant, pluginSetting, (const QString &pluginName, const QString &key), (const, override));
 	MOCK_METHOD(void, setPluginSetting, (const QString &pluginName, const QString &key, const QVariant &value), (override));
+	MOCK_METHOD(bool, isPluginEnabled, (const QString& pluginName), (const, override));
+	MOCK_METHOD(bool, isPluginEnabled, (IPlugin *plugin), (const, override));
 	MOCK_METHOD(QVariant, persistent, (const QString &pluginName, const QString &key, const QVariant &def), (const, override));
 	MOCK_METHOD(void, setPersistent, (const QString &pluginName, const QString &key, const QVariant &value, bool sync), (override));
 	MOCK_METHOD(QString, pluginDataPath, (), (const, override));
