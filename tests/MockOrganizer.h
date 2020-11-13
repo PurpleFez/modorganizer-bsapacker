@@ -45,6 +45,10 @@ public:
 	MOCK_METHOD(bool, onProfileCreated, (const std::function<void(MOBase::IProfile*)>&), (override));
 	MOCK_METHOD(bool, onProfileRemoved, (const std::function<void(const QString&)>&), (override));
 	MOCK_METHOD(bool, onProfileRenamed, (const std::function<void(MOBase::IProfile*, QString const&, QString const&)>&), (override));
-	MOCK_METHOD(bool, onProfileChanged, (const std::function<void (MOBase::IProfile *,MOBase::IProfile *)> &), (override));
+	MOCK_METHOD(bool, onProfileChanged, (const std::function<void (MOBase::IProfile*, MOBase::IProfile*)> &), (override));
 	MOCK_METHOD(bool, onPluginSettingChanged, (const std::function<void (const QString &,const QString &,const QVariant &,const QVariant &)> &), (override));
+	MOCK_METHOD(bool, onPluginEnabled, (const std::function<void(const MOBase::IPlugin*)>&), (override));
+	MOCK_METHOD(bool, onPluginEnabled, (const QString&, const std::function<void()>&), (override));
+	MOCK_METHOD(bool, onPluginDisabled, (const std::function<void(const MOBase::IPlugin*)>&), (override));
+	MOCK_METHOD(bool, onPluginDisabled, (const QString&, const std::function<void()>&), (override));
 };
