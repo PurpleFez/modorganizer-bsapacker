@@ -36,7 +36,7 @@ public:
 	MOCK_METHOD(MOBase::IModList*, modList, (), (const, override));
 	MOCK_METHOD(MOBase::IProfile*, profile, (), (const, override));
 	MOCK_METHOD(HANDLE, startApplication, (const QString &executable, const QStringList &args, const QString &cwd, const QString &profile, const QString &forcedCustomOverwrite, bool ignoreCustomOverwrite), (override));
-	MOCK_METHOD(bool, waitForApplication, (HANDLE handle, LPDWORD exitCode), (const, override));
+	MOCK_METHOD(bool, waitForApplication, (HANDLE handle, bool refresh, LPDWORD exitCode), (const, override));
 	MOCK_METHOD(bool, onAboutToRun, (const std::function<bool(const QString&)> &func), (override));
 	MOCK_METHOD(bool, onFinishedRun, (const std::function<void(const QString&, unsigned int)> &func), (override));
 	MOCK_METHOD(void, refresh, (bool saveChanges), (override));
