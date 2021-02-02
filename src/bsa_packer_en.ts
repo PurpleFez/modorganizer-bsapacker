@@ -5,12 +5,12 @@
     <name>Bsa_Packer</name>
     <message>
         <location filename="BsaPacker.cpp" line="46"/>
-        <location filename="BsaPacker.cpp" line="66"/>
+        <location filename="BsaPacker.cpp" line="61"/>
         <source>Transform loose files into a Bethesda Softworks Archive file (.bsa/.ba2).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="BsaPacker.cpp" line="76"/>
+        <location filename="BsaPacker.cpp" line="71"/>
         <source>BSA Packer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -18,22 +18,17 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="SettingsService.cpp" line="12"/>
+        <location filename="SettingsService.cpp" line="11"/>
         <source>After creating the archive, set loose assets to hidden.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="SettingsService.cpp" line="13"/>
+        <location filename="SettingsService.cpp" line="12"/>
         <source>Create a dummy plugin to load the archive if one does not exist.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="SettingsService.cpp" line="14"/>
-        <source>Allow this plugin to run.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="SettingsService.cpp" line="15"/>
+        <location filename="SettingsService.cpp" line="13"/>
         <source>Specify a semi-colon seperated list of file extensions to ignore when packing.</source>
         <translation type="unfinished"></translation>
     </message>
