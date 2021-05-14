@@ -18,4 +18,6 @@ target_link_libraries(bsa_packer DirectXTex)
 requires_library(libbsarch)
 target_compile_definitions(bsa_packer PRIVATE BSAPACKER_LIBRARY)
 
+if(BUILD_TESTING)
 add_subdirectory(tests)
+endif()
