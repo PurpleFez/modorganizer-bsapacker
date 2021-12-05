@@ -42,9 +42,9 @@ void BSArchive::close()
 
 void BSArchive::create(const QString &archiveName, const bsa_archive_type_e& type, const BSArchiveEntries& entries)
 {
-	LOG_LIBBSARCH << "Creating archive. Archive name: " << archiveName << endl
-				  << "type: " << type << endl
-				  << "entries: " << entries.getEntries();
+	LOG_LIBBSARCH << "Creating archive. Archive name: " << archiveName;
+	LOG_LIBBSARCH << "type: " << type;
+	LOG_LIBBSARCH << "entries: " << entries.getEntries();
 
 	bsa_create_archive(_archive, PREPARE_PATH_LIBBSARCH(archiveName), type, entries.getEntries());
 
@@ -62,9 +62,9 @@ void BSArchive::save()
 
 void BSArchive::addFileFromDiskRoot(const QString &rootDir, const QString &filename)
 {
-	LOG_LIBBSARCH << "Adding file from disk root. Root directory: " << rootDir << endl
-				  << "Filename: " << filename << endl
-				  << "Archive: " << _archive;
+	LOG_LIBBSARCH << "Adding file from disk root. Root directory: " << rootDir;
+	LOG_LIBBSARCH << "Filename: " << filename;
+	LOG_LIBBSARCH << "Archive: " << _archive;
 
 	const auto &result = bsa_add_file_from_disk_root(_archive,
 													 PREPARE_PATH_LIBBSARCH(rootDir),
@@ -81,9 +81,9 @@ void BSArchive::addFileFromDiskRoot(const QString &rootDir, const QStringList &f
 
 void BSArchive::addFileFromDisk(const QString &pathInArchive, const QString &filePath)
 {
-	LOG_LIBBSARCH << "Adding file from disk root. Path in archive: " << pathInArchive << endl
-				  << "Filepath: " << filePath << endl
-				  << "Archive: " << _archive;
+	LOG_LIBBSARCH << "Adding file from disk root. Path in archive: " << pathInArchive;
+	LOG_LIBBSARCH << "Filepath: " << filePath;
+	LOG_LIBBSARCH << "Archive: " << _archive;
 
 	const auto &result = bsa_add_file_from_disk_root(_archive,
 													 PREPARE_PATH_LIBBSARCH(pathInArchive),
@@ -94,7 +94,8 @@ void BSArchive::addFileFromDisk(const QString &pathInArchive, const QString &fil
 
 void BSArchive::addFileFromMemory(const QString &filename, const QByteArray &data) //NOTE UNTESTED
 {
-	LOG_LIBBSARCH << "Adding file from memory. Filename: " << filename << endl << "Data size: " << data.size();
+	LOG_LIBBSARCH << "Adding file from memory. Filename: " << filename;
+	LOG_LIBBSARCH << "Data size: " << data.size();
 
 	uint32_t size = static_cast<uint32_t>(data.size());
 	bsa_buffer_t buffer = const_cast<char *>(data.data());

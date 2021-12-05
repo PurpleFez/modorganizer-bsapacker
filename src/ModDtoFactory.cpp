@@ -68,7 +68,7 @@ namespace BsaPacker
 										 const QString& fileName)
 	{
 		const QString& absoluteFileName = filePath + '/' + fileName;
-		const QFileInfo& fileInfo(absoluteFileName);
+		const QFileInfo fileInfo(absoluteFileName);
 		if (!fileInfo.exists() || !fileInfo.isFile()) {
 			return true;
 		}

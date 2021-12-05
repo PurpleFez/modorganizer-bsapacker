@@ -37,7 +37,7 @@ namespace BsaPacker
 	bool DummyPluginLogic::canCreateDummy(const std::array<QString, SIZE>& fileList,
 										  const QString& fileNameNoExtension) const
 	{
-		const QFileInfo& archive(fileNameNoExtension + this->m_ArchiveNameService->GetFileExtension());
+		const QFileInfo archive(fileNameNoExtension + this->m_ArchiveNameService->GetFileExtension());
 		if (!(archive.exists() && archive.isFile())) {
 			return false;
 		}
@@ -46,7 +46,8 @@ namespace BsaPacker
 			return false;
 		}
 
-		for (const QFileInfo fileInfo : fileList) {
+		for (const QString &info : fileList) {
+			const QFileInfo fileInfo(info);
 			if (fileInfo.exists() && fileInfo.isFile()) {
 				return false;
 			}
